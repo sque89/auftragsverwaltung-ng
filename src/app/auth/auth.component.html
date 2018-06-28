@@ -1,0 +1,28 @@
+<h1 class="my-5 text-center">Login</h1>
+<form class="login-form" [formGroup]="form" (ngSubmit)="login(form.value, form.valid)" novalidate>
+    <div class="row mb-3 text-center">
+        <div class="col-xs-12 col-md-6 offset-md-3">
+            <mat-form-field>
+                <input matInput type="text" placeholder="Benutzername" formControlName="username" required>
+            </mat-form-field>
+            <mat-error *ngIf="form.controls.username.hasError('required')">
+                Benutzer ist <strong>Pflicht</strong>
+            </mat-error>
+        </div>
+    </div>
+    <div class="row mb-5 text-center">
+        <div class="col-xs-12 col-md-6 offset-md-3">
+            <mat-form-field>
+                <input matInput type="password" placeholder="Passwort" formControlName="password" required>
+            </mat-form-field>
+            <mat-error *ngIf="form.controls.password.hasError('required')">
+                Passwort ist <strong>Pflicht</strong>
+            </mat-error>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-xs-12 col-md-6 offset-md-3">
+            <button mat-raised-button color="primary" type="submit">Anmelden!</button>
+        </div>
+    </div>
+</form>

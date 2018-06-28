@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+        #mainMenu
+        class="sidenav"
+        fixedInViewport="true"
+        mode="push"
+        >
+        <mat-toolbar color="primary">
+            <span>Menü</span>
+            <span class="flex-fill"></span>
+            <button class="mat-button" type="button" (click)="mainMenu.toggle()">
+                <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <mat-nav-list>
+            <a mat-list-item href="#">Link 1</a>
+            <a mat-list-item href="#">Link 2</a>
+            <a mat-list-item href="#">Link 3</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <auftragsverwaltung-ng-header (toggleMainMenu)="mainMenu.toggle()"></auftragsverwaltung-ng-header>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+        <auftragsverwaltung-ng-footer></auftragsverwaltung-ng-footer>
+    </mat-sidenav-content>
+</mat-sidenav-container>
