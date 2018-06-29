@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'auftragsverwaltung-ng-header',
@@ -8,11 +9,15 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class HeaderComponent {
     @Output() toggleMainMenu: EventEmitter<void>;
 
-    public constructor() {
+    public constructor(private router: Router) {
         this.toggleMainMenu = new EventEmitter();
     }
 
     public emitMainMenuToggle() {
         this.toggleMainMenu.emit();
+    }
+
+    public gotoDashboard() {
+        this.router.navigate(['/dashboard']);
     }
 }

@@ -4,9 +4,9 @@ import {AuthGuard} from './core/guards/auth.guard';
 import {AuthComponent} from './auth/auth.component';
 
 const appRoutes: Routes = [
-    { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'login', component: AuthComponent },
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: 'dashboard' }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

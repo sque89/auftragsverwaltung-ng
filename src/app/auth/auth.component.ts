@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthenticationService} from '../core/services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'auftragsverwaltung-ng-auth',
@@ -10,7 +11,7 @@ import {AuthenticationService} from '../core/services/authentication.service';
 export class AuthComponent {
     public form: FormGroup;
 
-    public constructor(private authService: AuthenticationService) {
+    public constructor(private authService: AuthenticationService, private router: Router) {
     }
 
     public ngOnInit() {
@@ -26,7 +27,9 @@ export class AuthComponent {
 
     public login(credentials: {username: string, password: string}, isValid: boolean) {
         if (isValid) {
-            this.authService.login(credentials.username, credentials.password);
+            this.authService.login(credentials.username, credentials.password).subscribe(() => {
+                this.router.navigate(['/dashboard']);
+            });
         }
     }
 }
