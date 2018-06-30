@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthenticationService} from '../../../core/services/authentication.service';
 
 @Component({
   selector: 'auftragsverwaltung-ng-header',
@@ -9,7 +10,7 @@ import {Router} from '@angular/router';
 export class HeaderComponent {
     @Output() toggleMainMenu: EventEmitter<void>;
 
-    public constructor(private router: Router) {
+    public constructor(private router: Router, private authService: AuthenticationService) {
         this.toggleMainMenu = new EventEmitter();
     }
 
@@ -19,5 +20,10 @@ export class HeaderComponent {
 
     public gotoDashboard() {
         this.router.navigate(['/dashboard']);
+    }
+
+    public logout() {
+        this.authService.logout();
+        this.router.navigate(['/login']);
     }
 }

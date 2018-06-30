@@ -26,3 +26,6 @@
         <auftragsverwaltung-ng-footer></auftragsverwaltung-ng-footer>
     </mat-sidenav-content>
 </mat-sidenav-container>
+<div class="loading-overlay" [hidden]="!uiService.loadingOverlayVisible">
+    <mat-spinner></mat-spinner>
+</div>
