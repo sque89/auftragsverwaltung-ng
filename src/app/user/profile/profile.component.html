@@ -1,0 +1,41 @@
+<h1 class="mb-3">Profil bearbeiten</h1>
+<p>Hier können die Daten zum eigenen Profil eingesehen und geändert werden.</p>
+<mat-tab-group>
+    <mat-tab label="Übersicht">
+        <form [formGroup]="commonDataForm">
+            <mat-list class="mt-3">
+                <mat-list-item>Benutzername: {{currentUser.username}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>Berechtigung: {{currentUser.roles[0] === 'ROLE_ADMIN' ? 'Administrator' : 'Benutzer'}}</mat-list-item>
+            </mat-list>
+        </form>
+    </mat-tab>
+    <mat-tab label="Allgemeine Daten">
+        <form [formGroup]="commonDataForm">
+            <mat-form-field class="d-block mt-3">
+                <input matInput type="text" placeholder="Vorname" formControlName="firstname" required>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput type="text" placeholder="Nachname" formControlName="lastname" required>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="button" (click)="saveCommonData()">Daten speichern</button>
+        </form>
+    </mat-tab>
+    <mat-tab label="Passwort ändern">
+        <form [formGroup]="passwordForm">
+            <mat-form-field class="d-block mt-3">
+                <input matInput type="text" placeholder="Aktuelles Passwort" formControlName="currentPassword" required>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput type="text" placeholder="Neues Passwort" formControlName="newPassword" required>
+            </mat-form-field>
+            <mat-form-field class="d-block">
+                <input matInput type="text" placeholder="Neues Passwort bestätigen" formControlName="newPasswordConfirmation" required>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Passwort jetzt ändern</button>
+        </form>
+    </mat-tab>
+</mat-tab-group>
