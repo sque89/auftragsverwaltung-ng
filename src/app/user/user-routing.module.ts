@@ -5,6 +5,7 @@ import {AuthGuard} from '../core/guards/auth.guard';
 import {ProfileResolver} from './profile/profile-resolver.service';
 import {UserListComponent} from './list/user-list.component';
 import {UserListResolver} from './list/user-list-resolver.service';
+import {IsAdminGuard} from '../core/guards/is-admin.guard';
 
 const routes: Routes = [{
     path: 'profil',
@@ -15,18 +16,18 @@ const routes: Routes = [{
 }, {
     path: 'liste',
     component: UserListComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, IsAdminGuard],
     resolve: {UserListResolver}
 }, {
     path: ':username/details',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, IsAdminGuard],
     resolve: {ProfileResolver},
     data: {isAdmin: true}
 }, {
     path: ':username/bearbeiten',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, IsAdminGuard],
     resolve: {ProfileResolver},
     data: {isAdmin: true}
 }];

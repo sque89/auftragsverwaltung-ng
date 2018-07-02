@@ -1,16 +1,16 @@
 <mat-toolbar color="primary">
-    <button class="mat-button" type="button" (click)="emitMainMenuToggle()">
+    <button *ngIf="sessionService.isLoggedIn()" class="mat-button" type="button" (click)="emitMainMenuToggle()">
         <mat-icon class="mat-icon material-icons">menu</mat-icon>
     </button>
     <span>Fresko Auftragsverwaltung</span>
     <span class="flex-fill"></span>
-    <button class="mat-button" type="button" [routerLink]="['/dashboard']">
+    <button *ngIf="sessionService.isLoggedIn()" class="mat-button" type="button" [routerLink]="['/dashboard']">
         <mat-icon class="mat-icon material-icons">home</mat-icon>
     </button>
-    <button class="mat-button" type="button" [routerLink]="['/benutzer/profil']">
+    <button *ngIf="sessionService.isLoggedIn()" class="mat-button" type="button" [routerLink]="['/benutzer/profil']">
         <mat-icon class="mat-icon material-icons">person</mat-icon>
     </button>
-    <button class="mat-button" type="button">
+    <button *ngIf="sessionService.isLoggedIn()" class="mat-button" type="button">
         <mat-icon class="mat-icon material-icons" (click)="logout()">exit_to_app</mat-icon>
     </button>
 </mat-toolbar>

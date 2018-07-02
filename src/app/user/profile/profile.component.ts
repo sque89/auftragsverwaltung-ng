@@ -4,9 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {User} from '../../core/models/user.model';
 import {UserApiService} from '../../core/services/user-api.service';
 import {UiService} from '../../core/services/ui.service';
-import {LocalStorageService} from '../../core/services/local-storage.service';
 import {NotificationService} from '../../core/services/notification.service';
-import {catchError} from 'rxjs/operators';
+import {SessionService} from '../../core/services/session.service';
 
 @Component({
     selector: 'profile',
@@ -22,7 +21,7 @@ export class ProfileComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private userApiService: UserApiService,
         private uiService: UiService,
-        private localStorageService: LocalStorageService,
+        private sessionService: SessionService,
         private notificationService: NotificationService
     ) {}
 
@@ -57,7 +56,7 @@ export class ProfileComponent implements OnInit {
     public saveCommonData() {
         this.uiService.showLoadingOverlay();
         this.userApiService.changeCommonUserDataByUsername(
-            this.localStorageService.getCurrentUsername(),
+            this.sessionService.getUsername(),
             this.commonDataForm.get('firstname').value,
             this.commonDataForm.get('lastname').value,
             this.commonDataForm.get('mail').value,
@@ -73,7 +72,7 @@ export class ProfileComponent implements OnInit {
     public savePassword() {
         this.uiService.showLoadingOverlay();
         this.userApiService.changePasswordByUsername(
-            this.localStorageService.getCurrentUsername(),
+            this.sessionService.getUsername(),
             this.passwordForm.get('currentPassword').value,
             this.passwordForm.get('newPassword').value,
             this.passwordForm.get('newPasswordConfirmation').value

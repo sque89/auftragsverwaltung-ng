@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {UiService} from './core/services/ui.service';
+import {SessionService} from './core/services/session.service';
 
 @Component({
     selector: 'app-root',
@@ -9,7 +10,7 @@ import {UiService} from './core/services/ui.service';
 export class AppComponent {
     public mainMenuOpen: boolean;
 
-    public constructor(public uiService: UiService) {
+    public constructor(public uiService: UiService, public sessionService: SessionService) {
         this.mainMenuOpen = false;
     }
 
