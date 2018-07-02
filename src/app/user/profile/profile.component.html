@@ -11,7 +11,7 @@
         </form>
     </mat-tab>
     <mat-tab label="Allgemeine Daten">
-        <form [formGroup]="commonDataForm">
+        <form [formGroup]="commonDataForm" (submit)="saveCommonData()">
             <mat-form-field class="d-block mt-3">
                 <input matInput type="text" placeholder="Vorname" formControlName="firstname" required>
             </mat-form-field>
@@ -21,19 +21,19 @@
             <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="button" (click)="saveCommonData()">Daten speichern</button>
+            <button mat-raised-button color="primary" type="submit">Daten speichern</button>
         </form>
     </mat-tab>
     <mat-tab label="Passwort ändern">
-        <form [formGroup]="passwordForm">
+        <form [formGroup]="passwordForm" (submit)="savePassword()">
             <mat-form-field class="d-block mt-3">
-                <input matInput type="text" placeholder="Aktuelles Passwort" formControlName="currentPassword" required>
+                <input matInput type="password" placeholder="Aktuelles Passwort" formControlName="currentPassword" required>
             </mat-form-field>
             <mat-form-field class="d-block">
-                <input matInput type="text" placeholder="Neues Passwort" formControlName="newPassword" required>
+                <input matInput type="password" placeholder="Neues Passwort" formControlName="newPassword" required>
             </mat-form-field>
             <mat-form-field class="d-block">
-                <input matInput type="text" placeholder="Neues Passwort bestätigen" formControlName="newPasswordConfirmation" required>
+                <input matInput type="password" placeholder="Neues Passwort bestätigen" formControlName="newPasswordConfirmation" required>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit">Passwort jetzt ändern</button>
         </form>

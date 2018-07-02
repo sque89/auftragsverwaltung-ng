@@ -18,14 +18,6 @@ export class HeaderComponent {
         this.toggleMainMenu.emit();
     }
 
-    public gotoDashboard() {
-        this.router.navigate(['/dashboard']);
-    }
-
-    public gotoProfile() {
-        this.router.navigate(['/benutzer/profil']);
-    }
-
     public logout() {
         this.authService.logout();
         this.router.navigate(['/login']);

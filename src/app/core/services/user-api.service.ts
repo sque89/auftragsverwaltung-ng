@@ -26,16 +26,44 @@ export class UserApiService {
             }));
     }
 
+    public getAllUsers() {
+        this.uiService.showLoadingOverlay();
+        return this.http.get<Array<User>>(`${environment.apiUrl}/users`)
+            .pipe(map((response: any) => {
+                this.uiService.hideLoadingOverlay();
+                const users: Array<User> = [];
+                response.users.forEach((user: any) => {
+                    users.push({
+                        id: user.id,
+                        username: user.username,
+                        firstname: user.firstname,
+                        lastname: user.lastname,
+                        email: user.email,
+                        roles: user.roles
+                    });
+                });
+                return users;
+            }));
+    }
+
     public changeCommonUserDataByUsername(
         username: string,
         firstname: string,
         lastname: string,
         email: string
     ) {
-        return this.http.post(`${environment.apiUrl}/user/${username}`, {
+        return this.http.post(`${environment.apiUrl}/edit/user/commondata/${username}`, {
             firstname: firstname,
             lastname: lastname,
             email: email
+        });
+    }
+
+    public changePasswordByUsername(username: string, currentPassword: string, newPassword: string, newPasswordConfirmation: string) {
+        return this.http.post(`${environment.apiUrl}/edit/user/password/${username}`, {
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            newPasswordConfirmation: newPasswordConfirmation
         });
     }
 }

@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {User} from '../../core/models/user.model';
 import {UserApiService} from '../../core/services/user-api.service';
 import {UiService} from '../../core/services/ui.service';
 import {LocalStorageService} from '../../core/services/local-storage.service';
-import {MatSnackBar} from '@angular/material';
+import {NotificationService} from '../../core/services/notification.service';
+import {catchError} from 'rxjs/operators';
 
 @Component({
-  selector: 'profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+    selector: 'profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
     public commonDataForm: FormGroup;
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnInit {
         private userApiService: UserApiService,
         private uiService: UiService,
         private localStorageService: LocalStorageService,
-        private snackBar: MatSnackBar
+        private notificationService: NotificationService
     ) {}
 
     public ngOnInit() {
@@ -62,7 +63,26 @@ export class ProfileComponent implements OnInit {
             this.commonDataForm.get('mail').value,
         ).subscribe(() => {
             this.uiService.hideLoadingOverlay();
-            this.snackBar.open('Daten erfolgreich geändert!')
-        })
+            this.notificationService.showSuccess('Daten erfolgreich geändert!');
+        }, () => {
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showError('Datenänderung fehlgeschlagen!');
+        });
+    }
+
+    public savePassword() {
+        this.uiService.showLoadingOverlay();
+        this.userApiService.changePasswordByUsername(
+            this.localStorageService.getCurrentUsername(),
+            this.passwordForm.get('currentPassword').value,
+            this.passwordForm.get('newPassword').value,
+            this.passwordForm.get('newPasswordConfirmation').value
+        ).subscribe(() => {
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showSuccess('Passwort erfolgreich geändert!');
+        }, () => {
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showError('Passwortänderung fehlgeschlagen!');
+        });
     }
 }
