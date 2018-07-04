@@ -15,14 +15,20 @@ export class SessionService {
         return JSON.parse(localStorage.getItem('currentUser'));
     }
 
-    public setCurrentUser(user: User, token: string) {
-        localStorage.setItem('currentUser', JSON.stringify({user: user, token: token}));
+    public setCurrentUser(user: User, token?: string) {
+        const currentUser = this.getCurrentUserFromLocalStorage();
+        if (token) {
+            localStorage.setItem('currentUser', JSON.stringify({user: user, token: token}));
+        } else {
+            localStorage.setItem('currentUser', JSON.stringify({user: user, token: currentUser.token}));
+        }
     }
 
     public isLoggedIn() {
-        return this.getCurrentUserFromLocalStorage()
-            && this.getCurrentUserFromLocalStorage().user
-            && this.getCurrentUserFromLocalStorage().token;
+        const currentUser = this.getCurrentUserFromLocalStorage();
+        return currentUser
+            && currentUser.user
+            && currentUser.token;
     }
 
     public getUsername(): string {
@@ -30,9 +36,14 @@ export class SessionService {
             && this.getCurrentUserFromLocalStorage().user.username;
     }
 
+    public getFullName(): string {
+        return this.getCurrentUserFromLocalStorage()
+            && `${this.getCurrentUserFromLocalStorage().user.firstname} ${this.getCurrentUserFromLocalStorage().user.lastname}`;
+    }
+
     public isAdmin(): string {
         return this.getCurrentUserFromLocalStorage()
-            && this.getCurrentUserFromLocalStorage().user.roles.find((element) => {
+            && this.getCurrentUserFromLocalStorage().user.roles.find((element: string) => {
                 return element === this.USER_ROLES.ADMIN;
             });
     }

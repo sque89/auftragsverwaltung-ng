@@ -8,7 +8,7 @@
         <mat-toolbar color="primary">
             <span>Menü</span>
             <span class="flex-fill"></span>
-            <button class="mat-button" type="button" (click)="mainMenu.toggle()">
+            <button class="mat-button" type="button" (click)="uiService.closeMainMenu()">
                 <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">close</mat-icon>
             </button>
         </mat-toolbar>
@@ -19,7 +19,7 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <auftragsverwaltung-ng-header (toggleMainMenu)="mainMenu.toggle()"></auftragsverwaltung-ng-header>
+        <auftragsverwaltung-ng-header></auftragsverwaltung-ng-header>
         <div class="container py-5">
             <router-outlet></router-outlet>
         </div>

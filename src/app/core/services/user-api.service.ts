@@ -21,7 +21,8 @@ export class UserApiService {
                     firstname: response.firstname,
                     lastname: response.lastname,
                     email: response.email,
-                    roles: response.roles
+                    roles: response.roles,
+                    admin: response.admin
                 };
             }));
     }
@@ -39,31 +40,42 @@ export class UserApiService {
                         firstname: user.firstname,
                         lastname: user.lastname,
                         email: user.email,
-                        roles: user.roles
+                        roles: user.roles,
+                        admin: user.admin
                     });
                 });
                 return users;
             }));
     }
 
-    public changeCommonUserDataByUsername(
-        username: string,
+    public changeCommonUserData(
         firstname: string,
         lastname: string,
-        email: string
+        email: string,
+        username?: string
     ) {
-        return this.http.post(`${environment.apiUrl}/edit/user/commondata/${username}`, {
+        return this.http.post<User>(`${environment.apiUrl}/user/commondata` + (username ? '/' + username : ''), {
             firstname: firstname,
             lastname: lastname,
             email: email
         });
     }
 
-    public changePasswordByUsername(username: string, currentPassword: string, newPassword: string, newPasswordConfirmation: string) {
-        return this.http.post(`${environment.apiUrl}/edit/user/password/${username}`, {
-            currentPassword: currentPassword,
-            newPassword: newPassword,
-            newPasswordConfirmation: newPasswordConfirmation
-        });
+    public changePassword(
+        newPassword: string,
+        currentPassword?: string,
+        newPasswordConfirmation?: string,
+        username?: string
+    ) {
+        const postData: any = {newPassword: newPassword};
+
+        if (currentPassword) postData.currentPassword = currentPassword;
+        if (newPasswordConfirmation) postData.newPasswordConfirmation = newPasswordConfirmation;
+
+        return this.http.post(`${environment.apiUrl}/user/password` + (username ? '/' + username : ''), postData);
+    }
+
+    public deleteUser(username: string): Observable<User> {
+        return this.http.delete<User>(`${environment.apiUrl}/user/${username}`);
     }
 }

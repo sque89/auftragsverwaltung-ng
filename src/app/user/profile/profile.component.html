@@ -1,18 +1,28 @@
-<h1 class="mb-3">Profil bearbeiten</h1>
-<p>Hier können die Daten zum eigenen Profil eingesehen und geändert werden.</p>
+<h1 class="mb-3">
+    <ng-container *ngIf="isOwnProfile">Eigenes Profil bearbeiten</ng-container>
+    <ng-container *ngIf="!isOwnProfile && !editMode">Benutzer ansehen</ng-container>
+    <ng-container *ngIf="!isOwnProfile && editMode">Benutzer bearbeiten</ng-container>
+    <button mat-raised-button color="primary" *ngIf="!isOwnProfile && !editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Benutzer bearbeiten</button>
+    <button mat-raised-button color="warn" *ngIf="!isOwnProfile && editMode" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
+</h1>
+<p>
+    <ng-container *ngIf="isOwnProfile">Hier können die Daten zum eigenen Profil eingesehen und geändert werden.</ng-container>
+    <ng-container *ngIf="!isOwnProfile && !editMode">Hier können die Details zum aktuell aufgerufenen Profil eingesehen werden.</ng-container>
+    <ng-container *ngIf="!isOwnProfile && editMode">Hier können die Details zum aktuell aufgerufenen Profil bearbeitet werden.</ng-container>
+</p>
 <mat-tab-group>
     <mat-tab label="Übersicht">
         <form [formGroup]="commonDataForm">
             <mat-list class="mt-3">
                 <mat-list-item>Benutzername: {{currentUser.username}}</mat-list-item>
                 <mat-divider></mat-divider>
-                <mat-list-item>Berechtigung: {{currentUser.roles[0] === 'ROLE_ADMIN' ? 'Administrator' : 'Benutzer'}}</mat-list-item>
+                <mat-list-item>Berechtigung: {{currentUser.admin ? 'Administrator' : 'Benutzer'}}</mat-list-item>
             </mat-list>
         </form>
     </mat-tab>
     <mat-tab label="Allgemeine Daten">
-        <form [formGroup]="commonDataForm" (submit)="saveCommonData()">
-            <mat-form-field class="d-block mt-3">
+        <form [formGroup]="commonDataForm" (submit)="commonDataForm.valid && saveCommonData()" class="pt-3">
+            <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="Vorname" formControlName="firstname" required>
             </mat-form-field>
             <mat-form-field class="d-block">
@@ -21,21 +31,21 @@
             <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">Daten speichern</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid">Daten speichern</button>
         </form>
     </mat-tab>
     <mat-tab label="Passwort ändern">
-        <form [formGroup]="passwordForm" (submit)="savePassword()">
-            <mat-form-field class="d-block mt-3">
+        <form [formGroup]="passwordForm" (submit)="passwordForm.valid && savePassword()" class="pt-3">
+            <mat-form-field *ngIf="isOwnProfile" class="d-block">
                 <input matInput type="password" placeholder="Aktuelles Passwort" formControlName="currentPassword" required>
             </mat-form-field>
             <mat-form-field class="d-block">
                 <input matInput type="password" placeholder="Neues Passwort" formControlName="newPassword" required>
             </mat-form-field>
-            <mat-form-field class="d-block">
+            <mat-form-field *ngIf="isOwnProfile" class="d-block">
                 <input matInput type="password" placeholder="Neues Passwort bestätigen" formControlName="newPasswordConfirmation" required>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">Passwort jetzt ändern</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">Passwort jetzt ändern</button>
         </form>
     </mat-tab>
 </mat-tab-group>

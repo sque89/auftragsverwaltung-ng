@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Löschen?</h1>
+<div mat-dialog-content>
+    <p>Soll dieser Datensatz wirklich gelöscht werden? Die Aktion kann nicht rückgängig gemacht werden.</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true" class="mr-3">Ja, löschen</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Nein</button>
+</div>

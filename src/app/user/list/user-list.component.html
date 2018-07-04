@@ -1,10 +1,14 @@
-<mat-card *ngFor="let user of users">
-    <mat-card-title>
-        <a [routerLink]="'../' + user.username + '/details'">{{user.firstname}} {{user.lastname}}</a>
-    </mat-card-title>
-    <mat-card-subtitle>{{user.username}} // {{user.roles}}</mat-card-subtitle>
-    <mat-card-actions>
-        <button mat-raised-button color="primary">Bearbeiten</button>
-        <button mat-raised-button color="warn">Löschen</button>
-    </mat-card-actions>
-</mat-card>
+<div class="row">
+    <div *ngFor="let user of users" class="col-12 col-sm-6 col-md-4">
+        <mat-card>
+            <mat-card-title>
+                <a [routerLink]="'../' + user.username + '/details'">{{user.firstname}} {{user.lastname}}</a>
+            </mat-card-title>
+            <mat-card-subtitle>{{user.username}} // {{user.admin ? 'Administrator' : 'Benutzer'}}</mat-card-subtitle>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" [routerLink]="'../' + user.username + '/bearbeiten'">Bearbeiten</button>
+                <button *ngIf="user.username !== sessionService.getUsername()"  mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

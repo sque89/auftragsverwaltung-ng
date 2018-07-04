@@ -7,10 +7,10 @@ export class NotificationService {
     }
 
     public showSuccess(message: string) {
-        this.snackBar.open(message, null, {duration: 2000});
+        this.snackBar.open(message, null, {duration: 2000, panelClass: 'bg-success'});
     }
 
     public showError(message: string) {
-        this.snackBar.open(message, 'Verstanden.');
+        this.snackBar.open(message, 'Verstanden.', {panelClass: 'bg-danger'});
     }
 }

@@ -4,7 +4,7 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {ProfileComponent} from './profile/profile.component';
 import {UserRoutingModule} from './user-routing.module';
 import {CommonModule} from '@angular/common';
-import {MatButtonModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatListModule, MatSnackBarModule, MatDialogModule, MatCardModule} from '@angular/material';
+import {MatButtonModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatListModule, MatCardModule} from '@angular/material';
 import {UserApiService} from '../core/services/user-api.service';
 import {ProfileResolver} from './profile/profile-resolver.service';
 import {UserListComponent} from './list/user-list.component';

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Abbrechen?</h1>
+<div mat-dialog-content>
+    <p>Soll die Aktion wirklich abgebrochen werden? Nicht gespeicherte Daten gehen verloren.</p>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true" class="mr-3">Ok</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Nicht abbrechen</button>
+</div>

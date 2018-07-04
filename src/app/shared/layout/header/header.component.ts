@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../../core/services/authentication.service';
 import {SessionService} from '../../../core/services/session.service';
+import {UiService} from '../../../core/services/ui.service';
 
 @Component({
   selector: 'auftragsverwaltung-ng-header',
@@ -9,15 +10,12 @@ import {SessionService} from '../../../core/services/session.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-    @Output() toggleMainMenu: EventEmitter<void>;
-
-    public constructor(private router: Router, private authService: AuthenticationService, public sessionService: SessionService) {
-        this.toggleMainMenu = new EventEmitter();
-    }
-
-    public emitMainMenuToggle() {
-        this.toggleMainMenu.emit();
-    }
+    public constructor(
+        private router: Router,
+        private authService: AuthenticationService,
+        public sessionService: SessionService,
+        public uiService: UiService
+    ) {}
 
     public logout() {
         this.authService.logout();

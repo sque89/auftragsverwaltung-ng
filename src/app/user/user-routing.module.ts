@@ -12,7 +12,7 @@ const routes: Routes = [{
     component: ProfileComponent,
     canActivate: [AuthGuard],
     resolve: {ProfileResolver},
-    data: {isAdmin: false}
+    data: {isOwnProfile: true, editMode: true}
 }, {
     path: 'liste',
     component: UserListComponent,
@@ -23,13 +23,13 @@ const routes: Routes = [{
     component: ProfileComponent,
     canActivate: [AuthGuard, IsAdminGuard],
     resolve: {ProfileResolver},
-    data: {isAdmin: true}
+    data: {isOwnProfile: false, editMode: false}
 }, {
     path: ':username/bearbeiten',
     component: ProfileComponent,
     canActivate: [AuthGuard, IsAdminGuard],
     resolve: {ProfileResolver},
-    data: {isAdmin: true}
+    data: {isOwnProfile: false, editMode: true}
 }];
 
 @NgModule({
