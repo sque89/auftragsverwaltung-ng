@@ -31,6 +31,11 @@
             <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
             </mat-form-field>
+            <mat-form-field class="d-block">
+                <mat-select formControlName="roles" multiple required>
+                    <mat-option *ngFor="let role of sessionService.USER_ROLES" value="role">{{role}}</mat-option>
+                </mat-select>
+            </mat-form-field>
             <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid">Daten speichern</button>
         </form>
     </mat-tab>

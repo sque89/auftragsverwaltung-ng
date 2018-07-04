@@ -4,10 +4,15 @@
             <mat-card-title>
                 <a [routerLink]="'../' + user.username + '/details'">{{user.firstname}} {{user.lastname}}</a>
             </mat-card-title>
-            <mat-card-subtitle>{{user.username}} // {{user.admin ? 'Administrator' : 'Benutzer'}}</mat-card-subtitle>
-            <mat-card-actions>
+            <mat-card-subtitle>
+                {{user.username}} // {{user.admin ? 'Administrator' : 'Benutzer'}}
+            </mat-card-subtitle>
+            <mat-slide-toggle #activateToggle *ngIf="user.username !== sessionService.getUsername()" class="d-block" matInput [checked]="user.isActive" (change)="changeActivationStatus($event, user)">
+                {{user.isActive ? 'Benutzer ist aktiv' : 'Benutzer ist nicht aktiv'}}
+            </mat-slide-toggle>
+            <mat-card-actions class="mt-3">
                 <button mat-raised-button color="primary" [routerLink]="'../' + user.username + '/bearbeiten'">Bearbeiten</button>
-                <button *ngIf="user.username !== sessionService.getUsername()"  mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
+                <button *ngIf="user.username !== sessionService.getUsername()" mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
             </mat-card-actions>
         </mat-card>
     </div>

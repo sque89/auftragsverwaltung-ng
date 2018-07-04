@@ -42,13 +42,17 @@ export class ProfileComponent implements OnInit {
                 [Validators.required]
             ),
             lastname: new FormControl(
-                {value: this.activatedRoute.snapshot.data.ProfileResolver.lastname, disabled: !this.editMode},
+                {value: this.currentUser.lastname, disabled: !this.editMode},
                 [Validators.required]
             ),
             mail: new FormControl(
-                {value: this.activatedRoute.snapshot.data.ProfileResolver.email, disabled: !this.editMode},
+                {value: this.currentUser.email, disabled: !this.editMode},
                 [Validators.required]
-            )
+            ),
+            roles: new FormControl(
+                {value: this.currentUser.roles, disabled: !this.editMode},
+                [Validators.required]
+            ),
         });
 
         if (this.isOwnProfile) {

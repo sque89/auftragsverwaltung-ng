@@ -22,7 +22,8 @@ export class UserApiService {
                     lastname: response.lastname,
                     email: response.email,
                     roles: response.roles,
-                    admin: response.admin
+                    admin: response.admin,
+                    isActive: response.isActive
                 };
             }));
     }
@@ -41,7 +42,8 @@ export class UserApiService {
                         lastname: user.lastname,
                         email: user.email,
                         roles: user.roles,
-                        admin: user.admin
+                        admin: user.admin,
+                        isActive: user.isActive
                     });
                 });
                 return users;
@@ -78,4 +80,12 @@ export class UserApiService {
     public deleteUser(username: string): Observable<User> {
         return this.http.delete<User>(`${environment.apiUrl}/user/${username}`);
     }
+
+    public activateUser(username: string): Observable<User> {
+        return this.http.post<User>(`${environment.apiUrl}/user/activate/${username}`, null);
+    }
+    public deactivateUser(username: string): Observable<User> {
+        return this.http.post<User>(`${environment.apiUrl}/user/deactivate/${username}`, null);
+    }
+
 }

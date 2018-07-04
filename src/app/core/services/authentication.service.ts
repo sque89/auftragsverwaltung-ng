@@ -25,7 +25,8 @@ export class AuthenticationService {
                         lastname: decodedJwt.lastname,
                         email: decodedJwt.email,
                         roles: decodedJwt.roles,
-                        admin: decodedJwt.admin
+                        admin: decodedJwt.admin,
+                        isActive: decodedJwt.isActive
                     }, res.token);
                 }
             }));
