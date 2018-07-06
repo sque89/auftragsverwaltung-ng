@@ -9,7 +9,7 @@ export class IsAdminGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (this.sessionService.isAdmin()) {
+        if (this.sessionService.getUser().isAdministrator()) {
             return true;
         }
 

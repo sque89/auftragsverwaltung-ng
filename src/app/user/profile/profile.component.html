@@ -16,7 +16,7 @@
             <mat-list class="mt-3">
                 <mat-list-item>Benutzername: {{currentUser.username}}</mat-list-item>
                 <mat-divider></mat-divider>
-                <mat-list-item>Berechtigung: {{currentUser.admin ? 'Administrator' : 'Benutzer'}}</mat-list-item>
+                <mat-list-item>Berechtigung: {{currentUser.getRoleName()}}</mat-list-item>
             </mat-list>
         </form>
     </mat-tab>
@@ -31,12 +31,17 @@
             <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
             </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid || !editMode">Daten speichern</button>
+        </form>
+    </mat-tab>
+    <mat-tab label="Berechtigung" *ngIf="!isOwnProfile">
+        <form [formGroup]="authorizationForm" (submit)="authorizationForm.valid && saveRoles()" class="pt-3">
             <mat-form-field class="d-block">
                 <mat-select formControlName="roles" multiple required>
-                    <mat-option *ngFor="let role of sessionService.USER_ROLES" value="role">{{role}}</mat-option>
+                    <mat-option *ngFor="let role of currentUser.USER_ROLES" [value]="role.id">{{role.label}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid">Daten speichern</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid || !editMode">Daten speichern</button>
         </form>
     </mat-tab>
     <mat-tab label="Passwort ändern">
@@ -50,7 +55,7 @@
             <mat-form-field *ngIf="isOwnProfile" class="d-block">
                 <input matInput type="password" placeholder="Neues Passwort bestätigen" formControlName="newPasswordConfirmation" required>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">Passwort jetzt ändern</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid || !editMode">Passwort jetzt ändern</button>
         </form>
     </mat-tab>
 </mat-tab-group>

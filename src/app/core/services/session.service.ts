@@ -1,50 +1,55 @@
+import {environment} from '../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {User} from '../models/user.model';
+import * as _ from 'lodash';
 
 @Injectable({providedIn: 'root'})
 export class SessionService {
-    private readonly USER_ROLES = {
-        ADMIN: 'ROLE_ADMIN',
-        USER: 'ROLE_USER'
-    };
+    public user: User;
 
     public constructor() {
+        this.setUser();
     }
 
-    private getCurrentUserFromLocalStorage() {
-        return JSON.parse(localStorage.getItem('currentUser'));
+    public getSessionToken(): string {
+        return this.isSessionActive() ? JSON.parse(localStorage.getItem(environment.sessionId)).token : null;
     }
 
-    public setCurrentUser(user: User, token?: string) {
-        const currentUser = this.getCurrentUserFromLocalStorage();
-        if (token) {
-            localStorage.setItem('currentUser', JSON.stringify({user: user, token: token}));
+    public isSessionActive() {
+        const session = JSON.parse(localStorage.getItem(environment.sessionId));
+        return session && _.isString(session.token) && !_.isEmpty(session.token);
+    }
+
+    public setSession(user: User, token: string) {
+        localStorage.setItem(environment.sessionId, JSON.stringify({user: user, token: token}));
+        this.setUser();
+    }
+
+    public setUser(user?: User) {
+        if (user) {
+            localStorage.setItem(environment.sessionId, JSON.stringify({user: user, token: this.getSessionToken()}));
+        }
+        if (this.isSessionActive()) {
+            const sessionUser = JSON.parse(localStorage.getItem(environment.sessionId)).user;
+            this.user = new User(
+                sessionUser.id,
+                sessionUser.username,
+                sessionUser.firstname,
+                sessionUser.lastname,
+                sessionUser.email,
+                sessionUser.roles,
+                sessionUser.isActive
+            );
         } else {
-            localStorage.setItem('currentUser', JSON.stringify({user: user, token: currentUser.token}));
+            this.user = null;
         }
     }
 
-    public isLoggedIn() {
-        const currentUser = this.getCurrentUserFromLocalStorage();
-        return currentUser
-            && currentUser.user
-            && currentUser.token;
+    public getUser(): User {
+        return this.isSessionActive() ? this.user : null;
     }
 
-    public getUsername(): string {
-        return this.getCurrentUserFromLocalStorage()
-            && this.getCurrentUserFromLocalStorage().user.username;
-    }
-
-    public getFullName(): string {
-        return this.getCurrentUserFromLocalStorage()
-            && `${this.getCurrentUserFromLocalStorage().user.firstname} ${this.getCurrentUserFromLocalStorage().user.lastname}`;
-    }
-
-    public isAdmin(): string {
-        return this.getCurrentUserFromLocalStorage()
-            && this.getCurrentUserFromLocalStorage().user.roles.find((element: string) => {
-                return element === this.USER_ROLES.ADMIN;
-            });
+    public logout() {
+        localStorage.removeItem(environment.sessionId);
     }
 }

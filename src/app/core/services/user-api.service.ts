@@ -1,30 +1,29 @@
-import { environment } from '../../../environments/environment';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 import {User} from '../models/user.model';
 import {UiService} from './ui.service';
 import {Observable} from 'rxjs';
 
 @Injectable()
 export class UserApiService {
-    public constructor(private http: HttpClient, private uiService: UiService) { }
+    public constructor(private http: HttpClient, private uiService: UiService) {}
 
     public getUserByUsername(username: string): Observable<User> {
         this.uiService.showLoadingOverlay();
         return this.http.get<User>(`${environment.apiUrl}/user/${username}`)
-            .pipe(map((response:any) => {
+            .pipe(map((response: any) => {
                 this.uiService.hideLoadingOverlay();
-                return {
-                    id: response.id,
-                    username: response.username,
-                    firstname: response.firstname,
-                    lastname: response.lastname,
-                    email: response.email,
-                    roles: response.roles,
-                    admin: response.admin,
-                    isActive: response.isActive
-                };
+                return new User(
+                    response.id,
+                    response.username,
+                    response.firstname,
+                    response.lastname,
+                    response.email,
+                    response.roles,
+                    response.isActive
+                );
             }));
     }
 
@@ -35,16 +34,15 @@ export class UserApiService {
                 this.uiService.hideLoadingOverlay();
                 const users: Array<User> = [];
                 response.users.forEach((user: any) => {
-                    users.push({
-                        id: user.id,
-                        username: user.username,
-                        firstname: user.firstname,
-                        lastname: user.lastname,
-                        email: user.email,
-                        roles: user.roles,
-                        admin: user.admin,
-                        isActive: user.isActive
-                    });
+                    users.push(new User(
+                        user.id,
+                        user.username,
+                        user.firstname,
+                        user.lastname,
+                        user.email,
+                        user.roles,
+                        user.isActive
+                    ));
                 });
                 return users;
             }));
@@ -88,4 +86,7 @@ export class UserApiService {
         return this.http.post<User>(`${environment.apiUrl}/user/deactivate/${username}`, null);
     }
 
+    public changeRoles(username: string, roles: Array<string>): Observable<User> {
+        return this.http.post<User>(`${environment.apiUrl}/user/roles/${username}`, roles);
+    }
 }

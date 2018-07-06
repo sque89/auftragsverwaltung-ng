@@ -2,17 +2,22 @@
     <div *ngFor="let user of users" class="col-12 col-sm-6 col-md-4">
         <mat-card>
             <mat-card-title>
-                <a [routerLink]="'../' + user.username + '/details'">{{user.firstname}} {{user.lastname}}</a>
+                <a [routerLink]="user.username !== sessionService.getUser().username ? ('../' + user.username + '/details') : '/benutzer/profil'">
+                    {{user.firstname}} {{user.lastname}}
+                </a>
             </mat-card-title>
             <mat-card-subtitle>
-                {{user.username}} // {{user.admin ? 'Administrator' : 'Benutzer'}}
+                {{user.username}} // {{user.getRoleName()}}
             </mat-card-subtitle>
-            <mat-slide-toggle #activateToggle *ngIf="user.username !== sessionService.getUsername()" class="d-block" matInput [checked]="user.isActive" (change)="changeActivationStatus($event, user)">
+            <mat-slide-toggle #activateToggle *ngIf="user.username !== sessionService.getUser().username" class="d-block" matInput [checked]="user.isActive" (change)="changeActivationStatus($event, user)">
                 {{user.isActive ? 'Benutzer ist aktiv' : 'Benutzer ist nicht aktiv'}}
             </mat-slide-toggle>
             <mat-card-actions class="mt-3">
-                <button mat-raised-button color="primary" [routerLink]="'../' + user.username + '/bearbeiten'">Bearbeiten</button>
-                <button *ngIf="user.username !== sessionService.getUsername()" mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
+                <button
+                    mat-raised-button
+                    color="primary"
+                    [routerLink]="user.username !== sessionService.getUser().username ? ('../' + user.username + '/bearbeiten') : '/benutzer/profil'">Bearbeiten</button>
+                <button *ngIf="user.username !== sessionService.getUser().username" mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
             </mat-card-actions>
         </mat-card>
     </div>

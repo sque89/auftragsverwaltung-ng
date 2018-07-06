@@ -14,7 +14,7 @@ export class ProfileResolver implements Resolve<Observable<User>> {
         if (route.params.username) {
             return this.userApiService.getUserByUsername(route.params.username);
         } else {
-            return this.userApiService.getUserByUsername(this.sessionService.getUsername());
+            return this.userApiService.getUserByUsername(this.sessionService.getUser().username);
         }
     }
 }

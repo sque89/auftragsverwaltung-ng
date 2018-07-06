@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import {SessionService} from './session.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {User} from '../models/user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -14,25 +15,25 @@ export class AuthenticationService {
     }
 
     public login(username: string, password: string) {
+        // TODO use session service methods setCurrentUser and setRoles to init after login
         return this.http.post<any>(`${environment.apiUrl}/login_check`, { username: username, password: password })
             .pipe(map((res:any) => {
                 if (res && res.token) {
                     const decodedJwt = this.jwtHelper.decodeToken(res.token);
-                    this.sessionService.setCurrentUser({
-                        id: decodedJwt.id,
-                        username: decodedJwt.username,
-                        firstname: decodedJwt.firstname,
-                        lastname: decodedJwt.lastname,
-                        email: decodedJwt.email,
-                        roles: decodedJwt.roles,
-                        admin: decodedJwt.admin,
-                        isActive: decodedJwt.isActive
-                    }, res.token);
+                    this.sessionService.setSession(new User(
+                        decodedJwt.id,
+                        decodedJwt.username,
+                        decodedJwt.firstname,
+                        decodedJwt.lastname,
+                        decodedJwt.email,
+                        decodedJwt.roles,
+                        decodedJwt.isActive
+                    ), res.token);
                 }
             }));
     }
 
     public logout() {
-        localStorage.removeItem('currentUser');
+        this.sessionService.logout();
     }
 }

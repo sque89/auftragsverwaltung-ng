@@ -17,6 +17,7 @@ import {CancelDialogComponent} from '../../shared/dialogs/cancel/cancel-dialog.c
 export class ProfileComponent implements OnInit {
     public commonDataForm: FormGroup;
     public passwordForm: FormGroup;
+    public authorizationForm: FormGroup;
     public currentUser: User;
     public isOwnProfile: boolean;
     public editMode: boolean;
@@ -55,25 +56,30 @@ export class ProfileComponent implements OnInit {
             ),
         });
 
+        this.passwordForm = new FormGroup({
+            newPassword: new FormControl(
+                {value: '', disabled: !this.editMode},
+                [Validators.required]
+            )
+        });
+
         if (this.isOwnProfile) {
-            this.passwordForm = new FormGroup({
-                currentPassword: new FormControl(
-                    '',
-                    [Validators.required]
-                ),
-                newPassword: new FormControl(
-                    '',
-                    [Validators.required]
-                ),
-                newPasswordConfirmation: new FormControl(
+            this.passwordForm.addControl(
+                'currentPassword', new FormControl(
                     '',
                     [Validators.required]
                 )
-            });
+            );
+            this.passwordForm.addControl(
+                'newPasswordConfirmation', new FormControl(
+                    '',
+                    [Validators.required]
+                )
+            );
         } else {
-            this.passwordForm = new FormGroup({
-                newPassword: new FormControl(
-                    {value: '', disabled: !this.editMode},
+            this.authorizationForm = new FormGroup({
+                roles: new FormControl(
+                    {value: this.currentUser.roles, disabled: !this.editMode},
                     [Validators.required]
                 )
             });
@@ -103,7 +109,7 @@ export class ProfileComponent implements OnInit {
             this.isOwnProfile ? null : this.currentUser.username
         ).subscribe((updatedUser) => {
             if (this.isOwnProfile) {
-                this.sessionService.setCurrentUser(updatedUser);
+                this.sessionService.setUser(updatedUser);
             } else {
                 this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
             }
@@ -125,9 +131,27 @@ export class ProfileComponent implements OnInit {
         ).subscribe(() => {
             this.uiService.hideLoadingOverlay();
             this.notificationService.showSuccess('Passwort erfolgreich geändert!');
+            if (!this.isOwnProfile) {
+                this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
+            }
         }, () => {
             this.uiService.hideLoadingOverlay();
             this.notificationService.showError('Passwortänderung fehlgeschlagen!');
+        });
+    }
+
+    public saveRoles() {
+        this.uiService.showLoadingOverlay();
+        this.userApiService.changeRoles(
+            this.currentUser.username,
+            this.authorizationForm.get('roles').value
+        ).subscribe(() => {
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showSuccess('Berechtigung erfolgreich geändert!');
+            this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
+        }, () => {
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showError('Berechtigungsänderung fehlgeschlagen!');
         });
     }
 }
