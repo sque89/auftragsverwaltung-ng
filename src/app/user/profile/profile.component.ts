@@ -100,7 +100,6 @@ export class ProfileComponent implements OnInit {
     }
 
     public saveCommonData() {
-        // TODO implement actication status and role
         this.uiService.showLoadingOverlay();
         this.userApiService.changeCommonUserData(
             this.commonDataForm.get('firstname').value,

@@ -11,6 +11,10 @@ const routes: Routes = [
         loadChildren: './user/user.module#UserModule'
     },
     {
+        path: 'kunde',
+        loadChildren: './customer/customer.module#CustomerModule'
+    },
+    {
         path: '',
         pathMatch: 'full',
         redirectTo: 'dashboard'
