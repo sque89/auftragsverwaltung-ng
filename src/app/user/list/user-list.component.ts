@@ -6,7 +6,7 @@ import {UserApiService} from '../../core/services/user-api.service';
 import {NotificationService} from '../../core/services/notification.service';
 import {SessionService} from '../../core/services/session.service';
 import {MatDialog, MatSlideToggleChange, MatSlideToggle} from '@angular/material';
-import {DeletionConfirmationDialog} from '../../shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
+import {DeletionConfirmationDialogComponent} from '../../shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
 import * as _ from 'lodash';
 
 @Component({
@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit {
     }
 
     public deleteUser(username: string) {
-        const dialogRef = this.dialogService.open(DeletionConfirmationDialog, {
+        const dialogRef = this.dialogService.open(DeletionConfirmationDialogComponent, {
             height: '250px',
             width: '400px',
         });

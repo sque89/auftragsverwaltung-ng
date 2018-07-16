@@ -8,22 +8,31 @@ import {CustomerListResolver} from './list/customer-list-resolver.service';
 import {CustomerProfileResolver} from './profile/customer-profile-resolver.service';
 
 const routes: Routes = [{
-    path: 'liste',
+    path: '',
     component: CustomerListComponent,
     canActivate: [AuthGuard, IsAdminGuard],
-    resolve: {CustomerListResolver}
+    resolve: {CustomerListResolver},
+    data: {
+        breadcrumb: 'Liste'
+    }
 }, {
     path: ':customerId/details',
     component: CustomerProfileComponent,
     canActivate: [AuthGuard, IsAdminGuard],
     resolve: {CustomerProfileResolver},
-    data: {editMode: false}
+    data: {
+        breadcrumb: 'Kundendetails',
+        editMode: false
+    }
 }, {
     path: ':customerId/bearbeiten',
     component: CustomerProfileComponent,
     canActivate: [AuthGuard, IsAdminGuard],
     resolve: {CustomerProfileResolver},
-    data: {editMode: true}
+    data: {
+        breadcrumb: 'Kunde bearbeiten',
+        editMode: true
+    }
 }];
 
 @NgModule({

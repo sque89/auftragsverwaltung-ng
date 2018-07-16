@@ -1,22 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
-
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {MatToolbarModule, MatIconModule} from '@angular/material';
+import {BreadcrumbComponent} from './layout/breadcrumb/breadcrumb.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule
-  ],
-  declarations: [
-  ],
-  exports: [
-  ]
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        MatIconModule,
+        RouterModule
+    ],
+    declarations: [
+        BreadcrumbComponent
+    ],
+    exports: [
+        BreadcrumbComponent
+    ]
 })
 export class SharedModule {}

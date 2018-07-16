@@ -15,17 +15,17 @@
         <mat-nav-list>
             <mat-list-item>
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">people</mat-icon>
-                <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/benutzer/liste']">Benutzerverwaltung</a>
+                <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/benutzer']">Benutzerverwaltung</a>
             </mat-list-item>
             <mat-list-item>
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">business</mat-icon>
-                <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/kunde/liste']">Kundenverwaltung</a>
+                <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/kunden']">Kundenverwaltung</a>
             </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
         <auftragsverwaltung-ng-header></auftragsverwaltung-ng-header>
-        <div class="container py-5">
+        <div class="container py-3">
             <router-outlet></router-outlet>
         </div>
         <auftragsverwaltung-ng-footer></auftragsverwaltung-ng-footer>

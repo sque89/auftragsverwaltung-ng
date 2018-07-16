@@ -1,0 +1,13 @@
+<mat-toolbar>
+    <ol class="breadcrumb">
+        <li *ngFor="let breadcrumb of breadcrumbs" class="breadcrumb-item">
+            <a [routerLink]="[breadcrumb.url]">
+                {{ breadcrumb.label }}
+            </a>
+        </li>
+    </ol>
+    <span class="flex-fill"></span>
+    <button *ngFor="let button of buttons" class="mat-button" type="button" [routerLink]="[button.route]">
+        <mat-icon class="mat-icon material-icons" color="primary">{{button.icon}}</mat-icon>
+    </button>
+</mat-toolbar>

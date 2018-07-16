@@ -1,9 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
-
-import {MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule, MatDialogModule} from '@angular/material';
-
+import {MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './shared/layout/header/header.component';
 import {FooterComponent} from './shared/layout/footer/footer.component';
@@ -11,11 +9,10 @@ import {SharedModule} from './shared/shared.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthModule} from './auth/auth.module';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {JwtInterceptor} from './core/interceptors/jwt.interceptor';
-import {ErrorInterceptor} from './core/interceptors/error.interceptor';
 import {CancelDialogComponent} from './shared/dialogs/cancel/cancel-dialog.component';
-import {DeletionConfirmationDialog} from './shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
+import {DeletionConfirmationDialogComponent} from './shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
+import {CoreModule} from './core/core.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -23,13 +20,17 @@ import {DeletionConfirmationDialog} from './shared/dialogs/deletionConfirmation/
         HeaderComponent,
         FooterComponent,
         CancelDialogComponent,
-        DeletionConfirmationDialog
+        DeletionConfirmationDialogComponent
     ],
     imports: [
-        AppRoutingModule,
-        BrowserAnimationsModule,
         BrowserModule,
+        BrowserAnimationsModule,
+        CoreModule,
+        HttpClientModule,
         SharedModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        AuthModule,
         MatToolbarModule,
         MatButtonModule,
         MatSidenavModule,
@@ -42,18 +43,13 @@ import {DeletionConfirmationDialog} from './shared/dialogs/deletionConfirmation/
         MatInputModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
-        MatDialogModule,
-        ReactiveFormsModule,
-        AuthModule
+        MatDialogModule
     ],
     entryComponents: [
         CancelDialogComponent,
-        DeletionConfirmationDialog
+        DeletionConfirmationDialogComponent
     ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
-    ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -12,24 +12,39 @@ const routes: Routes = [{
     component: ProfileComponent,
     canActivate: [AuthGuard],
     resolve: {ProfileResolver},
-    data: {isOwnProfile: true, editMode: true}
+    data: {
+        breadcrumb: 'Eigenes Profil',
+        isOwnProfile: true,
+        editMode: true
+    }
 }, {
-    path: 'liste',
+    path: '',
     component: UserListComponent,
     canActivate: [AuthGuard, IsAdminGuard],
-    resolve: {UserListResolver}
+    resolve: {UserListResolver},
+    data: {
+        breadcrumb: 'Liste',
+    }
 }, {
     path: ':username/details',
     component: ProfileComponent,
     canActivate: [AuthGuard, IsAdminGuard],
     resolve: {ProfileResolver},
-    data: {isOwnProfile: false, editMode: false}
+    data: {
+        breadcrumb: 'Benutzerdetails',
+        isOwnProfile: false,
+        editMode: false
+    }
 }, {
     path: ':username/bearbeiten',
     component: ProfileComponent,
     canActivate: [AuthGuard, IsAdminGuard],
     resolve: {ProfileResolver},
-    data: {isOwnProfile: false, editMode: true}
+    data: {
+        breadcrumb: 'Benutzer bearbeiten',
+        isOwnProfile: false,
+        editMode: true
+    }
 }];
 
 @NgModule({

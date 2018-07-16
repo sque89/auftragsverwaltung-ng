@@ -1,8 +1,10 @@
+<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+
 <h1 class="mb-3">
     <ng-container *ngIf="!editMode">Kunde ansehen</ng-container>
     <ng-container *ngIf="editMode">Kunde bearbeiten</ng-container>
-    <button mat-raised-button color="primary" *ngIf="!isOwnProfile && !editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Kunde bearbeiten</button>
-    <button mat-raised-button color="warn" *ngIf="!isOwnProfile && editMode" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
+    <button mat-raised-button color="primary" *ngIf="!editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Kunde bearbeiten</button>
+    <button mat-raised-button color="warn" *ngIf="editMode" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
 </h1>
 <p>
     <ng-container *ngIf="!editMode">Hier können die Details zum aktuell aufgerufenen Kunde eingesehen werden.</ng-container>

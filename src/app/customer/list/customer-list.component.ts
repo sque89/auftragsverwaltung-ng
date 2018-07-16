@@ -33,6 +33,6 @@ export class CustomerListComponent implements OnInit {
     }
 
     public showCustomerDetails(customer: Customer) {
-        this.router.navigate([`/kunde/${customer.id}/details`]);
+        this.router.navigate(['/kunden', customer.id, 'details']);
     }
 }

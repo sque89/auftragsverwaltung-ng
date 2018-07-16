@@ -4,15 +4,24 @@ import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 const routes: Routes = [
     {
         path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: './dashboard/dashboard.module#DashboardModule',
+        data: {
+            breadcrumb: 'Dashboard'
+        }
     },
     {
         path: 'benutzer',
-        loadChildren: './user/user.module#UserModule'
+        loadChildren: './user/user.module#UserModule',
+        data: {
+            breadcrumb: 'Benutzer'
+        }
     },
     {
-        path: 'kunde',
-        loadChildren: './customer/customer.module#CustomerModule'
+        path: 'kunden',
+        loadChildren: './customer/customer.module#CustomerModule',
+        data: {
+            breadcrumb: 'Kunden'
+        }
     },
     {
         path: '',

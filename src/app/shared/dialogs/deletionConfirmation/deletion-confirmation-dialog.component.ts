@@ -4,7 +4,7 @@ import {Component } from '@angular/core';
     selector: 'deletion-confirmation-dialog',
     templateUrl: './deletion-confirmation-dialog.component.html'
 })
-export class DeletionConfirmationDialog {
+export class DeletionConfirmationDialogComponent {
     public constructor() {
     }
 }

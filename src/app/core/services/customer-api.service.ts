@@ -2,9 +2,7 @@ import {environment} from '../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {User} from '../models/user.model';
 import {UiService} from './ui.service';
-import {Observable} from 'rxjs';
 import {Customer} from '../models/customer.model';
 
 @Injectable()
@@ -53,7 +51,7 @@ export class CustomerApiService {
                 };
             }));
     }
-    
+
     public changeCustomerById(customer: Customer) {
         this.uiService.showLoadingOverlay();
         return this.http.post<Customer>(`${environment.apiUrl}/customer/${customer.id}`, customer)

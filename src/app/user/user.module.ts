@@ -9,12 +9,14 @@ import {UserApiService} from '../core/services/user-api.service';
 import {ProfileResolver} from './profile/profile-resolver.service';
 import {UserListComponent} from './list/user-list.component';
 import {UserListResolver} from './list/user-list-resolver.service';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
     imports: [
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
+        SharedModule,
         MatButtonModule,
         MatTabsModule,
         MatFormFieldModule,
