@@ -18,7 +18,7 @@
                 <button
                     mat-raised-button
                     color="primary"
-                    [routerLink]="user.username !== sessionService.getUser().username ? ('../' + user.username + '/bearbeiten') : '/benutzer/profil'">Bearbeiten</button>
+                    [routerLink]="user.username !== sessionService.getUser().username ? [user.username, 'bearbeiten'] : '/benutzer/profil'">Bearbeiten</button>
                 <button *ngIf="user.username !== sessionService.getUser().username" mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
             </mat-card-actions>
         </mat-card>

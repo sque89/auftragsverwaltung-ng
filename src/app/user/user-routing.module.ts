@@ -45,6 +45,16 @@ const routes: Routes = [{
         isOwnProfile: false,
         editMode: true
     }
+}, {
+    path: 'hinzufuegen',
+    component: ProfileComponent,
+    canActivate: [AuthGuard, IsAdminGuard],
+    data: {
+        breadcrumb: 'Benutzer hinzufügen',
+        isOwnProfile: false,
+        editMode: true,
+        createNew: true
+    }
 }];
 
 @NgModule({

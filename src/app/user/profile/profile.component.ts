@@ -17,10 +17,10 @@ import {CancelDialogComponent} from '../../shared/dialogs/cancel/cancel-dialog.c
 export class ProfileComponent implements OnInit {
     public commonDataForm: FormGroup;
     public passwordForm: FormGroup;
-    public authorizationForm: FormGroup;
     public currentUser: User;
     public isOwnProfile: boolean;
     public editMode: boolean;
+    public createNew: boolean;
 
     public constructor(
         private activatedRoute: ActivatedRoute,
@@ -30,12 +30,17 @@ export class ProfileComponent implements OnInit {
         private dialogService: MatDialog,
         private router: Router,
         private sessionService: SessionService
-    ) {}
+    ) {
+        this.currentUser = new User(null, '', '', '', '', [], true);
+    }
 
     public ngOnInit() {
-        this.currentUser = this.activatedRoute.snapshot.data.ProfileResolver;
+        if (this.activatedRoute.snapshot.data.ProfileResolver) {
+            this.currentUser = this.activatedRoute.snapshot.data.ProfileResolver;
+        }
         this.isOwnProfile = this.activatedRoute.snapshot.data.isOwnProfile;
         this.editMode = this.activatedRoute.snapshot.data.editMode;
+        this.createNew = this.activatedRoute.snapshot.data.createNew;
 
         this.commonDataForm = new FormGroup({
             firstname: new FormControl(
@@ -49,11 +54,7 @@ export class ProfileComponent implements OnInit {
             mail: new FormControl(
                 {value: this.currentUser.email, disabled: !this.editMode},
                 [Validators.required]
-            ),
-            roles: new FormControl(
-                {value: this.currentUser.roles, disabled: !this.editMode},
-                [Validators.required]
-            ),
+            )
         });
 
         this.passwordForm = new FormGroup({
@@ -77,12 +78,27 @@ export class ProfileComponent implements OnInit {
                 )
             );
         } else {
-            this.authorizationForm = new FormGroup({
-                roles: new FormControl(
+            this.commonDataForm.addControl(
+                'roles', new FormControl(
                     {value: this.currentUser.roles, disabled: !this.editMode},
                     [Validators.required]
                 )
-            });
+            );
+        }
+
+        if (this.createNew) {
+            this.commonDataForm.addControl(
+                'password', new FormControl(
+                    {value: '', disabled: !this.editMode},
+                    [Validators.required]
+                )
+            );
+            this.commonDataForm.addControl(
+                'username', new FormControl(
+                    {value: '', disabled: !this.editMode},
+                    [Validators.required]
+                )
+            );
         }
     }
 
@@ -105,12 +121,36 @@ export class ProfileComponent implements OnInit {
             this.commonDataForm.get('firstname').value,
             this.commonDataForm.get('lastname').value,
             this.commonDataForm.get('mail').value,
+            this.commonDataForm.get('roles').value,
             this.isOwnProfile ? null : this.currentUser.username
         ).subscribe((updatedUser) => {
             if (this.isOwnProfile) {
                 this.sessionService.setUser(updatedUser);
             } else {
                 this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
+            }
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showSuccess('Daten erfolgreich geändert!');
+        }, () => {
+            this.uiService.hideLoadingOverlay();
+            this.notificationService.showError('Datenänderung fehlgeschlagen!');
+        });
+    }
+
+    public saveNewUser() {
+        this.uiService.showLoadingOverlay();
+        this.userApiService.addUser(
+            this.commonDataForm.get('username').value,
+            this.commonDataForm.get('firstname').value,
+            this.commonDataForm.get('lastname').value,
+            this.commonDataForm.get('mail').value,
+            this.commonDataForm.get('roles').value,
+            this.commonDataForm.get('password').value
+        ).subscribe((updatedUser) => {
+            if (this.isOwnProfile) {
+                this.sessionService.setUser(updatedUser);
+            } else {
+                this.router.navigate(['/benutzer'], {relativeTo: this.activatedRoute});
             }
             this.uiService.hideLoadingOverlay();
             this.notificationService.showSuccess('Daten erfolgreich geändert!');
@@ -136,21 +176,6 @@ export class ProfileComponent implements OnInit {
         }, () => {
             this.uiService.hideLoadingOverlay();
             this.notificationService.showError('Passwortänderung fehlgeschlagen!');
-        });
-    }
-
-    public saveRoles() {
-        this.uiService.showLoadingOverlay();
-        this.userApiService.changeRoles(
-            this.currentUser.username,
-            this.authorizationForm.get('roles').value
-        ).subscribe(() => {
-            this.uiService.hideLoadingOverlay();
-            this.notificationService.showSuccess('Berechtigung erfolgreich geändert!');
-            this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
-        }, () => {
-            this.uiService.hideLoadingOverlay();
-            this.notificationService.showError('Berechtigungsänderung fehlgeschlagen!');
         });
     }
 }

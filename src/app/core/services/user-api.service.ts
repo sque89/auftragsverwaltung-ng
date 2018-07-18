@@ -52,12 +52,14 @@ export class UserApiService {
         firstname: string,
         lastname: string,
         email: string,
+        roles: Array<string>,
         username?: string
     ) {
         return this.http.post<User>(`${environment.apiUrl}/user/commondata` + (username ? '/' + username : ''), {
             firstname: firstname,
             lastname: lastname,
-            email: email
+            email: email,
+            roles: roles
         });
     }
 
@@ -75,6 +77,24 @@ export class UserApiService {
         return this.http.post(`${environment.apiUrl}/user/password` + (username ? '/' + username : ''), postData);
     }
 
+    public addUser(
+        username: string,
+        firstname: string,
+        lastname: string,
+        email: string,
+        roles: Array<string>,
+        password: string
+    ): Observable<User> {
+        return this.http.put<User>(`${environment.apiUrl}/user`, {
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            roles: roles,
+            username: username,
+            password: password
+        });
+    }
+
     public deleteUser(username: string): Observable<User> {
         return this.http.delete<User>(`${environment.apiUrl}/user/${username}`);
     }
@@ -84,9 +104,5 @@ export class UserApiService {
     }
     public deactivateUser(username: string): Observable<User> {
         return this.http.post<User>(`${environment.apiUrl}/user/deactivate/${username}`, null);
-    }
-
-    public changeRoles(username: string, roles: Array<string>): Observable<User> {
-        return this.http.post<User>(`${environment.apiUrl}/user/roles/${username}`, roles);
     }
 }

@@ -2,28 +2,31 @@
 
 <h1 class="mb-3">
     <ng-container *ngIf="isOwnProfile">Eigenes Profil bearbeiten</ng-container>
-    <ng-container *ngIf="!isOwnProfile && !editMode">Benutzer ansehen</ng-container>
-    <ng-container *ngIf="!isOwnProfile && editMode">Benutzer bearbeiten</ng-container>
-    <button mat-raised-button color="primary" *ngIf="!isOwnProfile && !editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Benutzer bearbeiten</button>
-    <button mat-raised-button color="warn" *ngIf="!isOwnProfile && editMode" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
+    <ng-container *ngIf="!isOwnProfile && !editMode && !createNew">Benutzer ansehen</ng-container>
+    <ng-container *ngIf="!isOwnProfile && editMode && !createNew">Benutzer bearbeiten</ng-container>
+    <ng-container *ngIf="createNew">Benutzer hinzufügen</ng-container>
+    <button mat-raised-button color="primary" *ngIf="!isOwnProfile && !editMode && !createNew" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Benutzer bearbeiten</button>
+    <button mat-raised-button color="warn" *ngIf="!isOwnProfile && editMode && !createNew" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
 </h1>
 <p>
     <ng-container *ngIf="isOwnProfile">Hier können die Daten zum eigenen Profil eingesehen und geändert werden.</ng-container>
-    <ng-container *ngIf="!isOwnProfile && !editMode">Hier können die Details zum aktuell aufgerufenen Profil eingesehen werden.</ng-container>
-    <ng-container *ngIf="!isOwnProfile && editMode">Hier können die Details zum aktuell aufgerufenen Profil bearbeitet werden.</ng-container>
+    <ng-container *ngIf="!isOwnProfile && !editMode && !createNew">Hier können die Details zum aktuell aufgerufenen Profil eingesehen werden.</ng-container>
+    <ng-container *ngIf="!isOwnProfile && editMode && !createNew">Hier können die Details zum aktuell aufgerufenen Profil bearbeitet werden.</ng-container>
+    <ng-container *ngIf="createNew">Bitte hier die Daten des neuen Benutzers angeben.</ng-container>
 </p>
 <mat-tab-group>
-    <mat-tab label="Übersicht">
-        <form [formGroup]="commonDataForm">
-            <mat-list class="mt-3">
-                <mat-list-item>Benutzername: {{currentUser.username}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Berechtigung: {{currentUser.getRoleName()}}</mat-list-item>
-            </mat-list>
-        </form>
+    <mat-tab *ngIf="!createNew" label="Übersicht">
+        <mat-list class="mt-3">
+            <mat-list-item>Benutzername: {{currentUser.username}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Berechtigung: {{currentUser.getRoleName()}}</mat-list-item>
+        </mat-list>
     </mat-tab>
     <mat-tab label="Allgemeine Daten">
-        <form [formGroup]="commonDataForm" (submit)="commonDataForm.valid && saveCommonData()" class="pt-3">
+        <form [formGroup]="commonDataForm" (submit)="createNew ? commonDataForm.valid && saveNewUser() : commonDataForm.valid && saveCommonData()" class="pt-3">
+            <mat-form-field *ngIf="createNew" class="d-block">
+                <input matInput type="text" placeholder="Benutzername" formControlName="username" required>
+            </mat-form-field>
             <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="Vorname" formControlName="firstname" required>
             </mat-form-field>
@@ -33,20 +36,18 @@
             <mat-form-field class="d-block">
                 <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
             </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid || !editMode">Daten speichern</button>
-        </form>
-    </mat-tab>
-    <mat-tab label="Berechtigung" *ngIf="!isOwnProfile">
-        <form [formGroup]="authorizationForm" (submit)="authorizationForm.valid && saveRoles()" class="pt-3">
-            <mat-form-field class="d-block">
-                <mat-select formControlName="roles" multiple required>
+            <mat-form-field *ngIf="!isOwnProfile" class="d-block">
+                <mat-select formControlName="roles" placeholder="Berechtigung" multiple required>
                     <mat-option *ngFor="let role of currentUser.USER_ROLES" [value]="role.id">{{role.label}}</mat-option>
                 </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="createNew" class="d-block">
+                <input matInput type="password" placeholder="Passwort" formControlName="password" required>
             </mat-form-field>
             <button mat-raised-button color="primary" type="submit" [disabled]="commonDataForm.invalid || !editMode">Daten speichern</button>
         </form>
     </mat-tab>
-    <mat-tab label="Passwort ändern">
+    <mat-tab *ngIf="!createNew" label="Passwort ändern">
         <form [formGroup]="passwordForm" (submit)="passwordForm.valid && savePassword()" class="pt-3">
             <mat-form-field *ngIf="isOwnProfile" class="d-block">
                 <input matInput type="password" placeholder="Aktuelles Passwort" formControlName="currentPassword" required>
