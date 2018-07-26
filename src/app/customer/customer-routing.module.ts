@@ -33,6 +33,15 @@ const routes: Routes = [{
         breadcrumb: 'Kunde bearbeiten',
         editMode: true
     }
+}, {
+    path: 'hinzufuegen',
+    component: CustomerProfileComponent,
+    canActivate: [AuthGuard, IsAdminGuard],
+    data: {
+        breadcrumb: 'Kunde hinzufügen',
+        editMode: true,
+        createNew: true
+    }
 }];
 
 @NgModule({

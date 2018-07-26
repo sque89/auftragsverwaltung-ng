@@ -70,4 +70,23 @@ export class CustomerApiService {
                 };
             }));
     }
+
+    public addCustomer(customer: Customer) {
+        this.uiService.showLoadingOverlay();
+        return this.http.put<Customer>(`${environment.apiUrl}/customer`, customer)
+            .pipe(map((customer: any) => {
+                this.uiService.hideLoadingOverlay();
+                return {
+                    id: customer.id,
+                    name: customer.name,
+                    postcode: customer.postcode,
+                    city: customer.city,
+                    address: customer.address,
+                    contactPerson: customer.contactPerson,
+                    mail: customer.mail,
+                    phone: customer.phone,
+                    fax: customer.fax
+                };
+            }));
+    }
 }

@@ -17,6 +17,7 @@ export class CustomerProfileComponent implements OnInit {
     private currentCustomer: Customer;
     public form: FormGroup;
     public editMode: boolean;
+    public createNew: boolean;
 
     public constructor(
         private activatedRoute: ActivatedRoute,
@@ -25,11 +26,26 @@ export class CustomerProfileComponent implements OnInit {
         private dialogService: MatDialog,
         private router: Router,
         private customerApiService: CustomerApiService
-    ) {}
+    ) {
+        this.currentCustomer = {
+            id: null,
+            name: '',
+            postcode: '',
+            city: '',
+            address: '',
+            contactPerson: '',
+            mail: '',
+            phone: '',
+            fax: ''
+        };
+    }
 
     public ngOnInit() {
-        this.currentCustomer = this.activatedRoute.snapshot.data.CustomerProfileResolver;
         this.editMode = this.activatedRoute.snapshot.data.editMode;
+        this.createNew = this.activatedRoute.snapshot.data.createNew;
+        if (!this.createNew) {
+            this.currentCustomer = this.activatedRoute.snapshot.data.CustomerProfileResolver;
+        }
 
         this.form = new FormGroup({
             name: new FormControl(
@@ -67,20 +83,7 @@ export class CustomerProfileComponent implements OnInit {
         });
     }
 
-    public askForCancel() {
-        const dialogRef = this.dialogService.open(CancelDialogComponent, {
-            height: '200px',
-            width: '400px',
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
-            }
-        });
-    }
-
-    public save() {
+    private updateCustomerWithFormValues() {
         this.currentCustomer.name = this.form.get('name').value;
         this.currentCustomer.postcode = this.form.get('postcode').value;
         this.currentCustomer.city = this.form.get('city').value;
@@ -89,13 +92,44 @@ export class CustomerProfileComponent implements OnInit {
         this.currentCustomer.mail = this.form.get('mail').value;
         this.currentCustomer.phone = this.form.get('phone').value;
         this.currentCustomer.fax = this.form.get('fax').value;
-        this.customerApiService.changeCustomerById(this.currentCustomer).subscribe(() => {
-            this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
-            this.uiService.hideLoadingOverlay();
-            this.notificationService.showSuccess('Daten erfolgreich geändert!');
-        }, () => {
-            this.uiService.hideLoadingOverlay();
-            this.notificationService.showError('Datenänderung fehlgeschlagen!');
+    }
+
+    private onSaveSuccess(routeConfig: Array<any>, message: string) {
+        this.router.navigate(routeConfig, {relativeTo: this.activatedRoute});
+        this.uiService.hideLoadingOverlay();
+        this.notificationService.showSuccess(message);
+    }
+
+    private onSaveFailure(message: string) {
+        this.uiService.hideLoadingOverlay();
+        this.notificationService.showError(message);
+    }
+
+    public askForCancel() {
+        const dialogRef = this.dialogService.open(CancelDialogComponent, {
+            height: '200px',
+            width: '400px',
         });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result && !this.createNew) {
+                this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
+            } else if (result && this.createNew) {
+                this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+            }
+        });
+    }
+
+    public save() {
+        this.updateCustomerWithFormValues();
+        if (this.createNew) {
+            this.customerApiService.addCustomer(this.currentCustomer).subscribe((addedCustomer) => {
+                this.onSaveSuccess(['..', addedCustomer.id, 'details'], 'Kunde wurde erstellt');
+            }, () => this.onSaveFailure('Beim Erstellen des Kundne ist ein Fehler aufgetreten!'));
+        } else {
+            this.customerApiService.changeCustomerById(this.currentCustomer).subscribe(() => {
+                this.onSaveSuccess(['../details'], 'Daten erfolgreich geändert!');
+            }, () => this.onSaveFailure('Datenänderung fehlgeschlagen!'));
+        }
     }
 }

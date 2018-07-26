@@ -5,8 +5,8 @@
     <ng-container *ngIf="!isOwnProfile && !editMode && !createNew">Benutzer ansehen</ng-container>
     <ng-container *ngIf="!isOwnProfile && editMode && !createNew">Benutzer bearbeiten</ng-container>
     <ng-container *ngIf="createNew">Benutzer hinzufügen</ng-container>
-    <button mat-raised-button color="primary" *ngIf="!isOwnProfile && !editMode && !createNew" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Benutzer bearbeiten</button>
-    <button mat-raised-button color="warn" *ngIf="!isOwnProfile && editMode && !createNew" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
+    <button mat-raised-button color="primary" *ngIf="!isOwnProfile && !editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Benutzer bearbeiten</button>
+    <button mat-raised-button color="warn" *ngIf="!isOwnProfile && editMode" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
 </h1>
 <p>
     <ng-container *ngIf="isOwnProfile">Hier können die Daten zum eigenen Profil eingesehen und geändert werden.</ng-container>

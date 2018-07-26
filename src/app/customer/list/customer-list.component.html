@@ -1,4 +1,4 @@
-<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+<auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: '/kunden/hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
 
 <mat-form-field class="w-100">
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">

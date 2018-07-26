@@ -109,8 +109,10 @@ export class ProfileComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
+            if (result && !this.createNew) {
                 this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
+            } else if (result && this.createNew) {
+                this.router.navigate(['../'], {relativeTo: this.activatedRoute});
             }
         });
     }
