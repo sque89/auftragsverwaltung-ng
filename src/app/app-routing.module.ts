@@ -24,6 +24,13 @@ const routes: Routes = [
         }
     },
     {
+        path: 'jobs',
+        loadChildren: './job/job.module#JobModule',
+        data: {
+            breadcrumb: 'Jobs'
+        }
+    },
+    {
         path: '',
         pathMatch: 'full',
         redirectTo: 'dashboard'

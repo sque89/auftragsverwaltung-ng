@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgModule} from '@angular/core';
+import {NgModule, LOCALE_ID} from '@angular/core';
 import {MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './shared/layout/header/header.component';
@@ -49,7 +49,9 @@ import {HttpClientModule} from '@angular/common/http';
         CancelDialogComponent,
         DeletionConfirmationDialogComponent
     ],
-    providers: [],
+    providers: [
+        { provide: LOCALE_ID, useValue: 'de' }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

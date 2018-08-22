@@ -1,0 +1,19 @@
+<auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: '/job/hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
+
+<mat-form-field class="w-100">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<table class="w-100" mat-table matSort [dataSource]="jobs">
+       <ng-container matColumnDef="id">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let job">{{job.id}}</td>
+    </ng-container>
+    <ng-container matColumnDef="dateIncoming">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Eingangsdatum</th>
+        <td mat-cell *matCellDef="let job">{{job.dateIncoming | date:'shortDate'}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr class="cursor-pointer" mat-row *matRowDef="let job; columns: columnsToDisplay" (click)="showJobDetails(job)"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>

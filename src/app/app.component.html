@@ -21,6 +21,10 @@
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">business</mat-icon>
                 <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/kunden']">Kundenverwaltung</a>
             </mat-list-item>
+            <mat-list-item>
+                <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">inbox</mat-icon>
+                <a [routerLink]="['/jobs']">Jobverwaltung</a>
+            </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
