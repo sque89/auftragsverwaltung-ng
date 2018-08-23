@@ -6,42 +6,42 @@
 
 <table class="w-100" mat-table matSort [dataSource]="customers">
        <ng-container matColumnDef="id">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let customer">{{customer.id}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.id}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="name">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let customer">{{customer.name}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.name}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="postcode">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>PLZ</th>
-        <td mat-cell *matCellDef="let customer">{{customer.postcode}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>PLZ</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.postcode}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="city">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Ort</th>
-        <td mat-cell *matCellDef="let customer">{{customer.city}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Ort</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.city}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="address">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Adresse</th>
-        <td mat-cell *matCellDef="let customer">{{customer.address}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Adresse</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.address}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="contactPerson">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Ansprechpartner</th>
-        <td mat-cell *matCellDef="let customer">{{customer.contactPerson}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Ansprechpartner</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.contactPerson}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="mail">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>E-Mail</th>
-        <td mat-cell *matCellDef="let customer">{{customer.mail}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>E-Mail</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.mail}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="phone">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Telefon</th>
-        <td mat-cell *matCellDef="let customer">{{customer.phone}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Telefon</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.phone}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="fax">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>Fax</th>
-        <td mat-cell *matCellDef="let customer">{{customer.fax}}</td>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Fax</mat-header-cell>
+        <mat-cell *matCellDef="let customer">{{customer.fax}}</mat-cell>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr class="cursor-pointer" mat-row *matRowDef="let customer; columns: columnsToDisplay" (click)="showCustomerDetails(customer)"></tr>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row class="cursor-pointer" *matRowDef="let customer; columns: columnsToDisplay" (click)="showCustomerDetails(customer)"></mat-row>
 </table>
 <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
