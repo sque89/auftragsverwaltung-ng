@@ -123,7 +123,7 @@ export class ProfileComponent implements OnInit {
             this.commonDataForm.get('firstname').value,
             this.commonDataForm.get('lastname').value,
             this.commonDataForm.get('mail').value,
-            this.commonDataForm.get('roles').value,
+            this.isOwnProfile ? this.currentUser.roles : this.commonDataForm.get('roles').value,
             this.isOwnProfile ? null : this.currentUser.username
         ).subscribe((updatedUser) => {
             if (this.isOwnProfile) {

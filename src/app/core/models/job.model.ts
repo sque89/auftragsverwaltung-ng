@@ -1,5 +1,6 @@
 import {User} from "./user.model";
 
+// TODO change to real class to handle for example no invoice number and delivery type
 export interface Job {
     id: string;
     dateIncoming: Date;

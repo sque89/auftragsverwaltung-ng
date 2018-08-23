@@ -15,9 +15,50 @@
         <mat-cell *matCellDef="let job">{{job.dateIncoming | date:'shortDate'}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="dateDeadline">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Abgabedatum</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.dateDeadline | date:'shortDate'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="deliveryType">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Lieferart</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.deliveryType}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Beschreibung</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.description}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="notes">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Notizen</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.notes}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="externalPurchase">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Einkauf</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.externalPurchase}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="invoiceNumber">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Rechnungsnummer</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.invoiceNumber}}</mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="expandedTasks">
         <td mat-cell *matCellDef="let job">
-            Hier stehen die Tasks des jobs {{job.job.id}}
+            <table class="w-100" mat-table [dataSource]="job.job.tasks">
+                <ng-container matColumnDef="id">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="['id']"></mat-header-row>
+
+                <mat-row
+                    *matRowDef="let job; columns: ['id'];"
+                ></mat-row>
+            </table>
         </td>
     </ng-container>
 

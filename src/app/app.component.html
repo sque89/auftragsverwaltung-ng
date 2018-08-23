@@ -13,13 +13,13 @@
             </button>
         </mat-toolbar>
         <mat-nav-list>
-            <mat-list-item>
+            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">people</mat-icon>
-                <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/benutzer']">Benutzerverwaltung</a>
+                <a [routerLink]="['/benutzer']">Benutzerverwaltung</a>
             </mat-list-item>
-            <mat-list-item>
+            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">business</mat-icon>
-                <a *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/kunden']">Kundenverwaltung</a>
+                <a [routerLink]="['/kunden']">Kundenverwaltung</a>
             </mat-list-item>
             <mat-list-item>
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">inbox</mat-icon>

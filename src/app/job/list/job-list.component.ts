@@ -18,11 +18,11 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
     ]
 })
 export class JobListComponent {
-    public jobs: MatTableDataSource<Array<Job>>;
-    public columnsToDisplay: string[] = ['id', 'dateIncoming'];
+    public jobs: MatTableDataSource<Job | {taskRow: boolean, job: Job}>;
+    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'description', 'notes', 'externalPurchase', 'invoiceNumber'];
     public pageSize = 10;
     public pageSizeOptions: number[] = [5, 10, 25, 100];
-    public isTaskRow = (i: number, row: Object) => row.hasOwnProperty('taskRow');
+    public isTaskRow = (i: number, row: Job | {taskRow: boolean, job: Job}) => row.hasOwnProperty('taskRow');
     public expandedJob: Job;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -32,12 +32,12 @@ export class JobListComponent {
     }
 
     public ngOnInit() {
-        const jobDataSource = [];
-        this.activatedRoute.snapshot.data.JobListResolver.forEach(job => jobDataSource.push(job, { taskRow: true, job }));
-        this.uiService.closeMainMenu();
+        const jobDataSource: Array<Job | {taskRow: boolean, job: Job}> = [];
+        this.activatedRoute.snapshot.data.JobListResolver.forEach((job: Job) => jobDataSource.push(job, { taskRow: true, job: job }));
         this.jobs = new MatTableDataSource(jobDataSource);
         this.jobs.sort = this.sort;
         this.jobs.paginator = this.paginator;
+        this.uiService.closeMainMenu();
     }
 
     public applyFilter(filterValue: string) {
