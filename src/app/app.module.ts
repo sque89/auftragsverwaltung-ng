@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgModule, LOCALE_ID} from '@angular/core';
+import {NgModule, LOCALE_ID, APP_INITIALIZER} from '@angular/core';
 import {MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './shared/layout/header/header.component';
@@ -13,6 +13,14 @@ import {CancelDialogComponent} from './shared/dialogs/cancel/cancel-dialog.compo
 import {DeletionConfirmationDialogComponent} from './shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
 import {CoreModule} from './core/core.module';
 import {HttpClientModule} from '@angular/common/http';
+import {AppService} from './core/services/app.service';
+import {SettingApiService} from './core/services/setting-api.service';
+
+export function getSettings(appService: AppService) {
+    return () => {
+        return appService.initialize();
+    };
+}
 
 @NgModule({
     declarations: [
@@ -50,7 +58,9 @@ import {HttpClientModule} from '@angular/common/http';
         DeletionConfirmationDialogComponent
     ],
     providers: [
-        { provide: LOCALE_ID, useValue: 'de' }
+        SettingApiService,
+        {provide: LOCALE_ID, useValue: 'de'},
+        {provide: APP_INITIALIZER, useFactory: getSettings, deps: [AppService], multi: true}
     ],
     bootstrap: [AppComponent]
 })

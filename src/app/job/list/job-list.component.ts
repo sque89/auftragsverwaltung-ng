@@ -19,7 +19,7 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
 })
 export class JobListComponent {
     public jobs: MatTableDataSource<Job | {taskRow: boolean, job: Job}>;
-    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'description', 'notes', 'externalPurchase', 'invoiceNumber'];
+    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'arrangers', 'description', 'notes', 'externalPurchase', 'invoiceNumber'];
     public pageSize = 10;
     public pageSizeOptions: number[] = [5, 10, 25, 100];
     public isTaskRow = (i: number, row: Job | {taskRow: boolean, job: Job}) => row.hasOwnProperty('taskRow');

@@ -31,6 +31,13 @@ const routes: Routes = [
         }
     },
     {
+        path: 'einstellungen',
+        loadChildren: './setting/setting.module#SettingModule',
+        data: {
+            breadcrumb: 'Einstellungen'
+        }
+    },
+    {
         path: '',
         pathMatch: 'full',
         redirectTo: 'dashboard'

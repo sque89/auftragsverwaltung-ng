@@ -25,6 +25,13 @@
         <mat-cell *matCellDef="let job">{{job.deliveryType}}</mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="arrangers">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Bearbeiter</mat-header-cell>
+        <mat-cell *matCellDef="let job">
+            <span  *ngFor="let arranger of job.arrangers" class="d-block badge badge-primary">{{arranger.firstname}} {{arranger.lastname}}</span>
+        </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="description">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Beschreibung</mat-header-cell>
         <mat-cell *matCellDef="let job">{{job.description}}</mat-cell>
@@ -42,7 +49,7 @@
 
     <ng-container matColumnDef="invoiceNumber">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Rechnungsnummer</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.invoiceNumber}}</mat-cell>
+        <mat-cell *matCellDef="let job">{{job.getInvoiceNumber()}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="expandedTasks">

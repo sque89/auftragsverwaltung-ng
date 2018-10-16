@@ -18,19 +18,19 @@ export class JobApiService {
                 this.uiService.hideLoadingOverlay();
                 const jobs: Array<Job> = [];
                 response.jobs.forEach((job: any) => {
-                    jobs.push({
-                        id: job.id,
-                        dateIncoming: job.dateIncoming,
-                        dateDeadline: job.dateDeadline,
-                        deliveryType: job.deliveryType,
-                        description: job.description,
-                        notes: job.notes,
-                        externalPurchase: job.externalPurchase,
-                        invoiceNumber: job.invoiceNumber,
-                        arrangers: job.arrangers,
-                        createdAt: job.createdAt,
-                        updatedAt: job.updatedAt
-                    });
+                    jobs.push(new Job(
+                        job.id,
+                        job.dateIncoming,
+                        job.dateDeadline,
+                        job.deliveryType,
+                        job.description,
+                        job.notes,
+                        job.externalPurchase,
+                        job.invoiceNumber,
+                        job.arrangers,
+                        job.createdAt,
+                        job.updatedAt
+                    ));
                 });
                 return jobs;
             }));
