@@ -4,6 +4,11 @@ import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
 import {UiService} from '../../core/services/ui.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {trigger, state, transition, style, animate} from '@angular/animations';
+import {AppService} from '../../core/services/app.service';
+import {Moment} from 'moment';
+import * as moment from 'moment'
+import {FormGroup, FormControl} from '@angular/forms';
+import {JobApiService} from '../../core/services/job-api.service';
 
 @Component({
     selector: 'job-list',
@@ -19,25 +24,48 @@ import {trigger, state, transition, style, animate} from '@angular/animations';
 })
 export class JobListComponent {
     public jobs: MatTableDataSource<Job | {taskRow: boolean, job: Job}>;
-    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'arrangers', 'description', 'notes', 'externalPurchase', 'invoiceNumber'];
+    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'arrangers', 'description', 'externalPurchase', 'invoiceNumber'];
     public pageSize = 10;
     public pageSizeOptions: number[] = [5, 10, 25, 100];
     public isTaskRow = (i: number, row: Job | {taskRow: boolean, job: Job}) => row.hasOwnProperty('taskRow');
     public expandedJob: Job;
+    public timespanForm: FormGroup;
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    public constructor(private uiService: UiService, private activatedRoute: ActivatedRoute, private router: Router) {
-    }
+    public constructor(
+        private uiService: UiService,
+        private activatedRoute: ActivatedRoute,
+        private router: Router,
+        private appService: AppService,
+        private jobApiService: JobApiService
+    ) {}
 
     public ngOnInit() {
-        const jobDataSource: Array<Job | {taskRow: boolean, job: Job}> = [];
-        this.activatedRoute.snapshot.data.JobListResolver.forEach((job: Job) => jobDataSource.push(job, { taskRow: true, job: job }));
-        this.jobs = new MatTableDataSource(jobDataSource);
+        this.setJobDataSource(this.activatedRoute.snapshot.data.JobListResolver);
         this.jobs.sort = this.sort;
         this.jobs.paginator = this.paginator;
         this.uiService.closeMainMenu();
+        this.timespanForm = new FormGroup({
+            from: new FormControl(moment().subtract(parseInt(this.appService.getSettingById('job_list_default_timespan').value), 'days').startOf('day')),
+            to: new FormControl(moment().endOf('day'))
+        });
+        this.bindTimespanChanges();
+    }
+
+    private bindTimespanChanges() {
+        this.timespanForm.valueChanges.subscribe(values => {
+            this.jobApiService.getJobsInTimespan(values.from, values.to).subscribe((jobs) => {
+                this.setJobDataSource(jobs);
+            });
+        });
+    }
+
+    private setJobDataSource(jobs: Array<Job>) {
+        const jobDataSource: Array<Job | {taskRow: boolean, job: Job}> = [];
+        jobs.forEach((job: Job) => jobDataSource.push(job, {taskRow: true, job: job}));
+        this.jobs = new MatTableDataSource(jobDataSource);
     }
 
     public applyFilter(filterValue: string) {

@@ -1,11 +1,30 @@
 <auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: '/job/hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
 
+<div class="row">
+    <div class="col-12">
+        <span class="mr-3 text-bold">Zeitraum:</span>
+        <form [formGroup]="timespanForm">
+            <mat-form-field class="mr-3">
+                <input matInput formControlName="from" [matDatepicker]="listFromPicker" placeholder="von">
+                       <mat-datepicker-toggle matSuffix [for]="listFromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #listFromPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput formControlName="to" [matDatepicker]="listToPicker" placeholder="bis">
+                       <mat-datepicker-toggle matSuffix [for]="listToPicker"></mat-datepicker-toggle>
+                <mat-datepicker #listToPicker></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </div>
+</div>
+
 <mat-form-field class="w-100">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Volltextsuche">
 </mat-form-field>
 
 <table class="w-100" mat-table matSort [dataSource]="jobs">
-    <ng-container matColumnDef="id">
+       <ng-container matColumnDef="id">
         <mat-header-cell mat-header-cell mat-sort-header *matHeaderCellDef>ID</mat-header-cell>
         <mat-cell mat-cell *matCellDef="let job">{{job.id}}</mat-cell>
     </ng-container>
@@ -27,7 +46,7 @@
 
     <ng-container matColumnDef="arrangers">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Bearbeiter</mat-header-cell>
-        <mat-cell *matCellDef="let job">
+        <mat-cell *matCellDef="let job" class="flex-wrap">
             <span  *ngFor="let arranger of job.arrangers" class="d-block badge badge-primary">{{arranger.firstname}} {{arranger.lastname}}</span>
         </mat-cell>
     </ng-container>
@@ -35,11 +54,6 @@
     <ng-container matColumnDef="description">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Beschreibung</mat-header-cell>
         <mat-cell *matCellDef="let job">{{job.description}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="notes">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Notizen</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.notes}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="externalPurchase">
@@ -55,7 +69,7 @@
     <ng-container matColumnDef="expandedTasks">
         <td mat-cell *matCellDef="let job">
             <table class="w-100" mat-table [dataSource]="job.job.tasks">
-                <ng-container matColumnDef="id">
+               <ng-container matColumnDef="id">
                     <mat-header-cell mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
                     <mat-cell mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
                 </ng-container>
@@ -64,7 +78,7 @@
 
                 <mat-row
                     *matRowDef="let job; columns: ['id'];"
-                ></mat-row>
+                    ></mat-row>
             </table>
         </td>
     </ng-container>
@@ -77,12 +91,12 @@
         matRipple
         [class.expanded]="expandedJob == job"
         (click)="expandedJob = job"
-    ></mat-row>
+        ></mat-row>
 
     <mat-row *matRowDef="let job; columns: ['expandedTasks']; when: isTaskRow"
-            [@taskExpand]="job.job == expandedJob ? 'expanded' : 'collapsed'"
-            style="overflow: hidden"
-            class="job-task-row"
-    ></mat-row>
+        [@taskExpand]="job.job == expandedJob ? 'expanded' : 'collapsed'"
+        style="overflow: hidden"
+        class="job-task-row"
+        ></mat-row>
 </table>
 <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>

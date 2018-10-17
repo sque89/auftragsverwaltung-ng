@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule, LOCALE_ID, APP_INITIALIZER} from '@angular/core';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './shared/layout/header/header.component';
@@ -51,7 +52,8 @@ export function getSettings(appService: AppService) {
         MatInputModule,
         MatProgressSpinnerModule,
         MatSnackBarModule,
-        MatDialogModule
+        MatDialogModule,
+        MatMomentDateModule
     ],
     entryComponents: [
         CancelDialogComponent,
