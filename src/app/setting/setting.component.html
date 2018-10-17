@@ -1,0 +1,14 @@
+<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+
+<h1 class="mb-3">
+    <ng-container>Einstellungen bearbeiten</ng-container>
+</h1>
+
+<p>Hier können die Anwendungseinstellungen bearbeitet werden.</p>
+
+<form (submit)="save()" class="pt-3">
+    <mat-form-field *ngFor="let setting of settings" class="d-block">
+        <input matInput type="text" placeholder="{{setting.label}}" name="{{setting.id}}" [(ngModel)]="setting.value" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Einstellungen speichern</button>
+</form>
