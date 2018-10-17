@@ -13,7 +13,7 @@ $mat-toolbar-height: 64px;
 
 .container.main {
     padding-top: $mat-toolbar-height;
-    min-height: calc(100vh - #{$mat-toolbar-height};
+    min-height: calc(100vh - #{$mat-toolbar-height});
 }
 
 .loading-overlay {
