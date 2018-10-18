@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatSnackBar, MatSnackBarRef} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
@@ -11,6 +11,6 @@ export class NotificationService {
     }
 
     public showError(message: string) {
-        this.snackBar.open(message, 'Verstanden.', {panelClass: 'bg-danger'});
+        this.snackBar.open(message, 'Verstanden', {panelClass: 'bg-danger'});
     }
 }
