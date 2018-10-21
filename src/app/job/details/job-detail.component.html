@@ -1,0 +1,33 @@
+<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h2>
+                {{job.id}}
+            </h2>
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{job.description}}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>
+                <h3 matLine>Notizen</h3>
+                <p matLine>{{job.notes}}</p>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-divider class="position-relative my-3"></mat-divider>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" *ngIf="!editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Job bearbeiten</button>
+    </mat-card-actions>
+    <mat-divider class="position-relative my-3"></mat-divider>
+    <mat-card-footer class="m-0">
+        <mat-chip-list>
+            <mat-chip>erstellt am: {{job.createdAt | date:'medium'}}</mat-chip>
+            <mat-chip>aktualisiert am: {{job.updatedAt | date:'medium'}}</mat-chip>
+        </mat-chip-list>
+    </mat-card-footer>
+</mat-card>

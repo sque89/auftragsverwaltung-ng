@@ -4,10 +4,10 @@
     </button>
     <span [routerLink]="['/']" class="cursor-pointer">Fresko Auftragsverwaltung</span>
     <span class="flex-fill"></span>
-    <button *ngIf="sessionService.isSessionActive()" class="mat-button min-width-0" type="button" [routerLink]="['/benutzer/profil']">
+    <button *ngIf="sessionService.isSessionActive()" class="mat-button min-width-0" type="button" [routerLink]="['benutzer', 'profil']">
         <mat-icon class="mat-icon material-icons">person</mat-icon>
     </button>
-    <span class="mr-5 cursor-pointer" [routerLink]="['/benutzer/profil']">{{sessionService.getUser()?.getFullName()}}</span>
+    <span class="mr-5 cursor-pointer" [routerLink]="['benutzer', 'profil']">{{sessionService.getUser()?.getFullName()}}</span>
     <button *ngIf="sessionService.isSessionActive()" class="mat-button" type="button" [routerLink]="['/dashboard']">
         <mat-icon class="mat-icon material-icons">home</mat-icon>
     </button>

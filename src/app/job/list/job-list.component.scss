@@ -1,17 +1,21 @@
 .job-row {
     position: relative;
-}
 
-.job-row:not(.expanded) {
-    cursor: pointer;
-}
+    &:not(.expanded) {
+        cursor: pointer;
 
-.job-row:not(.expanded):hover {
-    background: #f5f5f5;
-}
+        &:hover {
+            background: #f5f5f5;
+        }
+    }
 
-.job-row.expanded {
-    border-bottom-color: transparent;
+    &.expanded {
+        border-bottom-color: transparent;
+    }
+
+    .mat-column-actions .mat-button {
+        min-width: 0px;
+    }
 }
 
 .job-task-row td {

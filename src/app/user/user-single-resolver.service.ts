@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
-import {UserApiService} from '../../core/services/user-api.service';
+import {UserApiService} from '../core/services/user-api.service';
 import {Observable} from 'rxjs';
-import {User} from '../../core/models/user.model';
-import {SessionService} from '../../core/services/session.service';
+import {User} from '../core/models/user.model';
+import {SessionService} from '../core/services/session.service';
 
 @Injectable()
-export class ProfileResolver implements Resolve<Observable<User>> {
+export class UserSingleResolver implements Resolve<Observable<User>> {
     public constructor(private userApiService: UserApiService, private sessionService: SessionService,
     ) {}
 

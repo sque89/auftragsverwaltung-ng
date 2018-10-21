@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
-
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {ProfileComponent} from './profile/profile.component';
 import {UserRoutingModule} from './user-routing.module';
 import {CommonModule} from '@angular/common';
-import {MatButtonModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatListModule, MatCardModule, MatSlideToggleModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatListModule, MatCardModule, MatSlideToggleModule, MatSelectModule, MatChipsModule} from '@angular/material';
 import {UserApiService} from '../core/services/user-api.service';
-import {ProfileResolver} from './profile/profile-resolver.service';
 import {UserListComponent} from './list/user-list.component';
 import {UserListResolver} from './list/user-list-resolver.service';
 import {SharedModule} from '../shared/shared.module';
+import {UserSingleResolver} from './user-single-resolver.service';
+import {UserDetailComponent} from './details/user-detail.component';
+import {UserFormComponent} from './form/user-form.component';
 
 @NgModule({
     imports: [
@@ -26,16 +26,18 @@ import {SharedModule} from '../shared/shared.module';
         MatCardModule,
         MatSlideToggleModule,
         MatSelectModule,
-        UserRoutingModule
+        UserRoutingModule,
+        MatChipsModule
     ],
     providers: [
         UserApiService,
-        ProfileResolver,
+        UserSingleResolver,
         UserListResolver
     ],
     declarations: [
-        ProfileComponent,
-        UserListComponent
+        UserDetailComponent,
+        UserListComponent,
+        UserFormComponent
     ]
 })
 export class UserModule {}

@@ -9,17 +9,18 @@ import {SessionService} from '../../core/services/session.service';
 import {MatDialog} from '@angular/material';
 import {CancelDialogComponent} from '../../shared/dialogs/cancel/cancel-dialog.component';
 
+import * as _ from 'lodash';
+
 @Component({
-    selector: 'profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+    selector: 'user-form',
+    templateUrl: './user-form.component.html',
+    styleUrls: ['./user-form.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class UserFormComponent implements OnInit {
     public commonDataForm: FormGroup;
     public passwordForm: FormGroup;
-    public currentUser: User;
+    public user: User;
     public isOwnProfile: boolean;
-    public editMode: boolean;
     public createNew: boolean;
 
     public constructor(
@@ -31,35 +32,34 @@ export class ProfileComponent implements OnInit {
         private router: Router,
         private sessionService: SessionService
     ) {
-        this.currentUser = new User(null, '', '', '', '', [], true);
+        this.user = new User(null, '', '', '', '', [], true);
     }
 
     public ngOnInit() {
-        if (this.activatedRoute.snapshot.data.ProfileResolver) {
-            this.currentUser = this.activatedRoute.snapshot.data.ProfileResolver;
+        if (!_.isEmpty(this.activatedRoute.snapshot.data.UserSingleResolver)) {
+            this.user = this.activatedRoute.snapshot.data.UserSingleResolver;
         }
         this.isOwnProfile = this.activatedRoute.snapshot.data.isOwnProfile;
-        this.editMode = this.activatedRoute.snapshot.data.editMode;
         this.createNew = this.activatedRoute.snapshot.data.createNew;
 
         this.commonDataForm = new FormGroup({
             firstname: new FormControl(
-                {value: this.currentUser.firstname, disabled: !this.editMode},
+                this.user.firstname,
                 [Validators.required]
             ),
             lastname: new FormControl(
-                {value: this.currentUser.lastname, disabled: !this.editMode},
+                this.user.lastname,
                 [Validators.required]
             ),
             mail: new FormControl(
-                {value: this.currentUser.email, disabled: !this.editMode},
+                this.user.email,
                 [Validators.required]
             )
         });
 
         this.passwordForm = new FormGroup({
             newPassword: new FormControl(
-                {value: '', disabled: !this.editMode},
+                '',
                 [Validators.required]
             )
         });
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
         } else {
             this.commonDataForm.addControl(
                 'roles', new FormControl(
-                    {value: this.currentUser.roles, disabled: !this.editMode},
+                    this.user.roles,
                     [Validators.required]
                 )
             );
@@ -89,13 +89,13 @@ export class ProfileComponent implements OnInit {
         if (this.createNew) {
             this.commonDataForm.addControl(
                 'password', new FormControl(
-                    {value: '', disabled: !this.editMode},
+                    '',
                     [Validators.required]
                 )
             );
             this.commonDataForm.addControl(
                 'username', new FormControl(
-                    {value: '', disabled: !this.editMode},
+                    '',
                     [Validators.required]
                 )
             );
@@ -109,10 +109,10 @@ export class ProfileComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result && !this.createNew) {
-                this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
-            } else if (result && this.createNew) {
-                this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+            if (result && this.isOwnProfile || this.createNew) {
+                this.router.navigate(['..'], {relativeTo: this.activatedRoute});
+            } else if (result && !this.createNew) {
+                this.router.navigate(['..', 'details'], {relativeTo: this.activatedRoute});
             }
         });
     }
@@ -123,8 +123,8 @@ export class ProfileComponent implements OnInit {
             this.commonDataForm.get('firstname').value,
             this.commonDataForm.get('lastname').value,
             this.commonDataForm.get('mail').value,
-            this.isOwnProfile ? this.currentUser.roles : this.commonDataForm.get('roles').value,
-            this.isOwnProfile ? null : this.currentUser.username
+            this.isOwnProfile ? this.user.roles : this.commonDataForm.get('roles').value,
+            this.isOwnProfile ? null : this.user.username
         ).subscribe((updatedUser) => {
             if (this.isOwnProfile) {
                 this.sessionService.setUser(updatedUser);
@@ -168,7 +168,7 @@ export class ProfileComponent implements OnInit {
             this.passwordForm.get('newPassword').value,
             this.isOwnProfile ? this.passwordForm.get('currentPassword').value : null,
             this.isOwnProfile ? this.passwordForm.get('newPasswordConfirmation').value : null,
-            this.isOwnProfile ? null : this.currentUser.username
+            this.isOwnProfile ? null : this.user.username
         ).subscribe(() => {
             this.uiService.hideLoadingOverlay();
             this.notificationService.showSuccess('Passwort erfolgreich geändert!');

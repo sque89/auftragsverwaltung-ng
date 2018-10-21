@@ -64,4 +64,25 @@ export class JobApiService {
                 return jobs;
             }));
     }
+
+    public getJobById(id: string) {
+        this.uiService.showLoadingOverlay();
+        return this.http.get<Array<Job>>(`${environment.apiUrl}/job/${id}`)
+            .pipe(map((response: any) => {
+                this.uiService.hideLoadingOverlay();
+                return new Job(
+                    response.id,
+                    response.dateIncoming,
+                    response.dateDeadline,
+                    response.deliveryType,
+                    response.description,
+                    response.notes,
+                    response.externalPurchase,
+                    response.invoiceNumber,
+                    response.arrangers,
+                    response.createdAt,
+                    response.updatedAt
+                );
+            }));
+    }
 }

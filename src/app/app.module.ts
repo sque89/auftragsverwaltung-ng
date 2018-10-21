@@ -78,7 +78,7 @@ export const DATE_FORMATS = {
         LogApiService,
         {provide: LOCALE_ID, useValue: 'de'},
         {provide: APP_INITIALIZER, useFactory: getSettings, deps: [AppService], multi: true},
-        {provide: ErrorHandler, useClass: ErrorsHandler},
+        //{provide: ErrorHandler, useClass: ErrorsHandler},
         {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS}
     ],
     bootstrap: [AppComponent]

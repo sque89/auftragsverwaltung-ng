@@ -1,0 +1,40 @@
+<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+
+<h1 class="mb-3">
+    Job {{job.id}} bearbeiten
+    <button mat-raised-button color="warn" (click)="askForCancel()" class="ml-3 align-middle">Verwerfen</button>
+</h1>
+
+<form [formGroup]="form" (submit)="form.valid && save()" class="pt-3">
+    <mat-form-field class="w-100">
+        <input matInput formControlName="dateIncoming" [matDatepicker]="dateIncomingPicker" placeholder="Eingangsdatum">
+        <mat-datepicker-toggle matSuffix [for]="dateIncomingPicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateIncomingPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+        <input matInput formControlName="dateDeadline" [matDatepicker]="dateDeadlinePicker" placeholder="Ablieferdatum">
+        <mat-datepicker-toggle matSuffix [for]="dateDeadlinePicker"></mat-datepicker-toggle>
+        <mat-datepicker #dateDeadlinePicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <input matInput type="text" placeholder="Lieferart" formControlName="deliveryType" required>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <input matInput type="text" placeholder="Beschreibung" formControlName="description" required>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <input matInput type="text" placeholder="Notizen" formControlName="notes" required>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <input matInput type="text" placeholder="Einkauf" formControlName="externalPurchase" required>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <input matInput type="text" placeholder="Rechnungsnummer" formControlName="invoiceNumber" required>
+    </mat-form-field>
+    <mat-form-field class="d-block">
+        <mat-select formControlName="arrangers" placeholder="Bearbeiter*innen" multiple required>
+            <mat-option *ngFor="let arranger of job.arrangers" [value]="arranger">{{arranger.firstname}} {{arranger.lastname}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Job speichern</button>
+</form>

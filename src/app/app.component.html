@@ -1,10 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav
-        #mainMenu
-        class="sidenav"
-        fixedInViewport="true"
-        mode="push"
-        >
+    <mat-sidenav #mainMenu class="sidenav" fixedInViewport="true" mode="push">
         <mat-toolbar color="primary">
             <span>Menü</span>
             <span class="flex-fill"></span>
@@ -25,7 +20,7 @@
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">inbox</mat-icon>
                 <a [routerLink]="['/jobs']">Jobverwaltung</a>
             </mat-list-item>
-            <mat-list-item>
+            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">settings</mat-icon>
                 <a [routerLink]="['/einstellungen']">Einstellungen</a>
             </mat-list-item>
@@ -33,7 +28,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <auftragsverwaltung-ng-header></auftragsverwaltung-ng-header>
-        <div class="container main">
+        <div class="container main pb-5">
             <router-outlet></router-outlet>
         </div>
         <auftragsverwaltung-ng-footer></auftragsverwaltung-ng-footer>

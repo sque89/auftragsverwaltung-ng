@@ -1,10 +1,10 @@
 <auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: '/benutzer/hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
 
 <div class="row">
-    <div *ngFor="let user of users" class="col-12 col-sm-6 col-md-4">
+    <div *ngFor="let user of users" class="col-12 col-sm-6">
         <mat-card>
             <mat-card-title>
-                <a [routerLink]="user.username !== sessionService.getUser().username ? [user.username, 'details'] : '/benutzer/profil'">
+                <a [routerLink]="user.username === sessionService.getUser().username ? ['profil'] : [user.username, 'details']">
                     {{user.firstname}} {{user.lastname}}
                 </a>
             </mat-card-title>
