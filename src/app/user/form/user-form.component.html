@@ -1,16 +1,17 @@
 <auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
 
-<h1 class="mb-3">
-    <ng-container *ngIf="isOwnProfile">Eigenes Profil bearbeiten</ng-container>
-    <ng-container *ngIf="!isOwnProfile && !createNew">Benutzer bearbeiten</ng-container>
-    <ng-container *ngIf="createNew">Benutzer hinzufügen</ng-container>
-    <button mat-raised-button color="warn" (click)="askForCancel()" class="ml-3 align-middle">Verwerfen</button>
-</h1>
+<action-headline
+    [level]="1"
+    [text]="getHeadlineText()"
+    [actionButtons]="[{action: discardHappened, color: 'warn', title: 'Verwerfen', icon: 'cancel'}]"
+></action-headline>
+
 <p>
     <ng-container *ngIf="isOwnProfile">Hier können die Daten zum eigenen Profil geändert werden.</ng-container>
     <ng-container *ngIf="!isOwnProfile && !createNew">Hier können die Details zum aktuell aufgerufenen Profil geändert werden.</ng-container>
     <ng-container *ngIf="createNew">Bitte hier die Daten des neuen Benutzers angeben.</ng-container>
 </p>
+
 <mat-tab-group>
     <mat-tab *ngIf="!createNew" label="Übersicht">
         <mat-list class="mt-3">

@@ -51,9 +51,9 @@
         </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="externalPurchase">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Einkauf</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.externalPurchase}}</mat-cell>
+    <ng-container matColumnDef="description">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Beschreibung</mat-header-cell>
+        <mat-cell *matCellDef="let job">{{job.description | words : 10 : '...'}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="invoiceNumber">

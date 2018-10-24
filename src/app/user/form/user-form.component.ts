@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../core/models/user.model';
@@ -22,6 +22,7 @@ export class UserFormComponent implements OnInit {
     public user: User;
     public isOwnProfile: boolean;
     public createNew: boolean;
+    public discardHappened: EventEmitter<null>;
 
     public constructor(
         private activatedRoute: ActivatedRoute,
@@ -33,6 +34,7 @@ export class UserFormComponent implements OnInit {
         private sessionService: SessionService
     ) {
         this.user = new User(null, '', '', '', '', [], true);
+        this.discardHappened = new EventEmitter();
     }
 
     public ngOnInit() {
@@ -41,6 +43,8 @@ export class UserFormComponent implements OnInit {
         }
         this.isOwnProfile = this.activatedRoute.snapshot.data.isOwnProfile;
         this.createNew = this.activatedRoute.snapshot.data.createNew;
+
+        this.discardHappened.subscribe(() => this.askForCancel());
 
         this.commonDataForm = new FormGroup({
             firstname: new FormControl(
@@ -100,6 +104,16 @@ export class UserFormComponent implements OnInit {
                 )
             );
         }
+    }
+
+    public getHeadlineText() {
+        let text = 'Benutzer hinzufügen';
+        if (this.isOwnProfile) {
+            text = 'Eigenes Profil bearbeiten';
+        } else if (!this.isOwnProfile && !this.createNew) {
+            text = 'Benutzer bearbeiten';
+        }
+        return text;
     }
 
     public askForCancel() {

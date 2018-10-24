@@ -8,21 +8,21 @@
             </button>
         </mat-toolbar>
         <mat-nav-list>
-            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()">
+            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/benutzer']">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">people</mat-icon>
-                <a [routerLink]="['/benutzer']">Benutzerverwaltung</a>
+                <a>Benutzerverwaltung</a>
             </mat-list-item>
-            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()">
+            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/kunden']">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">business</mat-icon>
-                <a [routerLink]="['/kunden']">Kundenverwaltung</a>
+                <a>Kundenverwaltung</a>
             </mat-list-item>
-            <mat-list-item>
+            <mat-list-item [routerLink]="['/jobs']">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">inbox</mat-icon>
-                <a [routerLink]="['/jobs']">Jobverwaltung</a>
+                <a>Jobverwaltung</a>
             </mat-list-item>
-            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()">
+            <mat-list-item *ngIf="sessionService.getUser()?.isAdministrator()" [routerLink]="['/einstellungen']">
                 <mat-icon class="mat-icon material-icons mr-3" role="img" aria-hidden="true">settings</mat-icon>
-                <a [routerLink]="['/einstellungen']">Einstellungen</a>
+                <a>Einstellungen</a>
             </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>

@@ -10,6 +10,7 @@ import {SharedModule} from '../shared/shared.module';
 import {JobSingleResolver} from './job-single-resolver.service';
 import {JobDetailComponent} from './details/job-detail.component';
 import {JobFormComponent} from './form/job-form.component';
+import {TruncateModule} from '@yellowspot/ng-truncate';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import {JobFormComponent} from './form/job-form.component';
         MatChipsModule,
         MatListModule,
         MatDividerModule,
-        MatDialogModule
+        MatDialogModule,
+        TruncateModule
     ],
     providers: [
         JobApiService,

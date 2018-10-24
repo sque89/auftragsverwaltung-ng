@@ -5,10 +5,11 @@ import {CustomerListResolver} from './list/customer-list-resolver.service';
 import {CustomerListComponent} from './list/customer-list.component';
 import {CustomerRoutingModule} from './customer-routing.module';
 import {CustomerApiService} from '../core/services/customer-api.service';
-import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatButtonModule} from '@angular/material';
-import {CustomerProfileComponent} from './profile/customer-profile.component';
-import {CustomerProfileResolver} from './profile/customer-profile-resolver.service';
+import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatButtonModule, MatCardModule} from '@angular/material';
 import {SharedModule} from '../shared/shared.module';
+import {CustomerSingleResolver} from './customer-single-resolver.service';
+import {CustomerFormComponent} from './form/customer-form.component';
+import {CustomerDetailComponent} from './details/customer-detail.component';
 
 @NgModule({
     imports: [
@@ -22,16 +23,18 @@ import {SharedModule} from '../shared/shared.module';
         MatFormFieldModule,
         MatInputModule,
         MatPaginatorModule,
-        MatButtonModule
+        MatButtonModule,
+        MatCardModule
     ],
     providers: [
         CustomerApiService,
         CustomerListResolver,
-        CustomerProfileResolver
+        CustomerSingleResolver
     ],
     declarations: [
         CustomerListComponent,
-        CustomerProfileComponent
+        CustomerFormComponent,
+        CustomerDetailComponent
     ]
 })
 export class CustomerModule {}

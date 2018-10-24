@@ -1,0 +1,15 @@
+<div class="d-flex align-items-top mb-4">
+    <h1 *ngIf="level === 1" class="m-0">{{text}}</h1>
+    <h2 *ngIf="level === 2" class="m-0">{{text}}</h2>
+    <span class="flex-fill"></span>
+    <button
+        *ngFor="let actionButton of actionButtons"
+        mat-mini-fab
+        color="{{actionButton.color}}"
+        (click)="actionButton.action.emit(actionButton.eventParameter || null)"
+        class="ml-3 align-middle"
+        title="{{actionButton.title}}"
+    >
+        <mat-icon>{{actionButton.icon}}</mat-icon>
+    </button>
+</div>

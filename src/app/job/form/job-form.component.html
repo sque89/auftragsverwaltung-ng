@@ -1,9 +1,6 @@
 <auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
 
-<h1 class="mb-3">
-    Job {{job.id}} bearbeiten
-    <button mat-raised-button color="warn" (click)="askForCancel()" class="ml-3 align-middle">Verwerfen</button>
-</h1>
+<action-headline [level]="1" [text]="'Job ' + job.id + ' bearbeiten'" [actionButtons]="[{action: discardHappened, color: 'warn', title: 'Verwerfen', icon: 'cancel'}]"></action-headline>
 
 <form [formGroup]="form" (submit)="form.valid && save()" class="pt-3">
     <mat-form-field class="w-100">
@@ -20,13 +17,13 @@
         <input matInput type="text" placeholder="Lieferart" formControlName="deliveryType" required>
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Beschreibung" formControlName="description" required>
+        <textarea matInput rows="5" placeholder="Beschreibung" formControlName="description" required></textarea>
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Notizen" formControlName="notes" required>
+        <textarea matInput rows="5" placeholder="Notizen" formControlName="notes" required></textarea>
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Einkauf" formControlName="externalPurchase" required>
+        <textarea matInput rows="5" placeholder="Einkauf" formControlName="externalPurchase" required></textarea>
     </mat-form-field>
     <mat-form-field class="d-block">
         <input matInput type="text" placeholder="Rechnungsnummer" formControlName="invoiceNumber" required>

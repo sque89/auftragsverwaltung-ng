@@ -1,6 +1,4 @@
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
-
-$mat-toolbar-height: 64px;
+@import 'variables';
 
 .sidenav-container {
     height: 100%;
@@ -12,7 +10,7 @@ $mat-toolbar-height: 64px;
 }
 
 .container.main {
-    padding-top: $mat-toolbar-height;
+    padding-top: calc(#{$mat-toolbar-height} + 2rem);
     min-height: calc(100vh - #{$mat-toolbar-height});
 }
 

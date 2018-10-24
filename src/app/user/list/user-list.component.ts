@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit, ViewChild, EventEmitter} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../core/models/user.model';
 import {UiService} from '../../core/services/ui.service';
 import {UserApiService} from '../../core/services/user-api.service';
 import {NotificationService} from '../../core/services/notification.service';
 import {SessionService} from '../../core/services/session.service';
 import {MatDialog, MatSlideToggleChange, MatSlideToggle} from '@angular/material';
-import {DeletionConfirmationDialogComponent} from '../../shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
+import {DeletionConfirmationDialogComponent} from '../../shared/dialogs/deletion-confirmation/deletion-confirmation-dialog.component';
 import * as _ from 'lodash';
 
 @Component({
@@ -18,9 +18,13 @@ export class UserListComponent implements OnInit {
     @ViewChild('activateToggle') activateToggle: MatSlideToggle;
 
     public users: Array<User>;
+    public gotoDetailsHappened: EventEmitter<null>;
+    public gotoEditHappened: EventEmitter<string>;
+    public deleteHappened: EventEmitter<null>;
 
     public constructor(
         private activatedRoute: ActivatedRoute,
+        private router: Router,
         private uiService: UiService,
         private userApiService: UserApiService,
         private notificationService: NotificationService,
@@ -28,11 +32,18 @@ export class UserListComponent implements OnInit {
         public sessionService: SessionService
     ) {
         this.users = [];
+        this.gotoDetailsHappened = new EventEmitter();
+        this.gotoEditHappened = new EventEmitter();
+        this.deleteHappened = new EventEmitter();
     }
 
     public ngOnInit() {
         this.uiService.closeMainMenu();
         this.users = this.activatedRoute.snapshot.data.UserListResolver;
+
+        this.gotoDetailsHappened.subscribe((username: string) => { this.router.navigate([username, 'details'], {relativeTo: this.activatedRoute}); });
+        this.gotoEditHappened.subscribe((username: string) => { this.router.navigate([username, 'bearbeiten'], {relativeTo: this.activatedRoute}); })
+        this.deleteHappened.subscribe((username: string) => { this.deleteUser(username); })
     }
 
     public deleteUser(username: string) {

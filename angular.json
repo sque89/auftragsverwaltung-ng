@@ -32,7 +32,12 @@
 			  "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+			"stylePreprocessorOptions": {
+				"includePaths": [
+					"src/assets/sass"
+				]
+			}
           },
           "configurations": {
             "production": {

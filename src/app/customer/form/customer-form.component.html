@@ -1,15 +1,11 @@
 <auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
 
-<h1 class="mb-3">
-    <ng-container *ngIf="!editMode">Kunde ansehen</ng-container>
-    <ng-container *ngIf="editMode">Kunde bearbeiten</ng-container>
-    <button mat-raised-button color="primary" *ngIf="!editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Kunde bearbeiten</button>
-    <button mat-raised-button color="warn" *ngIf="editMode" (click)="askForCancel()" class="ml-3 align-middle">Bearbeiten abbrechen</button>
-</h1>
-<p>
-    <ng-container *ngIf="!editMode">Hier können die Details zum aktuell aufgerufenen Kunde eingesehen werden.</ng-container>
-    <ng-container *ngIf="editMode">Hier können die Details zum aktuell aufgerufenen Kunde bearbeitet werden.</ng-container>
-</p>
+<action-headline
+    [level]="1"
+    [text]="createNew ? 'Neuen Kunden erstellen' : 'Kunde bearbeiten'"
+    [actionButtons]="[{action: discardHappened, color: 'warn', title: 'Verwerfen', icon: 'cancel'}]"
+></action-headline>
+
 <form [formGroup]="form" (submit)="form.valid && save()" class="pt-3">
     <mat-form-field class="d-block">
         <input matInput type="text" placeholder="Name" formControlName="name" required>
@@ -35,5 +31,5 @@
     <mat-form-field class="d-block">
         <input matInput type="text" placeholder="Fax" formControlName="fax" required>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !editMode">Daten speichern</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Daten speichern</button>
 </form>

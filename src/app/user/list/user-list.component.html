@@ -1,26 +1,27 @@
 <auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: '/benutzer/hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
 
+<h1>Aktuell angelegte Benutzer</h1>
+
 <div class="row">
     <div *ngFor="let user of users" class="col-12 col-sm-6">
         <mat-card>
             <mat-card-title>
-                <a [routerLink]="user.username === sessionService.getUser().username ? ['profil'] : [user.username, 'details']">
-                    {{user.firstname}} {{user.lastname}}
-                </a>
+                <action-headline
+                    [level]="2"
+                    [text]="user.firstname + ' ' + user.lastname"
+                    [actionButtons]="[
+                        {action: gotoDetailsHappened, eventParameter: user.username, color: 'primary', title: 'Details', icon: 'visibility'},
+                        {action: gotoEditHappened, eventParameter: user.username, color: 'primary', title: 'Bearbeiten', icon: 'edit'},
+                        {action: deleteHappened, eventParameter: user.username, color: 'warn', title: 'Löschen', icon: 'delete_forever'}
+                    ]"
+                ></action-headline>
             </mat-card-title>
-            <mat-card-subtitle>
-                {{user.username}} // {{user.getRoleName()}}
-            </mat-card-subtitle>
-            <mat-slide-toggle #activateToggle *ngIf="user.username !== sessionService.getUser().username" class="d-block" matInput [checked]="user.isActive" (change)="changeActivationStatus($event, user)">
-                {{user.isActive ? 'Benutzer ist aktiv' : 'Benutzer ist nicht aktiv'}}
-            </mat-slide-toggle>
-            <mat-card-actions class="mt-3">
-                <button
-                    mat-raised-button
-                    color="primary"
-                    [routerLink]="user.username !== sessionService.getUser().username ? [user.username, 'bearbeiten'] : '/benutzer/profil'">Bearbeiten</button>
-                <button *ngIf="user.username !== sessionService.getUser().username" mat-raised-button color="warn" (click)="deleteUser(user.username)">Löschen</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
+        <mat-card-subtitle>
+            {{user.username}} // {{user.getRoleName()}}
+        </mat-card-subtitle>
+        <mat-slide-toggle #activateToggle *ngIf="user.username !== sessionService.getUser().username" class="d-block" matInput [checked]="user.isActive" (change)="changeActivationStatus($event, user)">
+            {{user.isActive ? 'Benutzer ist aktiv' : 'Benutzer ist nicht aktiv'}}
+    </mat-slide-toggle>
+</mat-card>
+</div>
 </div>

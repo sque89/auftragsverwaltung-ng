@@ -3,31 +3,52 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title>
-            <h2>
-                {{job.id}}
-            </h2>
+            <action-headline [level]="2" [text]="job.id" [actionButtons]="[{action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'}]"></action-headline>
         </mat-card-title>
         <mat-card-subtitle>
             {{job.description}}
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <mat-list>
-            <mat-list-item>
-                <h3 matLine>Notizen</h3>
-                <p matLine>{{job.notes}}</p>
-            </mat-list-item>
-        </mat-list>
-    </mat-card-content>
-    <mat-divider class="position-relative my-3"></mat-divider>
-    <mat-card-actions>
-        <button mat-raised-button color="primary" *ngIf="!editMode" [routerLink]="['../bearbeiten']" class="ml-3 align-middle">Job bearbeiten</button>
-    </mat-card-actions>
-    <mat-divider class="position-relative my-3"></mat-divider>
-    <mat-card-footer class="m-0">
+        <div class="row no-gutters mb-5 deadline-info align-items-center position-relative shadow rounded">
+            <svg class="deadline-info__deadline-progress-bar">
+            <rect class="deadline-info__deadline-progress-bar__elapsed" [attr.width]="100 - job.getPercentageTimeLeft() + '%'" style="fill:rgba(239,76,76);" />
+                  <rect class="deadline-info__deadline-progress-bar__left" [attr.x]="100 - job.getPercentageTimeLeft() + '%'" [attr.width]="job.getPercentageTimeLeft() + '%'" style="fill:rgba(85,193,52);" />
+                  </svg>
+            <div class="col-4 text-left pl-2">
+                <span class="d-block font-weight-bold text-black-50">Eingang</span>
+                <span class="d-block font-weight-bold deadline-info__date">{{job.dateIncoming | date:'mediumDate'}}</span>
+            </div>
+            <div class="col-4 font-weight-bold text-center">
+                <mat-icon>arrow_forward</mat-icon>
+            </div>
+            <div class="col-4 text-right pr-2">
+                <span class="d-block font-weight-bold text-black-50">Abgabe</span>
+                <span class="d-block font-weight-bold deadline-info__date">{{job.dateDeadline | date:'mediumDate'}}</span>
+            </div>
+        </div>
+        <h3 matLine>Notizen</h3>
+        <p matLine>{{job.notes}}</p>
+
+        <h3 matLine>Externer Einkauf</h3>
+        <p matLine>{{job.externalPurchase}}</p>
+
+        <h3 matLine>Bearbeiter</h3>
+        <p matLine>
         <mat-chip-list>
-            <mat-chip>erstellt am: {{job.createdAt | date:'medium'}}</mat-chip>
-            <mat-chip>aktualisiert am: {{job.updatedAt | date:'medium'}}</mat-chip>
-        </mat-chip-list>
-    </mat-card-footer>
+            <mat-chip *ngFor="let arranger of job.arrangers" selected>
+                {{arranger.firstname}} {{arranger.lastname}}
+        </mat-chip>
+    </mat-chip-list>
+    </p>
+</mat-card-content>
+
+<mat-divider class="position-relative my-4"></mat-divider>
+
+<mat-card-footer class="m-0">
+    <mat-chip-list>
+        <mat-chip>erstellt am: {{job.createdAt | date:'medium'}}</mat-chip>
+        <mat-chip>aktualisiert am: {{job.updatedAt | date:'medium'}}</mat-chip>
+    </mat-chip-list>
+</mat-card-footer>
 </mat-card>

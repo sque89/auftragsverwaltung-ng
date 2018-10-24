@@ -1,12 +1,10 @@
 <auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
 
-<h1 class="mb-3">
-    <ng-container *ngIf="isOwnProfile">Eigenes Profil</ng-container>
-    <ng-container *ngIf="!isOwnProfile">Benutzer ansehen</ng-container>
-    <button mat-raised-button color="primary" [routerLink]="isOwnProfile ? ['..', 'profil', 'bearbeiten'] : ['..', 'bearbeiten']" class="ml-3 align-middle">
-        {{isOwnProfile ? 'Eigene Daten bearbeiten' : 'Nutzer bearbeiten'}}
-    </button>
-</h1>
+<action-headline
+    [level]="1"
+    [text]="isOwnProfile ? 'Eigenes Profil' : 'Benutzer ansehen'"
+    [actionButtons]="[{action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'}]"
+></action-headline>
 
 <p>
 <ng-container *ngIf="isOwnProfile">Hier können die Daten zum eigenen Profil eingesehen und geändert werden.</ng-container>
@@ -25,13 +23,15 @@
             <mat-list-item>E-Mail: {{user.email}}</mat-list-item>
         </mat-list>
     </mat-card-content>
-    <mat-divider class="position-relative m-3"></mat-divider>
+
+    <mat-divider class="position-relative my-4"></mat-divider>
+
     <mat-card-footer class="m-0">
         <mat-chip-list>
             <mat-chip color="primary" selected>
                 {{user.getRoleName()}}
             </mat-chip>
-            <mat-chip color="primary" [attr.selected]="user.isActive ? 'selected' : ''">
+            <mat-chip color="primary" [selected]="user.isActive">
                 {{user.isActive ? 'Aktiviert' : 'Deaktiviert'}}
             </mat-chip>
         </mat-chip-list>

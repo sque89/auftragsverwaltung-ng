@@ -24,7 +24,7 @@ import {JobApiService} from '../../core/services/job-api.service';
 })
 export class JobListComponent {
     public jobs: MatTableDataSource<Job | {taskRow: boolean, job: Job}>;
-    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'arrangers', 'externalPurchase', 'invoiceNumber', 'actions'];
+    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'arrangers', 'description', 'invoiceNumber', 'actions'];
     public pageSize = this.appService.getSettingById('job_list_jobs_per_page').value;
     public pageSizeOptions: number[] = [5, 10, 25, 100];
     public isTaskRow = (i: number, row: Job | {taskRow: boolean, job: Job}) => row.hasOwnProperty('taskRow');

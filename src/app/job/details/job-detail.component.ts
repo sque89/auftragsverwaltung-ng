@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit, EventEmitter} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../core/models/job.model';
 
 @Component({
@@ -9,12 +9,15 @@ import {Job} from '../../core/models/job.model';
 })
 export class JobDetailComponent implements OnInit {
     public job: Job;
+    public gotoEditHappened: EventEmitter<null>;
 
-    public constructor(private activatedRoute: ActivatedRoute) {
+    public constructor(private activatedRoute: ActivatedRoute, private router: Router) {
         this.job = Job.fromVoid();
+        this.gotoEditHappened = new EventEmitter();
     }
 
     public ngOnInit() {
-        this.job = this.activatedRoute.snapshot.data.JobSingleResolver;
+        this.job = Job.fromObject(this.activatedRoute.snapshot.data.JobSingleResolver);
+        this.gotoEditHappened.subscribe(() => { this.router.navigate(['..', 'bearbeiten'], {relativeTo: this.activatedRoute}); })
     }
 }

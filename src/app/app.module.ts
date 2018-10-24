@@ -11,7 +11,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthModule} from './auth/auth.module';
 import {CancelDialogComponent} from './shared/dialogs/cancel/cancel-dialog.component';
-import {DeletionConfirmationDialogComponent} from './shared/dialogs/deletionConfirmation/deletion-confirmation-dialog.component';
+import {DeletionConfirmationDialogComponent} from './shared/dialogs/deletion-confirmation/deletion-confirmation-dialog.component';
 import {CoreModule} from './core/core.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AppService} from './core/services/app.service';

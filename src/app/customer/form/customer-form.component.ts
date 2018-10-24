@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UiService} from '../../core/services/ui.service';
@@ -9,15 +9,15 @@ import {Customer} from '../../core/models/customer.model';
 import {CustomerApiService} from '../../core/services/customer-api.service';
 
 @Component({
-    selector: 'customer-profile',
-    templateUrl: './customer-profile.component.html',
-    styleUrls: ['./customer-profile.component.scss']
+    selector: 'customer-form',
+    templateUrl: './customer-form.component.html',
+    styleUrls: ['./customer-form.component.scss']
 })
-export class CustomerProfileComponent implements OnInit {
-    private currentCustomer: Customer;
+export class CustomerFormComponent implements OnInit {
+    private customer: Customer;
     public form: FormGroup;
-    public editMode: boolean;
     public createNew: boolean;
+    public discardHappened: EventEmitter<null>;
 
     public constructor(
         private activatedRoute: ActivatedRoute,
@@ -27,7 +27,7 @@ export class CustomerProfileComponent implements OnInit {
         private router: Router,
         private customerApiService: CustomerApiService
     ) {
-        this.currentCustomer = {
+        this.customer = {
             id: null,
             name: '',
             postcode: '',
@@ -38,60 +38,38 @@ export class CustomerProfileComponent implements OnInit {
             phone: '',
             fax: ''
         };
+        this.discardHappened = new EventEmitter();
     }
 
     public ngOnInit() {
-        this.editMode = this.activatedRoute.snapshot.data.editMode;
         this.createNew = this.activatedRoute.snapshot.data.createNew;
         if (!this.createNew) {
-            this.currentCustomer = this.activatedRoute.snapshot.data.CustomerProfileResolver;
+            this.customer = this.activatedRoute.snapshot.data.CustomerSingleResolver;
         }
 
+        this.discardHappened.subscribe(() => this.askForCancel());
+
         this.form = new FormGroup({
-            name: new FormControl(
-                {value: this.currentCustomer.name, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            postcode: new FormControl(
-                {value: this.currentCustomer.postcode, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            city: new FormControl(
-                {value: this.currentCustomer.city, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            address: new FormControl(
-                {value: this.currentCustomer.address, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            contactPerson: new FormControl(
-                {value: this.currentCustomer.contactPerson, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            mail: new FormControl(
-                {value: this.currentCustomer.mail, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            phone: new FormControl(
-                {value: this.currentCustomer.phone, disabled: !this.editMode},
-                [Validators.required]
-            ),
-            fax: new FormControl(
-                {value: this.currentCustomer.fax, disabled: !this.editMode},
-                [Validators.required]
-            )
+            name: new FormControl(this.customer.name, [Validators.required]),
+            postcode: new FormControl(this.customer.postcode, [Validators.required]),
+            city: new FormControl(this.customer.city, [Validators.required]),
+            address: new FormControl(this.customer.address, [Validators.required]),
+            contactPerson: new FormControl(this.customer.contactPerson, [Validators.required]),
+            mail: new FormControl(this.customer.mail, [Validators.required]),
+            phone: new FormControl(this.customer.phone, [Validators.required]),
+            fax: new FormControl(this.customer.fax, [Validators.required])
         });
     }
 
     private updateCustomerWithFormValues() {
-        this.currentCustomer.name = this.form.get('name').value;
-        this.currentCustomer.postcode = this.form.get('postcode').value;
-        this.currentCustomer.city = this.form.get('city').value;
-        this.currentCustomer.address = this.form.get('address').value;
-        this.currentCustomer.contactPerson = this.form.get('contactPerson').value;
-        this.currentCustomer.mail = this.form.get('mail').value;
-        this.currentCustomer.phone = this.form.get('phone').value;
-        this.currentCustomer.fax = this.form.get('fax').value;
+        this.customer.name = this.form.get('name').value;
+        this.customer.postcode = this.form.get('postcode').value;
+        this.customer.city = this.form.get('city').value;
+        this.customer.address = this.form.get('address').value;
+        this.customer.contactPerson = this.form.get('contactPerson').value;
+        this.customer.mail = this.form.get('mail').value;
+        this.customer.phone = this.form.get('phone').value;
+        this.customer.fax = this.form.get('fax').value;
     }
 
     private onSaveSuccess(routeConfig: Array<any>, message: string) {
@@ -123,11 +101,11 @@ export class CustomerProfileComponent implements OnInit {
     public save() {
         this.updateCustomerWithFormValues();
         if (this.createNew) {
-            this.customerApiService.addCustomer(this.currentCustomer).subscribe((addedCustomer) => {
+            this.customerApiService.addCustomer(this.customer).subscribe((addedCustomer) => {
                 this.onSaveSuccess(['..', addedCustomer.id, 'details'], 'Kunde wurde erstellt');
             }, () => this.onSaveFailure('Beim Erstellen des Kundne ist ein Fehler aufgetreten!'));
         } else {
-            this.customerApiService.changeCustomerById(this.currentCustomer).subscribe(() => {
+            this.customerApiService.changeCustomerById(this.customer).subscribe(() => {
                 this.onSaveSuccess(['../details'], 'Daten erfolgreich geändert!');
             }, () => this.onSaveFailure('Datenänderung fehlgeschlagen!'));
         }

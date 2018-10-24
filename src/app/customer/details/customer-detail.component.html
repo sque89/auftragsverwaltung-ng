@@ -1,0 +1,20 @@
+<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <action-headline [level]="1" [text]="customer.name" [actionButtons]="[{action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'}]"></action-headline>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <h2>Adresse</h2>
+        <span class="d-block">{{customer.address}}</span>
+        <span class="d-block">{{customer.postcode}} {{customer.city}}</span>
+
+        <h2>Kontakt</h2>
+        <span class="d-block">{{customer.contactPerson}}</span>
+        <span class="d-block">{{customer.mail}}</span>
+        <span class="d-block">{{customer.phone}}</span>
+        <span class="d-block">{{customer.fax}}</span>
+    </mat-card-content>
+</mat-card>

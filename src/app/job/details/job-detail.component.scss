@@ -1,10 +1,17 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 18.10.2018, 17:22:17
-    Author     : robin
-*/
+.deadline-info {
+    height: 50px;
 
+    &__deadline-progress-bar {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        &__elapsed, &__left {
+            height: 100%;
+        }
+    }
+
+    &__date {
+        font-size: 1.2rem;
+    }
+}

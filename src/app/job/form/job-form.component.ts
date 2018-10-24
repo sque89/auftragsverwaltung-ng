@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../core/models/job.model';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
@@ -14,51 +14,31 @@ export class JobFormComponent implements OnInit {
     public job: Job;
     public form: FormGroup;
     public createNew: boolean;
+    public discardHappened: EventEmitter<null>;
 
-    constructor(private activatedRoute: ActivatedRoute, private router: Router, private dialogService: MatDialog) {
+    public constructor(private activatedRoute: ActivatedRoute, private router: Router, private dialogService: MatDialog) {
         this.job = Job.fromVoid();
         this.createNew = false;
+        this.discardHappened = new EventEmitter();
     }
 
     public ngOnInit() {
         this.job = this.activatedRoute.snapshot.data.JobSingleResolver;
         this.form = new FormGroup({
-            dateIncoming: new FormControl(
-                this.job.dateIncoming,
-                [Validators.required]
-            ),
-            dateDeadline: new FormControl(
-                this.job.dateDeadline,
-                [Validators.required]
-            ),
-            deliveryType: new FormControl(
-                this.job.deliveryType,
-                [Validators.required]
-            ),
-            description: new FormControl(
-                this.job.description,
-                [Validators.required]
-            ),
-            notes: new FormControl(
-                this.job.notes,
-                [Validators.required]
-            ),
-            externalPurchase: new FormControl(
-                this.job.externalPurchase,
-                [Validators.required]
-            ),
-            invoiceNumber: new FormControl(
-                this.job.invoiceNumber,
-                [Validators.required]
-            ),
-            arrangers: new FormControl(
-                this.job.arrangers,
-                [Validators.required]
-            )
+            dateIncoming: new FormControl(this.job.dateIncoming, [Validators.required]),
+            dateDeadline: new FormControl(this.job.dateDeadline, [Validators.required]),
+            deliveryType: new FormControl(this.job.deliveryType, [Validators.required]),
+            description: new FormControl(this.job.description, [Validators.required]),
+            notes: new FormControl(this.job.notes, [Validators.required]),
+            externalPurchase: new FormControl(this.job.externalPurchase, [Validators.required]),
+            invoiceNumber: new FormControl(this.job.invoiceNumber, [Validators.required]),
+            arrangers: new FormControl(this.job.arrangers, [Validators.required])
         });
+
+        this.discardHappened.subscribe(() => this.askForCancel());
     }
 
-    public askForCancel() {
+    private askForCancel() {
         const dialogRef = this.dialogService.open(CancelDialogComponent, {
             height: '200px',
             width: '400px',
