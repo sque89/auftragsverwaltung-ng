@@ -25,6 +25,14 @@ const routes: Routes = [
             breadcrumb: 'Jobdetails'
         }
     }, {
+        path: 'hinzufuegen',
+        component: JobFormComponent,
+        canActivate: [AuthGuard],
+        data: {
+            createNew: true,
+            breadcrumb: 'Job bearbeiten'
+        }
+    }, {
         path: ':jobId/bearbeiten',
         component: JobFormComponent,
         canActivate: [AuthGuard],

@@ -142,6 +142,7 @@ export class UserFormComponent implements OnInit {
         ).subscribe((updatedUser) => {
             if (this.isOwnProfile) {
                 this.sessionService.setUser(updatedUser);
+                this.router.navigate(['..'], {relativeTo: this.activatedRoute});
             } else {
                 this.router.navigate(['../details'], {relativeTo: this.activatedRoute});
             }

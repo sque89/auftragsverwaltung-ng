@@ -2,10 +2,11 @@ import {User} from "./user.model";
 import * as _ from 'lodash';
 import {Moment} from "moment";
 import * as moment from 'moment'
+import {Customer} from "./customer.model";
 
 export class Job {
     public static fromVoid() {
-        return new Job(null, null, null, null, '', '', '', null, [], null, null)
+        return new Job(null, null, null, null, null, '', '', '', null, [], null, null);
     }
 
     public static fromObject(data: any) {
@@ -13,6 +14,7 @@ export class Job {
             data.id,
             moment(data.dateIncoming),
             moment(data.dateDeadline),
+            data.customer,
             data.deliveryType,
             data.description,
             data.notes,
@@ -21,13 +23,14 @@ export class Job {
             data.arrangers,
             moment(data.createdAt),
             moment(data.updatedAt)
-        )
+        );
     }
 
     public constructor(
         public id: string,
         public dateIncoming: Moment,
         public dateDeadline: Moment,
+        public customer: Customer,
         public deliveryType: number,
         public description: string,
         public notes: string,

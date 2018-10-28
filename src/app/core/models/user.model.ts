@@ -7,6 +7,22 @@ export class User {
         {id: 'ROLE_USER', label: 'Benutzer'}
     ];
 
+    public static fromVoid() {
+        return new User(null, '', '', '', '', [], false);
+    }
+
+    public static fromObject(data: any) {
+        return new User(
+            data.id,
+            data.username,
+            data.firstname,
+            data.lastname,
+            data.email,
+            data.roles,
+            data.isActive
+        );
+    }
+
     public constructor(
         public id: number,
         public username: string,

@@ -1,10 +1,11 @@
 import {environment} from '../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {User} from '../models/user.model';
 import {UiService} from './ui.service';
 import {Observable} from 'rxjs';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UserApiService {
@@ -12,40 +13,44 @@ export class UserApiService {
 
     public getUserByUsername(username: string): Observable<User> {
         this.uiService.showLoadingOverlay();
-        return this.http.get<User>(`${environment.apiUrl}/user/${username}`)
-            .pipe(map((response: any) => {
+        return this.http.get<User>(`${environment.apiUrl}/user/${username}`).pipe(
+            map((user: any) => {
                 this.uiService.hideLoadingOverlay();
-                return new User(
-                    response.id,
-                    response.username,
-                    response.firstname,
-                    response.lastname,
-                    response.email,
-                    response.roles,
-                    response.isActive
-                );
-            }));
+                return User.fromObject(user)
+            })
+        );
     }
 
-    public getAllUsers() {
+    public getAllUsers(): Observable<Array<User>> {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<User>>(`${environment.apiUrl}/users`)
-            .pipe(map((response: any) => {
+        return this.http.get<Array<User>>(`${environment.apiUrl}/users`).pipe(
+            map((response: any) => {
                 this.uiService.hideLoadingOverlay();
                 const users: Array<User> = [];
-                response.users.forEach((user: any) => {
-                    users.push(new User(
-                        user.id,
-                        user.username,
-                        user.firstname,
-                        user.lastname,
-                        user.email,
-                        user.roles,
-                        user.isActive
-                    ));
-                });
+                if (!_.isEmpty(response)) {
+                    response.forEach((user: any) => {
+                        users.push(User.fromObject(user));
+                    });
+                }
                 return users;
-            }));
+            })
+        );
+    }
+
+    public getAllUsersUnsensitive(): Observable<Array<User>> {
+        this.uiService.showLoadingOverlay();
+        return this.http.get<Array<User>>(`${environment.apiUrl}/users/unsensitive`).pipe(
+            map((response: any) => {
+                this.uiService.hideLoadingOverlay();
+                const users: Array<User> = [];
+                if (!_.isEmpty(response)) {
+                    response.forEach((user: any) => {
+                        users.push(User.fromObject(user));
+                    });
+                }
+                return users;
+            })
+        );
     }
 
     public changeCommonUserData(

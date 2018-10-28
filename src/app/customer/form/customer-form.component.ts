@@ -103,7 +103,7 @@ export class CustomerFormComponent implements OnInit {
         if (this.createNew) {
             this.customerApiService.addCustomer(this.customer).subscribe((addedCustomer) => {
                 this.onSaveSuccess(['..', addedCustomer.id, 'details'], 'Kunde wurde erstellt');
-            }, () => this.onSaveFailure('Beim Erstellen des Kundne ist ein Fehler aufgetreten!'));
+            }, () => this.onSaveFailure('Beim Erstellen des Kunden ist ein Fehler aufgetreten!'));
         } else {
             this.customerApiService.changeCustomerById(this.customer).subscribe(() => {
                 this.onSaveSuccess(['../details'], 'Daten erfolgreich geändert!');

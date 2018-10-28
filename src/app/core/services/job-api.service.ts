@@ -13,52 +13,29 @@ export class JobApiService {
 
     public getAllJobs() {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<Job>>(`${environment.apiUrl}/jobs`)
-            .pipe(map((response: any) => {
+        return this.http.get<Array<Job>>(`${environment.apiUrl}/jobs`).pipe(
+            map((response: any) => {
                 this.uiService.hideLoadingOverlay();
                 const jobs: Array<Job> = [];
                 if (!_.isEmpty(response)) {
                     response.forEach((job: any) => {
-                        jobs.push(new Job(
-                            job.id,
-                            job.dateIncoming,
-                            job.dateDeadline,
-                            job.deliveryType,
-                            job.description,
-                            job.notes,
-                            job.externalPurchase,
-                            job.invoiceNumber,
-                            job.arrangers,
-                            job.createdAt,
-                            job.updatedAt
-                        ));
+                        jobs.push(Job.fromObject(job));
                     });
                 }
                 return jobs;
-            }));
+            })
+        );
     }
 
     public getJobsInTimespan(from: Moment, to: Moment) {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<Job>>(`${environment.apiUrl}/jobs/${from.unix()}/${to.unix()}`)
-            .pipe(map((response: any) => {
+        return this.http.get<Array<Job>>(`${environment.apiUrl}/jobs/${from.unix()}/${to.unix()}`).pipe(
+            map((response: any) => {
                 this.uiService.hideLoadingOverlay();
                 const jobs: Array<Job> = [];
                 if (!_.isEmpty(response)) {
                     response.forEach((job: any) => {
-                        jobs.push(new Job(
-                            job.id,
-                            job.dateIncoming,
-                            job.dateDeadline,
-                            job.deliveryType,
-                            job.description,
-                            job.notes,
-                            job.externalPurchase,
-                            job.invoiceNumber,
-                            job.arrangers,
-                            job.createdAt,
-                            job.updatedAt
-                        ));
+                        jobs.push(Job.fromObject(job));
                     });
                 }
                 return jobs;
@@ -67,22 +44,31 @@ export class JobApiService {
 
     public getJobById(id: string) {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<Job>>(`${environment.apiUrl}/job/${id}`)
-            .pipe(map((response: any) => {
+        return this.http.get<Array<Job>>(`${environment.apiUrl}/job/${id}`).pipe(
+            map((job: any) => {
                 this.uiService.hideLoadingOverlay();
-                return new Job(
-                    response.id,
-                    response.dateIncoming,
-                    response.dateDeadline,
-                    response.deliveryType,
-                    response.description,
-                    response.notes,
-                    response.externalPurchase,
-                    response.invoiceNumber,
-                    response.arrangers,
-                    response.createdAt,
-                    response.updatedAt
-                );
-            }));
+                return Job.fromObject(job)
+            })
+        );
+    }
+
+    public createJob(job: Job) {
+        this.uiService.showLoadingOverlay();
+        return this.http.post<Job>(`${environment.apiUrl}/job`, job).pipe(
+            map((job: any) => {
+                this.uiService.hideLoadingOverlay();
+                return Job.fromObject(job);
+            })
+         );
+    }
+
+    public changeJobById(job: Job) {
+        this.uiService.showLoadingOverlay();
+        return this.http.post<Job>(`${environment.apiUrl}/job/${job.id}`, job).pipe(
+            map((job: any) => {
+                this.uiService.hideLoadingOverlay();
+                return Job.fromObject(job);
+            })
+        );
     }
 }

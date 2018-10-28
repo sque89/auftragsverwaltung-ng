@@ -27,6 +27,15 @@
                 <span class="d-block font-weight-bold deadline-info__date">{{job.dateDeadline | date:'mediumDate'}}</span>
             </div>
         </div>
+        <h3 matLine>Kunde</h3>
+        <p matLine>{{job.customer.name}}</p>
+        <p matLine>{{job.customer.address}}</p>
+        <p matLine>{{job.customer.postcode}} {{job.customer.city}}</p>
+        <p matLine>{{job.customer.contactPerson}}</p>
+        <p matLine>{{job.customer.phone}}</p>
+        <p matLine>{{job.customer.email}}</p>
+        <p matLine>{{job.customer.fax}}</p>
+
         <h3 matLine>Notizen</h3>
         <p matLine>{{job.notes}}</p>
 

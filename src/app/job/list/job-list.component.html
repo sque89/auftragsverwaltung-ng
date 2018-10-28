@@ -1,4 +1,4 @@
-<auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: '/job/hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
+<auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: 'hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
 
 <div class="row">
     <div class="col-12 col-md-6">
@@ -41,7 +41,7 @@
 
     <ng-container matColumnDef="deliveryType">
         <mat-header-cell mat-sort-header *matHeaderCellDef>Lieferart</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.deliveryType}}</mat-cell>
+        <mat-cell *matCellDef="let job">{{job.deliveryType.label}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="arrangers">

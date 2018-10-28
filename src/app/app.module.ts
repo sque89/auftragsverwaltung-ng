@@ -18,6 +18,7 @@ import {AppService} from './core/services/app.service';
 import {SettingApiService} from './core/services/setting-api.service';
 import {ErrorsHandler} from './core/handlers/error.handler';
 import {LogApiService} from './core/services/log-api.service';
+import {DeliveryTypeApiService} from './core/services/delivery-type-api.service';
 
 export function getSettings(appService: AppService) {
     return () => {
@@ -75,6 +76,7 @@ export const DATE_FORMATS = {
     ],
     providers: [
         SettingApiService,
+        DeliveryTypeApiService,
         LogApiService,
         {provide: LOCALE_ID, useValue: 'de'},
         {provide: APP_INITIALIZER, useFactory: getSettings, deps: [AppService], multi: true},
