@@ -3,10 +3,11 @@ import * as _ from 'lodash';
 import {Moment} from "moment";
 import * as moment from 'moment'
 import {Customer} from "./customer.model";
+import {Task} from "./task.model";
 
 export class Job {
     public static fromVoid() {
-        return new Job(null, null, null, null, null, '', '', '', null, [], null, null);
+        return new Job(null, null, null, null, null, '', '', '', null, [], [], null, null);
     }
 
     public static fromObject(data: any) {
@@ -21,6 +22,7 @@ export class Job {
             data.externalPurchase,
             data.invoiceNumber,
             data.arrangers,
+            data.tasks,
             moment(data.createdAt),
             moment(data.updatedAt)
         );
@@ -37,6 +39,7 @@ export class Job {
         public externalPurchase: string,
         public invoiceNumber: string,
         public arrangers: Array<User>,
+        public tasks: Array<Task>,
         public createdAt: Moment,
         public updatedAt: Moment
     ) {

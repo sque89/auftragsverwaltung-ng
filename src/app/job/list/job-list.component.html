@@ -74,18 +74,28 @@
     </ng-container>
 
     <ng-container matColumnDef="expandedTasks">
-        <td mat-cell *matCellDef="let job">
+        <td mat-cell *matCellDef="let job" class="w-100">
             <table class="w-100" mat-table [dataSource]="job.job.tasks">
                <ng-container matColumnDef="id">
                     <mat-header-cell mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
                     <mat-cell mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
                 </ng-container>
+                <ng-container matColumnDef="description">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef>Beschreibung</mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let task">{{task.description}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="arranger">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef>Bearbeiter*in</mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let task">{{task.arranger.firstname}} {{task.arranger.lastname}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="workingTime">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef>Arbeitszeit</mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let task">{{task.workingTime}}</mat-cell>
+                </ng-container>
 
-                <mat-header-row *matHeaderRowDef="['id']"></mat-header-row>
+                <mat-header-row *matHeaderRowDef="['id', 'description', 'arranger', 'workingTime']"></mat-header-row>
 
-                <mat-row
-                    *matRowDef="let job; columns: ['id'];"
-                    ></mat-row>
+                <mat-row *matRowDef="let job; columns: ['id', 'description', 'arranger', 'workingTime'];"></mat-row>
             </table>
         </td>
     </ng-container>
