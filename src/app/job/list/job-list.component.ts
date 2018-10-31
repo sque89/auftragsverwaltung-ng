@@ -13,26 +13,13 @@ import {JobApiService} from '../../core/services/job-api.service';
 @Component({
     selector: 'job-list',
     templateUrl: './job-list.component.html',
-    styleUrls: ['./job-list.component.scss'],
-    animations: [
-        trigger('taskExpand', [
-            state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
-            state('expanded', style({height: '*', visibility: 'visible'})),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ]
+    styleUrls: ['./job-list.component.scss']
 })
 export class JobListComponent {
-    public jobs: MatTableDataSource<Job | {taskRow: boolean, job: Job}>;
-    public columnsToDisplay: string[] = ['id', 'dateIncoming', 'dateDeadline', 'deliveryType', 'arrangers', 'description', 'invoiceNumber', 'actions'];
+    public jobs: Array<Job>;
     public pageSize = this.appService.getSettingById('job_list_jobs_per_page').value;
     public pageSizeOptions: number[] = [5, 10, 25, 100];
-    public isTaskRow = (i: number, row: Job | {taskRow: boolean, job: Job}) => row.hasOwnProperty('taskRow');
-    public expandedJob: Job;
     public timespanForm: FormGroup;
-
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     public constructor(
         private uiService: UiService,
@@ -43,9 +30,7 @@ export class JobListComponent {
     ) {}
 
     public ngOnInit() {
-        this.setJobDataSource(this.activatedRoute.snapshot.data.JobListResolver);
-        this.jobs.sort = this.sort;
-        this.jobs.paginator = this.paginator;
+        this.jobs = this.activatedRoute.snapshot.data.JobListResolver;
         this.uiService.closeMainMenu();
         this.timespanForm = new FormGroup({
             from: new FormControl(moment().subtract(parseInt(this.appService.getSettingById('job_list_default_timespan').value), 'days').startOf('day')),
@@ -57,19 +42,9 @@ export class JobListComponent {
     private bindTimespanChanges() {
         this.timespanForm.valueChanges.subscribe(values => {
             this.jobApiService.getJobsInTimespan(values.from, values.to).subscribe((jobs) => {
-                this.setJobDataSource(jobs);
+                this.jobs = jobs;
             });
         });
-    }
-
-    private setJobDataSource(jobs: Array<Job>) {
-        const jobDataSource: Array<Job | {taskRow: boolean, job: Job}> = [];
-        jobs.forEach((job: Job) => jobDataSource.push(job, {taskRow: true, job: job}));
-        this.jobs = new MatTableDataSource(jobDataSource);
-    }
-
-    public applyFilter(filterValue: string) {
-        this.jobs.filter = filterValue.trim().toLowerCase();
     }
 
     public showJobDetails(job: Job) {

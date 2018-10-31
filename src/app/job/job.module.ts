@@ -5,7 +5,7 @@ import {JobListComponent} from './list/job-list.component';
 import {JobApiService} from '../core/services/job-api.service';
 import {JobListResolver} from './list/job-list-resolver.service';
 import {JobRoutingModule} from './job-routing.module';
-import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatSelectModule, MatCardModule, MatChipsModule, MatListModule, MatDividerModule, MatDialogModule, MatAutocompleteModule} from '@angular/material';
+import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatSelectModule, MatCardModule, MatChipsModule, MatListModule, MatDividerModule, MatDialogModule, MatAutocompleteModule, MatExpansionModule} from '@angular/material';
 import {SharedModule} from '../shared/shared.module';
 import {JobSingleResolver} from './job-single-resolver.service';
 import {JobDetailComponent} from './details/job-detail.component';
@@ -21,11 +21,8 @@ import {UserApiService} from '../core/services/user-api.service';
         FormsModule,
         SharedModule,
         JobRoutingModule,
-        MatTableModule,
-        MatSortModule,
         MatFormFieldModule,
         MatInputModule,
-        MatPaginatorModule,
         MatButtonModule,
         MatDatepickerModule,
         MatIconModule,
@@ -36,6 +33,7 @@ import {UserApiService} from '../core/services/user-api.service';
         MatDividerModule,
         MatDialogModule,
         MatAutocompleteModule,
+        MatExpansionModule,
         TruncateModule
     ],
     providers: [
