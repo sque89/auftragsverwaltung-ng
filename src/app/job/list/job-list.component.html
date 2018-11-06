@@ -1,8 +1,8 @@
 <auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: 'hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
 
-<div class="row">
-    <div class="col-12 col-md-6">
-        <form [formGroup]="timespanForm">
+<form [formGroup]="filterForm">
+    <div class="row">
+        <div class="col-12 col-md-6">
             <mat-form-field class="mr-3">
                 <input matInput formControlName="from" [matDatepicker]="listFromPicker" placeholder="von">
                 <mat-datepicker-toggle matSuffix [for]="listFromPicker"></mat-datepicker-toggle>
@@ -14,106 +14,29 @@
                 <mat-datepicker-toggle matSuffix [for]="listToPicker"></mat-datepicker-toggle>
                 <mat-datepicker #listToPicker></mat-datepicker>
             </mat-form-field>
-        </form>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field class="w-100">
+                <input matInput formControlName="search" placeholder="Volltextsuche">
+            </mat-form-field>
+        </div>
     </div>
-    <div class="col-12 col-md-6">
-        <mat-form-field class="w-100">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Volltextsuche">
-        </mat-form-field>
-    </div>
-</div>
+</form>
 
-<table class="w-100" mat-table matSort [dataSource]="jobs">
-       <ng-container matColumnDef="id">
-        <mat-header-cell mat-header-cell mat-sort-header *matHeaderCellDef>ID</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let job">{{job.id}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="dateIncoming">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Eingangsdatum</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.dateIncoming | date:'shortDate'}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="dateDeadline">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Abgabedatum</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.dateDeadline | date:'shortDate'}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="deliveryType">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Lieferart</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.deliveryType.label}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="arrangers">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Bearbeiter</mat-header-cell>
-        <mat-cell *matCellDef="let job" class="flex-wrap">
-            <span  *ngFor="let arranger of job.arrangers" class="d-block badge badge-primary">{{arranger.firstname}} {{arranger.lastname}}</span>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Beschreibung</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.description | words : 10 : '...'}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="invoiceNumber">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Rechnungsnummer</mat-header-cell>
-        <mat-cell *matCellDef="let job">{{job.getInvoiceNumber()}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let job">
-            <button class="mat-button" type="button" [routerLink]="[job.id, 'details']">
-                <mat-icon class="mat-icon material-icons" color="primary">visibility</mat-icon>
-            </button>
-            <button class="mat-button" type="button" [routerLink]="[job.id, 'bearbeiten']">
-                <mat-icon class="mat-icon material-icons" color="primary">edit</mat-icon>
-            </button>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="expandedTasks">
-        <td mat-cell *matCellDef="let job" class="w-100">
-            <table class="w-100" mat-table [dataSource]="job.job.tasks">
-               <ng-container matColumnDef="id">
-                    <mat-header-cell mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let task">{{task.id}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="description">
-                    <mat-header-cell mat-header-cell *matHeaderCellDef>Beschreibung</mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let task">{{task.description}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="arranger">
-                    <mat-header-cell mat-header-cell *matHeaderCellDef>Bearbeiter*in</mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let task">{{task.arranger.firstname}} {{task.arranger.lastname}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="workingTime">
-                    <mat-header-cell mat-header-cell *matHeaderCellDef>Arbeitszeit</mat-header-cell>
-                    <mat-cell mat-cell *matCellDef="let task">{{task.workingTime}}</mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="['id', 'description', 'arranger', 'workingTime']"></mat-header-row>
-
-                <mat-row *matRowDef="let job; columns: ['id', 'description', 'arranger', 'workingTime'];"></mat-row>
-            </table>
-        </td>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-
-    <mat-row
-        *matRowDef="let job; columns: columnsToDisplay;"
-        class="job-row"
-        matRipple
-        [class.expanded]="expandedJob == job"
-        (click)="expandedJob = job"
-        ></mat-row>
-
-    <mat-row *matRowDef="let job; columns: ['expandedTasks']; when: isTaskRow"
-        [@taskExpand]="job.job == expandedJob ? 'expanded' : 'collapsed'"
-        style="overflow: hidden"
-        class="job-task-row"
-        ></mat-row>
-</table>
-<mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+<mat-accordion multi="true">
+    <mat-expansion-panel *ngFor="let job of filteredJobs" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen" [routerLink]="[job.job.id, 'details']" stopClickPropagation>
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten" [routerLink]="[job.job.id, 'bearbeiten']" stopClickPropagation>
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <span [innerHtml]="job.job.id | highlight: search"></span>
+            </mat-panel-title>
+            <mat-panel-description *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: search"></mat-panel-description>
+        </mat-expansion-panel-header>
+        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="search"></job-detail>
+    </mat-expansion-panel>
+</mat-accordion>
