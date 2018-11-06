@@ -1,19 +1,16 @@
-<auftragsverwaltung-ng-breadcrumb></auftragsverwaltung-ng-breadcrumb>
+<auftragsverwaltung-ng-breadcrumb [hidden]="summaryMode"></auftragsverwaltung-ng-breadcrumb>
 
 <mat-card>
     <mat-card-header>
-        <mat-card-title>
+        <mat-card-title *ngIf="!summaryMode">
             <action-headline [level]="2" [text]="job.id" [actionButtons]="[{action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'}]"></action-headline>
         </mat-card-title>
-        <mat-card-subtitle>
-            {{job.description}}
-        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div class="row no-gutters mb-5 deadline-info align-items-center position-relative shadow rounded">
             <svg class="deadline-info__deadline-progress-bar">
-            <rect class="deadline-info__deadline-progress-bar__elapsed" [attr.width]="100 - job.getPercentageTimeLeft() + '%'" style="fill:rgba(239,76,76);" />
-                  <rect class="deadline-info__deadline-progress-bar__left" [attr.x]="100 - job.getPercentageTimeLeft() + '%'" [attr.width]="job.getPercentageTimeLeft() + '%'" style="fill:rgba(85,193,52);" />
+            <rect class="deadline-info__deadline-progress-bar__elapsed" [attr.width]="100 - job.getPercentageTimeLeft() + '%'" style="fill:rgba(239, 76, 76);" />
+                  <rect class="deadline-info__deadline-progress-bar__left" [attr.x]="100 - job.getPercentageTimeLeft() + '%'" [attr.width]="job.getPercentageTimeLeft() + '%'" style="fill:rgba(139, 195, 74);" />
                   </svg>
             <div class="col-4 text-left pl-2">
                 <span class="d-block font-weight-bold text-black-50">Eingang</span>
@@ -27,29 +24,31 @@
                 <span class="d-block font-weight-bold deadline-info__date">{{job.dateDeadline | date:'mediumDate'}}</span>
             </div>
         </div>
-        <h3 matLine>Kunde</h3>
-        <p matLine>{{job.customer.name}}</p>
-        <p matLine>{{job.customer.address}}</p>
-        <p matLine>{{job.customer.postcode}} {{job.customer.city}}</p>
-        <p matLine>{{job.customer.contactPerson}}</p>
-        <p matLine>{{job.customer.phone}}</p>
-        <p matLine>{{job.customer.email}}</p>
-        <p matLine>{{job.customer.fax}}</p>
 
-        <h3 matLine>Notizen</h3>
-        <p matLine>{{job.notes}}</p>
+        <div class="h4">Beschreibung</div>
+        <div class="mb-3" [innerHtml]="job.description | highlight: textToHighlight"></div>
 
-        <h3 matLine>Externer Einkauf</h3>
-        <p matLine>{{job.externalPurchase}}</p>
+        <div class="h4">Kunde</div>
+        <div class="d-block font-weight-bold" [innerHtml]="job.customer.name | highlight: textToHighlight"></div>
+        <div>{{job.customer.address}}</div>
+        <div class="mb-3">{{job.customer.postcode}} {{job.customer.city}}</div>
+        <div>{{job.customer.email}}</div>
+        <div class="font-weight-bold">{{job.customer.contactPerson}}</div>
+        <div>Tel: {{job.customer.phone}}</div>
+        <div class="mb-3">Fax: {{job.customer.fax}}</div>
 
-        <h3 matLine>Bearbeiter</h3>
-        <p matLine>
-        <mat-chip-list>
-            <mat-chip *ngFor="let arranger of job.arrangers" selected>
-                {{arranger.firstname}} {{arranger.lastname}}
-        </mat-chip>
-    </mat-chip-list>
-    </p>
+        <div class="h4" matLine>Notizen</div>
+        <div class="mb-3" [innerHtml]="job.notes | highlight: textToHighlight"></div>
+
+        <div class="h4" matLine>Externer Einkauf</div>
+        <div class="mb-3" [innerHtml]="job.externalPurchase | highlight: textToHighlight"></div>
+
+        <div class="h4" matLine>Bearbeiter</div>
+            <mat-chip-list>
+                <mat-chip *ngFor="let arranger of job.arrangers" selected>
+                    {{arranger.firstname}} {{arranger.lastname}}
+            </mat-chip>
+        </mat-chip-list>
 </mat-card-content>
 
 <mat-divider class="position-relative my-4"></mat-divider>
