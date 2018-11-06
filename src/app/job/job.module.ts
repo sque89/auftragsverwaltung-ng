@@ -13,6 +13,7 @@ import {JobFormComponent} from './form/job-form.component';
 import {TruncateModule} from '@yellowspot/ng-truncate';
 import {CustomerApiService} from '../core/services/customer-api.service';
 import {UserApiService} from '../core/services/user-api.service';
+import {HighlightPipe} from '../core/pipes/highlight/highlight.pipe';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import {UserApiService} from '../core/services/user-api.service';
     declarations: [
         JobListComponent,
         JobDetailComponent,
-        JobFormComponent
+        JobFormComponent,
+        HighlightPipe
     ]
 })
 export class JobModule {}

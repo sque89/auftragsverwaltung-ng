@@ -1,2 +1,12 @@
-@import "/assets/sass/overwrites";
-@import "/assets/sass/utils";
+@import 'variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import 'overwrites';
+@import 'utils';
+
+job-list {
+    .mat-expansion-panel-header {
+        .mat-content {
+            height: 100%;
+        }
+    }
+}
