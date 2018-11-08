@@ -6,8 +6,10 @@ import {Customer} from "./customer.model";
 import {Task} from "./task.model";
 
 export class Job {
+    public tasks: Array<Task>;
+
     public static fromVoid() {
-        return new Job(null, null, null, null, null, '', '', '', null, [], [], null, null);
+        return new Job(null, null, null, null, null, '', '', '', null, [], null, null, []);
     }
 
     public static fromObject(data: any) {
@@ -22,9 +24,9 @@ export class Job {
             data.externalPurchase,
             data.invoiceNumber,
             data.arrangers,
-            data.tasks,
             moment(data.createdAt),
-            moment(data.updatedAt)
+            moment(data.updatedAt),
+            data.tasks
         );
     }
 
@@ -39,10 +41,14 @@ export class Job {
         public externalPurchase: string,
         public invoiceNumber: string,
         public arrangers: Array<User>,
-        public tasks: Array<Task>,
         public createdAt: Moment,
-        public updatedAt: Moment
+        public updatedAt: Moment,
+        tasks: Array<Task>
     ) {
+        this.tasks = [];
+        tasks && tasks.forEach(task => {
+            this.tasks.push(Task.fromObject(task));
+        });
     }
 
     public getInvoiceNumber(): string {
@@ -54,5 +60,9 @@ export class Job {
         const daysLeft = this.dateDeadline.diff(moment(), 'days');
 
         return daysLeft > 0 ? (daysLeft / daysOverall) * 100 : 0;
+    }
+
+    public getOverallWorkingTimeInMinutes(): number {
+        return this.tasks.reduce((acc: number, cv: Task) => acc + cv.workingTime, 0);
     }
 }

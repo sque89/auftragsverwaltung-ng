@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule, LOCALE_ID, APP_INITIALIZER, ErrorHandler} from '@angular/core';
-import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule, MatDialogModule, MAT_DATE_FORMATS} from '@angular/material';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './shared/layout/header/header.component';
@@ -81,7 +81,8 @@ export const DATE_FORMATS = {
         {provide: LOCALE_ID, useValue: 'de'},
         {provide: APP_INITIALIZER, useFactory: getSettings, deps: [AppService], multi: true},
         //{provide: ErrorHandler, useClass: ErrorsHandler},
-        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS}
+        {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
+        {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true }}
     ],
     bootstrap: [AppComponent]
 })

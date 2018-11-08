@@ -2,13 +2,14 @@
 
 <form [formGroup]="filterForm">
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-3">
             <mat-form-field class="mr-3">
                 <input matInput formControlName="from" [matDatepicker]="listFromPicker" placeholder="von">
                 <mat-datepicker-toggle matSuffix [for]="listFromPicker"></mat-datepicker-toggle>
                 <mat-datepicker #listFromPicker></mat-datepicker>
             </mat-form-field>
-
+        </div>
+        <div class="col-12 col-md-3">
             <mat-form-field>
                 <input matInput formControlName="to" [matDatepicker]="listToPicker" placeholder="bis">
                 <mat-datepicker-toggle matSuffix [for]="listToPicker"></mat-datepicker-toggle>
@@ -18,25 +19,47 @@
         <div class="col-12 col-md-6">
             <mat-form-field class="w-100">
                 <input matInput formControlName="search" placeholder="Volltextsuche">
+                <button mat-button *ngIf="filterForm.controls['search'].value" matSuffix mat-icon-button aria-label="Clear" (click)="filterForm.controls['search'].setValue('')">
+                        <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <mat-form-field>
+                <mat-select matInput formControlName="sort" placeholder="Sortieren nach">
+                    <mat-option value="id">Jobnummer</mat-option>
+                    <mat-option value="description">Beschreibung</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button (click)="changeSortDirection()">
+                    <mat-icon *ngIf="!sortDirectionAsc">arrow_downward</mat-icon>
+                <mat-icon *ngIf="sortDirectionAsc">arrow_upward</mat-icon>
+            </button>
         </div>
     </div>
 </form>
 
 <mat-accordion multi="true">
     <mat-expansion-panel *ngFor="let job of filteredJobs" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header [collapsedHeight]="'58px'" [expandedHeight]="'58px'">
             <mat-panel-title>
-                <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen" [routerLink]="[job.job.id, 'details']" stopClickPropagation>
-                    <mat-icon>visibility</mat-icon>
-                </button>
-                <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten" [routerLink]="[job.job.id, 'bearbeiten']" stopClickPropagation>
-                    <mat-icon>edit</mat-icon>
-                </button>
                 <span [innerHtml]="job.job.id | highlight: search"></span>
             </mat-panel-title>
-            <mat-panel-description *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: search"></mat-panel-description>
+            <mat-panel-description class="flex-fill">
+                <span *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: search"></span>
+            </mat-panel-description>
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen" [routerLink]="[job.job.id, 'details']" (click)="false" stopClickPropagation>
+                <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten" [routerLink]="[job.job.id, 'bearbeiten']" stopClickPropagation>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Aufwand buchen" (click)="showTaskFormDialog(job.job)" stopClickPropagation>
+                <mat-icon>playlist_add</mat-icon>
+            </button>
         </mat-expansion-panel-header>
-        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="search"></job-detail>
+        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="search" [updateTaskTable]="updateTaskTable" (taskEditHappened)="showTaskFormDialog(job.job, $event)"></job-detail>
     </mat-expansion-panel>
 </mat-accordion>

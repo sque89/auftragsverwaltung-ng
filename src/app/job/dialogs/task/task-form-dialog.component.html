@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Aufwand buchen</h1>
+<div mat-dialog-content>
+    <form [formGroup]="form">
+        <mat-form-field class="d-block">
+            <input type="number" matInput placeholder="Arbeitszeit" formControlName="workingTime" />
+        </mat-form-field>
+        <mat-form-field class="d-block">
+            <textarea matInput rows="5" placeholder="Beschreibung" formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+            <input matInput formControlName="date" [matDatepicker]="datePicker" placeholder="Aufwandsdatum">
+            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker></mat-datepicker>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions class="mb-0">
+    <button mat-raised-button color="warn" (click)="onNoClick()">Abbrechen</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+</div>

@@ -4,30 +4,47 @@
     [level]="1"
     [text]="createNew ? 'Job erstellen' : 'Job ' + job.id + ' bearbeiten'"
     [actionButtons]="[{action: discardHappened, color: 'warn', title: 'Verwerfen', icon: 'cancel'}]"
-></action-headline>
+    ></action-headline>
 
-<form [formGroup]="form" (submit)="form.valid && save()" class="pt-3">
-    <mat-form-field class="w-100">
-        <input matInput formControlName="dateIncoming" [matDatepicker]="dateIncomingPicker" placeholder="Eingangsdatum">
-        <mat-datepicker-toggle matSuffix [for]="dateIncomingPicker"></mat-datepicker-toggle>
-        <mat-datepicker #dateIncomingPicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field class="w-100">
-        <input matInput formControlName="dateDeadline" [matDatepicker]="dateDeadlinePicker" placeholder="Ablieferdatum">
-        <mat-datepicker-toggle matSuffix [for]="dateDeadlinePicker"></mat-datepicker-toggle>
-        <mat-datepicker #dateDeadlinePicker></mat-datepicker>
-    </mat-form-field>
+<form [formGroup]="form" (submit)="form.valid && save()" class="container-fluid pt-3">
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <mat-form-field class="w-100">
+                <input matInput formControlName="dateIncoming" [matDatepicker]="dateIncomingPicker" placeholder="Eingangsdatum">
+                <mat-datepicker-toggle matSuffix [for]="dateIncomingPicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateIncomingPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-sm-6">
+            <mat-form-field class="w-100">
+                <input matInput formControlName="dateDeadline" [matDatepicker]="dateDeadlinePicker" placeholder="Ablieferdatum">
+                <mat-datepicker-toggle matSuffix [for]="dateDeadlinePicker"></mat-datepicker-toggle>
+                <mat-datepicker #dateDeadlinePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <mat-form-field class="d-block">
+                <input type="text" matInput placeholder="Kunde" formControlName="customer" [matAutocomplete]="customerAutocomplete" />
+            </mat-form-field>
+            <mat-autocomplete #customerAutocomplete="matAutocomplete" [displayWith]="customerAutocompleteDisplay">
+                <mat-option *ngFor="let customer of customers$ | async" [value]="customer">
+                    {{ customer.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col-12 col-sm-6">
+            <mat-form-field class="d-block">
+                <mat-select matInput placeholder="Lieferart" formControlName="deliveryType" [compareWith]="compareDeliveryTypes">
+                    <mat-option *ngFor="let deliveryType of appService.getDeliveryTypes()" [value]="deliveryType">{{deliveryType.label}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
     <mat-form-field class="d-block">
-        <input type="text" matInput placeholder="Kunde" formControlName="customer" [matAutocomplete]="customerAutocomplete" />
-    </mat-form-field>
-    <mat-autocomplete #customerAutocomplete="matAutocomplete" [displayWith]="customerAutocompleteDisplay">
-        <mat-option *ngFor="let customer of customers$ | async" [value]="customer">
-            {{ customer.name }}
-        </mat-option>
-    </mat-autocomplete>
-    <mat-form-field class="d-block">
-        <mat-select matInput type="text" placeholder="Lieferart" formControlName="deliveryType" [compareWith]="compareDeliveryTypes">
-            <mat-option *ngFor="let deliveryType of appService.getDeliveryTypes()" [value]="deliveryType">{{deliveryType.label}}</mat-option>
+        <mat-select formControlName="arrangers" placeholder="Bearbeiter*innen" [compareWith]="compareUsers" multiple>
+            <mat-option *ngFor="let user of users$ | async" [value]="user">{{user.firstname}} {{user.lastname}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field class="d-block">
@@ -41,11 +58,6 @@
     </mat-form-field>
     <mat-form-field class="d-block">
         <input matInput type="text" placeholder="Rechnungsnummer" formControlName="invoiceNumber">
-    </mat-form-field>
-    <mat-form-field class="d-block">
-        <mat-select formControlName="arrangers" placeholder="Bearbeiter*innen" [compareWith]="compareUsers" multiple>
-            <mat-option *ngFor="let user of users$ | async" [value]="user">{{user.firstname}} {{user.lastname}}</mat-option>
-        </mat-select>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Job speichern</button>
 </form>
