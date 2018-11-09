@@ -3,7 +3,14 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title *ngIf="!summaryMode">
-            <action-headline [level]="2" [text]="job.id" [actionButtons]="[{action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'}]"></action-headline>
+            <action-headline
+                [level]="2"
+                [text]="job.id"
+                [actionButtons]="[
+                    {action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'},
+                    {action: openTaskFormDialogHappened, color: 'primary', title: 'Zeit buchen', icon: 'playlist_add'}
+                ]"
+            ></action-headline>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
@@ -59,7 +66,7 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef> Aktionen </th>
                     <td mat-cell *matCellDef="let task">
-                        <button mat-mini-fab (click)="taskEditHappened.emit(task)" type="button" color="primary" title="Task ändern">
+                        <button mat-mini-fab (click)="showTaskFormDialog(task)" type="button" color="primary" title="Task ändern">
                             <mat-icon>edit</mat-icon>
                         </button>
                     </td>
@@ -83,10 +90,10 @@
         <div class="mb-3">Fax: {{job.customer.fax}}</div>
 
         <div class="h4" matLine>Notizen</div>
-        <div class="mb-3" [innerHtml]="job.notes | highlight: textToHighlight"></div>
+        <div class="mb-3" [innerHtml]="job.notes || '--' | highlight: textToHighlight"></div>
 
         <div class="h4" matLine>Externer Einkauf</div>
-        <div class="mb-3" [innerHtml]="job.externalPurchase | highlight: textToHighlight"></div>
+        <div class="mb-3" [innerHtml]="job.externalPurchase || '--'  | highlight: textToHighlight"></div>
 
         <div class="h4" matLine>Bearbeiter</div>
         <mat-chip-list>

@@ -16,6 +16,7 @@ import {UserApiService} from '../core/services/user-api.service';
 import {HighlightPipe} from '../core/pipes/highlight/highlight.pipe';
 import {TaskFormDialogComponent} from './dialogs/task/task-form-dialog.component';
 import {TaskApiService} from '../core/services/task-api.service';
+import {JobService} from './job.service';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import {TaskApiService} from '../core/services/task-api.service';
         JobSingleResolver,
         CustomerApiService,
         UserApiService,
-        TaskApiService
+        TaskApiService,
+        JobService
     ],
     declarations: [
         JobListComponent,

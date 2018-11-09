@@ -14,6 +14,7 @@ import {TaskApiService} from '../../core/services/task-api.service';
 import {NotificationService} from '../../core/services/notification.service';
 import {Task} from '../../core/models/task.model';
 import {Subject} from 'rxjs';
+import {JobService} from '../job.service';
 
 @Component({
     selector: 'job-list',
@@ -37,9 +38,7 @@ export class JobListComponent {
         private router: Router,
         private appService: AppService,
         private jobApiService: JobApiService,
-        private taskApiService: TaskApiService,
-        private dialog: MatDialog,
-        private notificationService: NotificationService
+        public jobService: JobService
     ) {
         this.search = ''
         this.updateTaskTable = new Subject();
@@ -132,32 +131,11 @@ export class JobListComponent {
         this.router.navigate(['/jobs', job.id, 'details']);
     }
 
-    public showTaskFormDialog(job: Job, task?: Task): void {
-        const dialogRef = this.dialog.open(TaskFormDialogComponent, {
-            width: '50%',
-            data: {task: _.cloneDeep(task) || {workingTime: '', description: ''}, jobId: job.id}
-        });
-
-        dialogRef.afterClosed().subscribe(data => {
+    public showTaskFormDialog(job: Job): void {
+        this.jobService.showTaskFormDialog(job).subscribe((data) => {
             if (data) {
-                if (data.task.id) {
-                    this.taskApiService.changeTask(data.task).subscribe((changedTask) => {
-                        job.tasks[job.tasks.findIndex(task => task.id === changedTask.id)] = changedTask;
-                        this.updateTaskTable.next();
-                        this.notificationService.showSuccess('Buchung wurde geändert');
-                    }, () => {
-                        this.notificationService.showError('Es ist ein Fehler bei der Änderung aufgetreten');
-                    });
-                } else {
-                    this.taskApiService.createTask(data.task, job).subscribe((createdTask) => {
-                        job.tasks.push(createdTask);
-                        this.updateTaskTable.next();
-                        this.notificationService.showSuccess('Aufwand wurde gebucht');
-                    }, () => {
-                        this.notificationService.showError('Es ist ein Fehler bei der Buchung aufgetreten');
-                    });
-                }
+                this.updateTaskTable.next();
             }
-        });
+        }, () => {});
     }
 }

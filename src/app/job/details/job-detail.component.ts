@@ -5,6 +5,7 @@ import {NumberService} from '../../core/services/number.service';
 import {Task} from '../../core/models/task.model';
 import {Observable, Subject} from 'rxjs';
 import {MatTable} from '@angular/material';
+import {JobService} from '../job.service';
 
 @Component({
     selector: 'job-detail',
@@ -16,6 +17,7 @@ export class JobDetailComponent implements OnInit, AfterViewInit {
 
     public job: Job;
     public gotoEditHappened: EventEmitter<null>;
+    public openTaskFormDialogHappened: EventEmitter<null>;
 
     @Input() inputJob: Job;
     @Input() summaryMode: boolean;
@@ -24,9 +26,10 @@ export class JobDetailComponent implements OnInit, AfterViewInit {
 
     @Output() taskEditHappened: EventEmitter<Task>;
 
-    public constructor(private activatedRoute: ActivatedRoute, private router: Router, public numberService: NumberService) {
+    public constructor(private activatedRoute: ActivatedRoute, private router: Router, public numberService: NumberService, private jobService: JobService) {
         this.job = Job.fromVoid();
         this.gotoEditHappened = new EventEmitter();
+        this.openTaskFormDialogHappened = new EventEmitter();
         this.taskEditHappened = new EventEmitter();
     }
 
@@ -36,10 +39,19 @@ export class JobDetailComponent implements OnInit, AfterViewInit {
         } else {
             this.job = this.inputJob;
         }
-        this.gotoEditHappened.subscribe(() => {this.router.navigate(['..', 'bearbeiten'], {relativeTo: this.activatedRoute});})
+        this.gotoEditHappened.subscribe(() => this.router.navigate(['..', 'bearbeiten'], {relativeTo: this.activatedRoute}));
+        this.openTaskFormDialogHappened.subscribe(() => this.showTaskFormDialog());
     }
 
     public ngAfterViewInit() {
         this.updateTaskTable && this.updateTaskTable.subscribe(() => this.taskTable.renderRows());
+    }
+
+    public showTaskFormDialog(task?: Task): void {
+        this.jobService.showTaskFormDialog(this.job, task).subscribe((data) => {
+            if (data) {
+                this.taskTable.renderRows();
+            }
+        }, () => {});
     }
 }

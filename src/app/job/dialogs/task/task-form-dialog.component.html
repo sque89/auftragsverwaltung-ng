@@ -2,13 +2,13 @@
 <div mat-dialog-content>
     <form [formGroup]="form">
         <mat-form-field class="d-block">
-            <input type="number" matInput placeholder="Arbeitszeit" formControlName="workingTime" />
+            <input type="number" matInput placeholder="Arbeitszeit" formControlName="workingTime" required />
         </mat-form-field>
         <mat-form-field class="d-block">
-            <textarea matInput rows="5" placeholder="Beschreibung" formControlName="description"></textarea>
+            <textarea matInput rows="5" placeholder="Beschreibung" formControlName="description" required></textarea>
         </mat-form-field>
         <mat-form-field class="w-100">
-            <input matInput formControlName="date" [matDatepicker]="datePicker" placeholder="Aufwandsdatum">
+            <input matInput formControlName="date" [matDatepicker]="datePicker" placeholder="Aufwandsdatum" required>
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker></mat-datepicker>
         </mat-form-field>
@@ -16,5 +16,5 @@
 </div>
 <div mat-dialog-actions class="mb-0">
     <button mat-raised-button color="warn" (click)="onNoClick()">Abbrechen</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial [disabled]="!form.valid">Speichern</button>
 </div>
