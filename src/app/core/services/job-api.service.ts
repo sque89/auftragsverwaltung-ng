@@ -9,11 +9,16 @@ import {Moment} from 'moment';
 
 @Injectable()
 export class JobApiService {
+    private readonly ENDPOINTS = {
+        JOB: `${environment.apiUrl}/job`,
+        JOBS: `${environment.apiUrl}/jobs`
+    };
+
     public constructor(private http: HttpClient, private uiService: UiService) {}
 
     public getAllJobs() {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<Job>>(`${environment.apiUrl}/jobs`).pipe(
+        return this.http.get<Array<Job>>(this.ENDPOINTS.JOBS).pipe(
             map((response: any) => {
                 this.uiService.hideLoadingOverlay();
                 const jobs: Array<Job> = [];
@@ -29,7 +34,7 @@ export class JobApiService {
 
     public getJobsInTimespan(from: Moment, to: Moment) {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<Job>>(`${environment.apiUrl}/jobs/${from.unix()}/${to.unix()}`).pipe(
+        return this.http.get<Array<Job>>(this.ENDPOINTS.JOBS + `/${from.unix()}/${to.unix()}`).pipe(
             map((response: any) => {
                 this.uiService.hideLoadingOverlay();
                 const jobs: Array<Job> = [];
@@ -44,7 +49,7 @@ export class JobApiService {
 
     public getJobById(id: string) {
         this.uiService.showLoadingOverlay();
-        return this.http.get<Array<Job>>(`${environment.apiUrl}/job/${id}`).pipe(
+        return this.http.get<Array<Job>>(this.ENDPOINTS.JOB + `/${id}`).pipe(
             map((job: any) => {
                 this.uiService.hideLoadingOverlay();
                 return Job.fromObject(job)
@@ -52,19 +57,37 @@ export class JobApiService {
         );
     }
 
+    public getOpenJobsForLoggedInUser(skipSpinner = false) {
+        if (!skipSpinner) {
+            this.uiService.showLoadingOverlay();
+        }
+        return this.http.get<Array<Job>>(this.ENDPOINTS.JOBS + `/open`).pipe(
+            map((response: any) => {
+                this.uiService.hideLoadingOverlay();
+                const jobs: Array<Job> = [];
+                if (!_.isEmpty(response)) {
+                    response.forEach((job: any) => {
+                        jobs.push(Job.fromObject(job));
+                    });
+                }
+                return jobs;
+            })
+        );
+    }
+
     public createJob(job: Job) {
         this.uiService.showLoadingOverlay();
-        return this.http.post<Job>(`${environment.apiUrl}/job`, job).pipe(
+        return this.http.post<Job>(this.ENDPOINTS.JOB, job).pipe(
             map((job: any) => {
                 this.uiService.hideLoadingOverlay();
                 return Job.fromObject(job);
             })
-         );
+        );
     }
 
     public changeJobById(job: Job) {
         this.uiService.showLoadingOverlay();
-        return this.http.post<Job>(`${environment.apiUrl}/job/${job.id}`, job).pipe(
+        return this.http.post<Job>(this.ENDPOINTS.JOB + `/${job.id}`, job).pipe(
             map((job: any) => {
                 this.uiService.hideLoadingOverlay();
                 return Job.fromObject(job);

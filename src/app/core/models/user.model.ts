@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import {Role} from './role.model';
+import {Task} from './task.model';
 
 export class User {
     public readonly USER_ROLES: Array<Role> = [
@@ -49,5 +50,9 @@ export class User {
             }
         });
         return roles.substr(0, roles.length -2);
+    }
+
+    public ownsTask(task: Task) {
+        return this.id === task.arranger.id;
     }
 }

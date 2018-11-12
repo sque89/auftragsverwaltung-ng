@@ -1,20 +1,15 @@
 import {Component} from '@angular/core';
 import {Job} from '../../core/models/job.model';
-import {MatDialog} from '@angular/material';
 import {UiService} from '../../core/services/ui.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '../../core/services/app.service';
 import {FormGroup, FormControl} from '@angular/forms';
 import {JobApiService} from '../../core/services/job-api.service';
 import {debounceTime} from 'rxjs/operators';
-import {TaskFormDialogComponent} from '../dialogs/task/task-form-dialog.component';
-import * as _ from 'lodash';
-import * as moment from 'moment'
-import {TaskApiService} from '../../core/services/task-api.service';
-import {NotificationService} from '../../core/services/notification.service';
-import {Task} from '../../core/models/task.model';
 import {Subject} from 'rxjs';
 import {JobService} from '../job.service';
+import * as _ from 'lodash';
+import * as moment from 'moment'
 
 @Component({
     selector: 'job-list',
@@ -48,15 +43,20 @@ export class JobListComponent {
     public ngOnInit() {
         this.uiService.closeMainMenu();
         this.jobs = this.activatedRoute.snapshot.data.JobListResolver;
-        this.sortJobs('id', this.sortDirectionAsc);
-        this.filterJobs();
         this.filterForm = new FormGroup({
             from: new FormControl(moment().subtract(parseInt(this.appService.getSettingById('job_list_default_timespan').value), 'days').startOf('day')),
             to: new FormControl(moment().endOf('day')),
             search: new FormControl(this.search),
-            sort: new FormControl('id')
+            sort: new FormControl('id'),
+            filterOpen: new FormControl(),
+            filterClosed: new FormControl(false),
+            filterOverdue: new FormControl(false)
         });
+        this.filterJobs();
+        this.sortJobs('id', this.sortDirectionAsc);
         this.bindFilterChanges();
+        this.bindRouteQueryParamChanges();
+        this.filterForm.controls['filterOpen'].setValue(true);
     }
 
     private bindFilterChanges() {
@@ -66,7 +66,7 @@ export class JobListComponent {
                 this.filterJobs();
             });
         });
-        this.filterForm.controls['to'].valueChanges.subscribe(values => {
+        this.filterForm.controls['to'].valueChanges.subscribe(() => {
             this.jobApiService.getJobsInTimespan(this.filterForm.controls['from'].value, this.filterForm.controls['to'].value).subscribe((jobs) => {
                 this.jobs = jobs;
                 this.filterJobs();
@@ -82,17 +82,34 @@ export class JobListComponent {
             this.sortJobs(newSortMode, this.sortDirectionAsc);
             this.filterJobs();
         });
+        this.filterForm.controls['filterOpen'].valueChanges.subscribe(() => this.filterJobs());
+        this.filterForm.controls['filterOverdue'].valueChanges.subscribe(() => this.filterJobs());
+        this.filterForm.controls['filterClosed'].valueChanges.subscribe(() => this.filterJobs());
+    }
+
+    private bindRouteQueryParamChanges() {
+        this.activatedRoute.queryParams.subscribe((updatedParams) => {
+            this.filterForm.controls['filterOpen'].setValue(updatedParams.filterOpen === "true" ? true : false);
+            this.filterForm.controls['filterOverdue'].setValue(updatedParams.filterOverdue === "true" ? true : false);
+        });
     }
 
     private filterJobs(): void {
+        const filterOpen = this.filterForm.controls['filterOpen'].value;
+        const filterClosed = this.filterForm.controls['filterClosed'].value;
+        const filterOverdue = this.filterForm.controls['filterOverdue'].value;
         this.filteredJobs = [];
+
         this.jobs.forEach((job: Job) => {
-            if (
+            if ((
                 job.id.toLowerCase().includes(this.search.toLowerCase()) ||
                 job.description.toLowerCase().includes(this.search.toLowerCase()) ||
                 job.externalPurchase.toLowerCase().includes(this.search.toLowerCase()) ||
                 job.notes.toLowerCase().includes(this.search.toLowerCase()) ||
-                job.customer.name.toLowerCase().includes(this.search.toLowerCase())
+                job.customer.name.toLowerCase().includes(this.search.toLowerCase())) &&
+                (!filterOpen || filterOpen && !job.isClosed()) &&
+                (!filterClosed || filterClosed && job.isClosed()) &&
+                (!filterOverdue || filterOverdue && job.isOverdue() && !job.isClosed())
             ) {
                 this.filteredJobs.push({opened: !_.isEmpty(this.search), job: job});
             }

@@ -5,7 +5,7 @@ import {JobListComponent} from './list/job-list.component';
 import {JobApiService} from '../core/services/job-api.service';
 import {JobListResolver} from './list/job-list-resolver.service';
 import {JobRoutingModule} from './job-routing.module';
-import {MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatSelectModule, MatCardModule, MatChipsModule, MatListModule, MatDividerModule, MatDialogModule, MatAutocompleteModule, MatExpansionModule} from '@angular/material';
+import {MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatSelectModule, MatCardModule, MatChipsModule, MatListModule, MatDividerModule, MatDialogModule, MatAutocompleteModule, MatExpansionModule, MatSlideToggleModule, MatMenuModule, MatTooltipModule} from '@angular/material';
 import {SharedModule} from '../shared/shared.module';
 import {JobSingleResolver} from './job-single-resolver.service';
 import {JobDetailComponent} from './details/job-detail.component';
@@ -39,6 +39,9 @@ import {JobService} from './job.service';
         MatAutocompleteModule,
         MatExpansionModule,
         MatTableModule,
+        MatSlideToggleModule,
+        MatMenuModule,
+        MatTooltipModule,
         TruncateModule
     ],
     providers: [

@@ -116,13 +116,19 @@ export class JobFormComponent implements OnInit {
         this.updateCustomerWithFormValues();
         if (this.createNew) {
             this.jobApiService.createJob(this.job).subscribe(
-                (createdJob) => { this.onSaveSuccess(['..', createdJob.id, 'details'], 'Job wurde erstellt'); },
+                (createdJob) => {this.onSaveSuccess(['..', createdJob.id, 'details'], 'Job wurde erstellt');},
                 () => this.onSaveFailure('Beim Erstellen des Jobs ist ein Fehler aufgetreten!')
             );
         } else {
             this.jobApiService.changeJobById(this.job).subscribe(
-                () => { this.onSaveSuccess(['../details'], 'Daten erfolgreich geändert!'); },
-                () => this.onSaveFailure('Datenänderung fehlgeschlagen!')
+                () => this.onSaveSuccess(['../details'], 'Daten erfolgreich geändert!'),
+                (error) => {
+                    if (error.status === 423) {
+                        this.onSaveFailure('Der Datensatz wurde in der Zwischenzeit geändert. Bitte Eingaben merken und Datensatz neu laden');
+                    } else {
+                        this.onSaveFailure('Datenänderung fehlgeschlagen!');
+                    }
+                }
             );
         }
     }

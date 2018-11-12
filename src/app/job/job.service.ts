@@ -26,8 +26,12 @@ export class JobService {
                     this.notificationService.showSuccess('Buchung wurde geändert');
                     return of(changedTask);
                 }),
-                catchError(() => {
-                    this.notificationService.showError('Es ist ein Fehler bei der Änderung aufgetreten');
+                catchError((error) => {
+                    if (error.status === 423) {
+                        this.notificationService.showError('Der Datensatz wurde in der Zwischenzeit geändert. Bitte Eingaben merken und Datensatz neu laden');
+                    } else {
+                        this.notificationService.showError('Es ist ein Fehler bei der Änderung aufgetreten');
+                    }
                     return throwError(null);
                 })
             );

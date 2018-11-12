@@ -6,6 +6,7 @@ import {Task} from '../../core/models/task.model';
 import {Observable, Subject} from 'rxjs';
 import {MatTable} from '@angular/material';
 import {JobService} from '../job.service';
+import {SessionService} from '../../core/services/session.service';
 
 @Component({
     selector: 'job-detail',
@@ -26,7 +27,13 @@ export class JobDetailComponent implements OnInit, AfterViewInit {
 
     @Output() taskEditHappened: EventEmitter<Task>;
 
-    public constructor(private activatedRoute: ActivatedRoute, private router: Router, public numberService: NumberService, private jobService: JobService) {
+    public constructor(
+        private activatedRoute: ActivatedRoute,
+        private router: Router,
+        public numberService: NumberService,
+        private jobService: JobService,
+        public sessionService: SessionService
+    ) {
         this.job = Job.fromVoid();
         this.gotoEditHappened = new EventEmitter();
         this.openTaskFormDialogHappened = new EventEmitter();

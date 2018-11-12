@@ -4,7 +4,7 @@ import * as moment from 'moment'
 
 export class Task {
     public static fromVoid() {
-        return new Task(null, '', null, 0, null, null, null);
+        return new Task(null, '', null, 0, null, null, null, null);
     }
 
     public static fromObject(data: any) {
@@ -15,7 +15,8 @@ export class Task {
             data.workingTime,
             data.arranger,
             data.createdAt,
-            data.updatedAt
+            data.updatedAt,
+            data.version
         );
     }
 
@@ -26,6 +27,7 @@ export class Task {
         public workingTime: number,
         public arranger: User,
         public createdAt: Moment,
-        public updatedAt: Moment
+        public updatedAt: Moment,
+        public version: number
     ) {}
 }

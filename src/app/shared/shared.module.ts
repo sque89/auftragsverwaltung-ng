@@ -1,9 +1,11 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {MatToolbarModule, MatIconModule, MatButtonModule} from '@angular/material';
+import {MatToolbarModule, MatIconModule, MatButtonModule, MatGridListModule} from '@angular/material';
 import {BreadcrumbComponent} from './layout/breadcrumb/breadcrumb.component';
 import {RouterModule} from '@angular/router';
 import {ActionHeadlineComponent} from './content/action-headline/action-headline.component';
+import {JobListWidgetComponent} from './widgets/job-list/job-list-widget.component';
+import {QuickstartWidgetComponent} from './widgets/quickstart/quickstart-widget.component';
 
 @NgModule({
     imports: [
@@ -11,15 +13,20 @@ import {ActionHeadlineComponent} from './content/action-headline/action-headline
         RouterModule,
         MatToolbarModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        MatGridListModule
     ],
     declarations: [
         BreadcrumbComponent,
-        ActionHeadlineComponent
+        ActionHeadlineComponent,
+        JobListWidgetComponent,
+        QuickstartWidgetComponent
     ],
     exports: [
         BreadcrumbComponent,
-        ActionHeadlineComponent
+        ActionHeadlineComponent,
+        JobListWidgetComponent,
+        QuickstartWidgetComponent
     ]
 })
 export class SharedModule {}

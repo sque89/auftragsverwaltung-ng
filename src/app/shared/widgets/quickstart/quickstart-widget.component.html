@@ -1,0 +1,13 @@
+<mat-grid-list [cols]="2">
+    <mat-grid-tile
+        *ngFor="let link of links; let index = index"
+        class="bg-primary cursor-pointer rounded"
+        [routerLink]="link.routerLink"
+        [@jackInTheBox]="jackInTheBox"
+    >
+        <div>
+            <mat-icon class="d-block text-dark mx-auto link-icon">{{link.icon}}</mat-icon>
+            <span class="d-block text-dark font-weight-bold">{{link.label}}</span>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

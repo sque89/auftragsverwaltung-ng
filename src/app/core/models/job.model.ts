@@ -1,15 +1,15 @@
 import {User} from "./user.model";
-import * as _ from 'lodash';
 import {Moment} from "moment";
-import * as moment from 'moment'
 import {Customer} from "./customer.model";
 import {Task} from "./task.model";
+import * as _ from 'lodash';
+import * as moment from 'moment'
 
 export class Job {
     public tasks: Array<Task>;
 
     public static fromVoid() {
-        return new Job(null, null, null, null, null, '', '', '', null, [], null, null, []);
+        return new Job(null, null, null, null, null, '', '', '', null, [], null, null, null, []);
     }
 
     public static fromObject(data: any) {
@@ -26,6 +26,7 @@ export class Job {
             data.arrangers,
             moment(data.createdAt),
             moment(data.updatedAt),
+            data.version,
             data.tasks
         );
     }
@@ -43,6 +44,7 @@ export class Job {
         public arrangers: Array<User>,
         public createdAt: Moment,
         public updatedAt: Moment,
+        public version: number,
         tasks: Array<Task>
     ) {
         this.tasks = [];
@@ -64,5 +66,13 @@ export class Job {
 
     public getOverallWorkingTimeInMinutes(): number {
         return this.tasks.reduce((acc: number, cv: Task) => acc + cv.workingTime, 0);
+    }
+
+    public isClosed(): boolean {
+        return _.isString(this.invoiceNumber);
+    }
+
+    public isOverdue() {
+        return this.dateDeadline.isBefore(moment().utc(), 'day');
     }
 }

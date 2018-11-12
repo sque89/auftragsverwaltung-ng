@@ -1,4 +1,4 @@
-<auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: 'hinzufuegen'}]"></auftragsverwaltung-ng-breadcrumb>
+<auftragsverwaltung-ng-breadcrumb [buttons]="[{icon: 'add_box', route: 'neu'}]"></auftragsverwaltung-ng-breadcrumb>
 
 <form [formGroup]="filterForm">
     <div class="row">
@@ -38,6 +38,16 @@
                 <mat-icon *ngIf="sortDirectionAsc">arrow_upward</mat-icon>
             </button>
         </div>
+        <div class="col-12 col-md-6 text-right my-auto">
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="filterMenu" aria-label="Filter-Menü öffnen">
+                Filter
+            </button>
+            <mat-menu class="p-3" #filterMenu="matMenu" xPosition="before">
+                <mat-slide-toggle class="d-block mb-3" (click)="$event.stopPropagation();" formControlName="filterOpen" matTooltip="Jobs ohne Rechnungsnummer">offen</mat-slide-toggle>
+                <mat-slide-toggle class="d-block mb-3" (click)="$event.stopPropagation();" formControlName="filterClosed" matTooltip="Jobs mit Rechnungsnummer">geschlossen</mat-slide-toggle>
+                <mat-slide-toggle class="d-block" (click)="$event.stopPropagation();" formControlName="filterOverdue" matTooltip="Jobs ohne Rechnungsnummer und mit überschrittenem Abgabedatum">überfällig</mat-slide-toggle>
+            </mat-menu>
+        </div>
     </div>
 </form>
 
@@ -50,13 +60,15 @@
             <mat-panel-description class="flex-fill">
                 <span *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: search"></span>
             </mat-panel-description>
-            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen" [routerLink]="[job.job.id, 'details']" (click)="false" stopClickPropagation>
+            <mat-chip *ngIf="job.job.isClosed()" class="mr-3" color="primary" selected>geschlossen</mat-chip>
+            <mat-chip *ngIf="job.job.isOverdue()" class="mr-3" color="warn" selected>überfällig</mat-chip>
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen" [routerLink]="[job.job.id, 'details']" (click)="false" (click)="$event.stopPropagation();">
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten" [routerLink]="[job.job.id, 'bearbeiten']" stopClickPropagation>
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten" [routerLink]="[job.job.id, 'bearbeiten']" (click)="$event.stopPropagation();">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Aufwand buchen" (click)="showTaskFormDialog(job.job)" stopClickPropagation>
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Aufwand buchen" (click)="showTaskFormDialog(job.job)" (click)="$event.stopPropagation();">
                 <mat-icon>playlist_add</mat-icon>
             </button>
         </mat-expansion-panel-header>

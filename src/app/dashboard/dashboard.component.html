@@ -1,22 +1,44 @@
 <div class="grid-container">
     <h1 class="mat-h1">Dashboard</h1>
-    <mat-grid-list cols="2" rowHeight="350px">
-        <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
+    <mat-grid-list cols="3" rowHeight="350px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-card class="dashboard-card">
                 <mat-card-header>
                     <mat-card-title>
-                        {{card.title}}
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                        Eigene offene Jobs
+                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Menü öffnen">
                             <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>Expand</button>
-                            <button mat-menu-item>Remove</button>
+                            <button mat-menu-item>Öffnen</button>
+                            <button mat-menu-item>Entfernen</button>
                         </mat-menu>
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="dashboard-card-content">
-                    <div>Card Content Here</div>
+                    <job-list-widget [jobs]="ownOpenJobs$ | async"></job-list-widget>
+                </mat-card-content>
+            </mat-card>
+            <div class="loading-overlay position-absolute" *ngIf="!(ownOpenJobs$ | async)">
+                <mat-spinner></mat-spinner>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        Schnellstart
+                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Menü öffnen">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" xPosition="before">
+                            <button mat-menu-item>Öffnen</button>
+                            <button mat-menu-item>Entfernen</button>
+                        </mat-menu>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <quickstart-widget [links]="quickstartLinks"></quickstart-widget>
                 </mat-card-content>
             </mat-card>
         </mat-grid-tile>
