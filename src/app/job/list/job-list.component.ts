@@ -20,7 +20,7 @@ import {SessionService} from '../../core/services/session.service';
 })
 export class JobListComponent implements OnInit {
     private jobsInTimespan: Array<Job>;
-    private jobsInTimespanFiltered: Array<{opened: boolean, job: Job}>;
+    public jobsInTimespanFiltered: Array<{opened: boolean, job: Job}>;
     public jobsInTimespanFilteredPaged: Array<{opened: boolean, job: Job}>;
 
     private searchString: string;

@@ -7,9 +7,9 @@ import {Observable} from 'rxjs';
     styleUrls: ['simple-number-widget.component.scss']
 })
 export class SimpleNumberWidgetComponent implements AfterViewInit {
-    private currentNumber: number;
     private duration: number;
     private limit: number;
+    public currentNumber: number;
 
     @Input() number: Observable<number>;
 
