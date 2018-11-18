@@ -6,10 +6,7 @@
             <action-headline
                 [level]="2"
                 [text]="job.id"
-                [actionButtons]="[
-                    {action: gotoEditHappened, color: 'primary', title: 'Bearbeiten', icon: 'edit'},
-                    {action: openTaskFormDialogHappened, color: 'primary', title: 'Zeit buchen', icon: 'playlist_add'}
-                ]"
+                [actionButtons]="headlineActions"
             ></action-headline>
         </mat-card-title>
     </mat-card-header>

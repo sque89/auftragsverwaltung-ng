@@ -3,6 +3,11 @@ import {MatSidenav} from '@angular/material';
 
 @Injectable({ providedIn: 'root' })
 export class UiService {
+    public readonly COLORS = {
+        PRIMARY: '#8bc34a',
+        DANGER: '#dc3545'
+    };
+
     public loadingOverlayVisible: boolean;
     public mainMenu: MatSidenav;
 

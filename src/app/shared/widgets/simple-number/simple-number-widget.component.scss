@@ -1,0 +1,13 @@
+@import 'variables';
+
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .counter {
+        color: $primary;
+        font-size: 10em;
+        font-weight: bold;
+    }
+}

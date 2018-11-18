@@ -5,7 +5,7 @@ import {JobListComponent} from './list/job-list.component';
 import {JobApiService} from '../core/services/job-api.service';
 import {JobListResolver} from './list/job-list-resolver.service';
 import {JobRoutingModule} from './job-routing.module';
-import {MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatSelectModule, MatCardModule, MatChipsModule, MatListModule, MatDividerModule, MatDialogModule, MatAutocompleteModule, MatExpansionModule, MatSlideToggleModule, MatMenuModule, MatTooltipModule} from '@angular/material';
+import {MatTableModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatSelectModule, MatCardModule, MatChipsModule, MatListModule, MatDividerModule, MatDialogModule, MatAutocompleteModule, MatExpansionModule, MatSlideToggleModule, MatMenuModule, MatTooltipModule, MatPaginatorModule} from '@angular/material';
 import {SharedModule} from '../shared/shared.module';
 import {JobSingleResolver} from './job-single-resolver.service';
 import {JobDetailComponent} from './details/job-detail.component';
@@ -17,6 +17,7 @@ import {HighlightPipe} from '../core/pipes/highlight/highlight.pipe';
 import {TaskFormDialogComponent} from './dialogs/task/task-form-dialog.component';
 import {TaskApiService} from '../core/services/task-api.service';
 import {JobService} from './job.service';
+import {InvoiceDialogComponent} from './dialogs/invoice/invoice-dialog.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {JobService} from './job.service';
         MatSlideToggleModule,
         MatMenuModule,
         MatTooltipModule,
+        MatPaginatorModule,
         TruncateModule
     ],
     providers: [
@@ -58,10 +60,12 @@ import {JobService} from './job.service';
         JobDetailComponent,
         JobFormComponent,
         HighlightPipe,
-        TaskFormDialogComponent
+        TaskFormDialogComponent,
+        InvoiceDialogComponent
     ],
     entryComponents: [
-        TaskFormDialogComponent
+        TaskFormDialogComponent,
+        InvoiceDialogComponent
     ]
 })
 export class JobModule {}

@@ -10,4 +10,5 @@
             <div class="progress-bar bg-primary" role="progressbar" [ngStyle]="{'width':job.getPercentageTimeLeft() + '%'}"></div>
         </div>
     </a>
+    <p *ngIf="!jobs || jobs.length === 0">Aktuell keine Jobs in Bearbeitung</p>
 </div>

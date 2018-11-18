@@ -33,7 +33,7 @@
                     <mat-option value="description">Beschreibung</mat-option>
                 </mat-select>
             </mat-form-field>
-            <button mat-icon-button (click)="changeSortDirection()">
+            <button mat-icon-button (click)="toggleSortDirection()">
                     <mat-icon *ngIf="!sortDirectionAsc">arrow_downward</mat-icon>
                 <mat-icon *ngIf="sortDirectionAsc">arrow_upward</mat-icon>
             </button>
@@ -51,8 +51,10 @@
     </div>
 </form>
 
+<mat-paginator #paginator [length]="jobsInTimespanFiltered.length" (page)="updatePage($event)" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+
 <mat-accordion multi="true">
-    <mat-expansion-panel *ngFor="let job of filteredJobs" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
+    <mat-expansion-panel *ngFor="let job of jobsInTimespanFilteredPaged" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
         <mat-expansion-panel-header [collapsedHeight]="'58px'" [expandedHeight]="'58px'">
             <mat-panel-title>
                 <span [innerHtml]="job.job.id | highlight: search"></span>
@@ -60,18 +62,29 @@
             <mat-panel-description class="flex-fill">
                 <span *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: search"></span>
             </mat-panel-description>
+
             <mat-chip *ngIf="job.job.isClosed()" class="mr-3" color="primary" selected>geschlossen</mat-chip>
             <mat-chip *ngIf="job.job.isOverdue()" class="mr-3" color="warn" selected>überfällig</mat-chip>
-            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen" [routerLink]="[job.job.id, 'details']" (click)="false" (click)="$event.stopPropagation();">
+
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job ansehen"
+                [routerLink]="[job.job.id, 'details']" (click)="false" (click)="$event.stopPropagation();"
+            >
                 <mat-icon>visibility</mat-icon>
             </button>
-            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten" [routerLink]="[job.job.id, 'bearbeiten']" (click)="$event.stopPropagation();">
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Job bearbeiten"
+                    [routerLink]="[job.job.id, 'bearbeiten']" (click)="$event.stopPropagation();"
+                    *ngIf="!job.job.isClosed() || (job.job.isClosed() && sessionService.getUser().isAdministrator())"
+            >
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Aufwand buchen" (click)="showTaskFormDialog(job.job)" (click)="$event.stopPropagation();">
+            <button mat-mini-fab class="mr-3" type="button" color="primary" title="Aufwand buchen"
+                *ngIf="!job.job.isClosed()"
+                (click)="showTaskFormDialog(job.job)"
+                (click)="$event.stopPropagation();"
+            >
                 <mat-icon>playlist_add</mat-icon>
             </button>
         </mat-expansion-panel-header>
-        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="search" [updateTaskTable]="updateTaskTable"></job-detail>
+        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="searchString" [updateTaskTable]="updateTaskTable"></job-detail>
     </mat-expansion-panel>
 </mat-accordion>

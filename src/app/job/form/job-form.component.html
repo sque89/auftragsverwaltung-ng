@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-12 col-sm-6">
             <mat-form-field class="w-100">
-                <input matInput formControlName="dateIncoming" [matDatepicker]="dateIncomingPicker" placeholder="Eingangsdatum">
+                <input matInput formControlName="dateIncoming" [matDatepicker]="dateIncomingPicker" placeholder="Eingangsdatum" required />
                 <mat-datepicker-toggle matSuffix [for]="dateIncomingPicker"></mat-datepicker-toggle>
                 <mat-datepicker #dateIncomingPicker></mat-datepicker>
             </mat-form-field>
@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-12 col-sm-6">
             <mat-form-field class="d-block">
-                <input type="text" matInput placeholder="Kunde" formControlName="customer" [matAutocomplete]="customerAutocomplete" />
+                <input type="text" matInput placeholder="Kunde" formControlName="customer" [matAutocomplete]="customerAutocomplete" required />
             </mat-form-field>
             <mat-autocomplete #customerAutocomplete="matAutocomplete" [displayWith]="customerAutocompleteDisplay">
                 <mat-option *ngFor="let customer of customers$ | async" [value]="customer">
@@ -36,28 +36,25 @@
         </div>
         <div class="col-12 col-sm-6">
             <mat-form-field class="d-block">
-                <mat-select matInput placeholder="Lieferart" formControlName="deliveryType" [compareWith]="compareDeliveryTypes">
+                <mat-select matInput placeholder="Lieferart" formControlName="deliveryType" [compareWith]="compareDeliveryTypes" required>
                     <mat-option *ngFor="let deliveryType of appService.getDeliveryTypes()" [value]="deliveryType">{{deliveryType.label}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
     </div>
     <mat-form-field class="d-block">
-        <mat-select formControlName="arrangers" placeholder="Bearbeiter*innen" [compareWith]="compareUsers" multiple>
+        <mat-select formControlName="arrangers" placeholder="Bearbeiter*innen" [compareWith]="compareUsers" multiple required>
             <mat-option *ngFor="let user of users$ | async" [value]="user">{{user.firstname}} {{user.lastname}}</mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field class="d-block">
-        <textarea matInput rows="5" placeholder="Beschreibung" formControlName="description"></textarea>
+        <textarea matInput rows="5" placeholder="Beschreibung" formControlName="description" required></textarea>
     </mat-form-field>
     <mat-form-field class="d-block">
         <textarea matInput rows="5" placeholder="Notizen" formControlName="notes"></textarea>
     </mat-form-field>
     <mat-form-field class="d-block">
         <textarea matInput rows="5" placeholder="Einkauf" formControlName="externalPurchase"></textarea>
-    </mat-form-field>
-    <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Rechnungsnummer" formControlName="invoiceNumber">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Job speichern</button>
 </form>

@@ -8,28 +8,28 @@
 
 <form [formGroup]="form" (submit)="form.valid && save()" class="pt-3">
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Name" formControlName="name" required>
+        <input matInput type="text" placeholder="Name" formControlName="name">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="PLZ" formControlName="postcode" required>
+        <input matInput type="text" placeholder="PLZ" formControlName="postcode">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Ort" formControlName="city" required>
+        <input matInput type="text" placeholder="Ort" formControlName="city">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Adresse" formControlName="address" required>
+        <input matInput type="text" placeholder="Adresse" formControlName="address">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Kontaktperson" formControlName="contactPerson" required>
+        <input matInput type="text" placeholder="Kontaktperson" formControlName="contactPerson">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="E-Mail" formControlName="mail" required>
+        <input matInput type="text" placeholder="E-Mail" formControlName="mail">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Telefon" formControlName="phone" required>
+        <input matInput type="text" placeholder="Telefon" formControlName="phone">
     </mat-form-field>
     <mat-form-field class="d-block">
-        <input matInput type="text" placeholder="Fax" formControlName="fax" required>
+        <input matInput type="text" placeholder="Fax" formControlName="fax">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Daten speichern</button>
 </form>

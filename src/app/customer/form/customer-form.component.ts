@@ -51,13 +51,13 @@ export class CustomerFormComponent implements OnInit {
 
         this.form = new FormGroup({
             name: new FormControl(this.customer.name, [Validators.required]),
-            postcode: new FormControl(this.customer.postcode, [Validators.required]),
-            city: new FormControl(this.customer.city, [Validators.required]),
-            address: new FormControl(this.customer.address, [Validators.required]),
-            contactPerson: new FormControl(this.customer.contactPerson, [Validators.required]),
-            mail: new FormControl(this.customer.mail, [Validators.required]),
-            phone: new FormControl(this.customer.phone, [Validators.required]),
-            fax: new FormControl(this.customer.fax, [Validators.required])
+            postcode: new FormControl(this.customer.postcode),
+            city: new FormControl(this.customer.city),
+            address: new FormControl(this.customer.address),
+            contactPerson: new FormControl(this.customer.contactPerson),
+            mail: new FormControl(this.customer.mail),
+            phone: new FormControl(this.customer.phone),
+            fax: new FormControl(this.customer.fax)
         });
     }
 

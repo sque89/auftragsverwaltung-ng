@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthenticationService} from '../core/services/authentication.service';
 import {Router} from '@angular/router';
+import {NotificationService} from '../core/services/notification.service';
 
 @Component({
   selector: 'auftragsverwaltung-ng-auth',
@@ -11,7 +12,10 @@ import {Router} from '@angular/router';
 export class AuthComponent {
     public form: FormGroup;
 
-    public constructor(private authService: AuthenticationService, private router: Router) {
+    public constructor(
+        private authService: AuthenticationService,
+        private router: Router,
+        private notificationService: NotificationService) {
     }
 
     public ngOnInit() {
@@ -29,6 +33,8 @@ export class AuthComponent {
         if (isValid) {
             this.authService.login(credentials.username, credentials.password).subscribe(() => {
                 this.router.navigate(['/dashboard']);
+            }, () => {
+                this.notificationService.showError('Nutzer nicht gefunden oder deaktiviert oder Passwort falsch.')
             });
         }
     }

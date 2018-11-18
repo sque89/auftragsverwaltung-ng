@@ -27,10 +27,13 @@
     "@types/lodash": "^4.14.110",
     "@yellowspot/ng-truncate": "^1.4.0",
     "bootstrap": "^4.1.1",
+    "chart.js": "^2.7.3",
     "core-js": "^2.5.4",
     "lodash": "^4.17.10",
+    "material-design-icons": "^3.0.1",
     "moment": "^2.22.2",
     "ng-animate": "^0.3.4",
+    "primeng": "^6.1.6",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

@@ -55,13 +55,12 @@ export class JobFormComponent implements OnInit {
         }
         this.form = new FormGroup({
             dateIncoming: new FormControl(this.job.dateIncoming, [Validators.required]),
-            dateDeadline: new FormControl(this.job.dateDeadline, [Validators.required]),
+            dateDeadline: new FormControl(this.job.dateDeadline),
             customer: new FormControl(this.job.customer, [Validators.required]),
             deliveryType: new FormControl(this.job.deliveryType, [Validators.required]),
             description: new FormControl(this.job.description, [Validators.required]),
             notes: new FormControl(this.job.notes),
             externalPurchase: new FormControl(this.job.externalPurchase),
-            invoiceNumber: new FormControl(this.job.invoiceNumber),
             arrangers: new FormControl(this.job.arrangers, [Validators.required])
         });
 
@@ -89,7 +88,7 @@ export class JobFormComponent implements OnInit {
         });
     }
 
-    private updateCustomerWithFormValues() {
+    private updateJobWithFormValues() {
         this.job.dateIncoming = this.form.get('dateIncoming').value;
         this.job.dateDeadline = this.form.get('dateDeadline').value;
         this.job.customer = this.form.get('customer').value;
@@ -97,7 +96,6 @@ export class JobFormComponent implements OnInit {
         this.job.description = this.form.get('description').value;
         this.job.notes = this.form.get('notes').value;
         this.job.externalPurchase = this.form.get('externalPurchase').value;
-        this.job.invoiceNumber = this.form.get('invoiceNumber').value;
         this.job.arrangers = this.form.get('arrangers').value;
     }
 
@@ -113,7 +111,7 @@ export class JobFormComponent implements OnInit {
     }
 
     public save() {
-        this.updateCustomerWithFormValues();
+        this.updateJobWithFormValues();
         if (this.createNew) {
             this.jobApiService.createJob(this.job).subscribe(
                 (createdJob) => {this.onSaveSuccess(['..', createdJob.id, 'details'], 'Job wurde erstellt');},
