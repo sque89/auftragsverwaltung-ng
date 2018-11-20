@@ -6,7 +6,6 @@ import {CustomerListComponent} from './list/customer-list.component';
 import {CustomerListResolver} from './list/customer-list-resolver.service';
 import {CustomerDetailComponent} from './details/customer-detail.component';
 import {CustomerSingleResolver} from './customer-single-resolver.service';
-import {CustomerFormComponent} from './form/customer-form.component';
 
 const routes: Routes = [{
     path: '',
@@ -24,24 +23,6 @@ const routes: Routes = [{
     data: {
         breadcrumb: 'Kundendetails',
         editMode: false
-    }
-}, {
-    path: ':customerId/bearbeiten',
-    component: CustomerFormComponent,
-    canActivate: [AuthGuard, IsAdminGuard],
-    resolve: {CustomerSingleResolver},
-    data: {
-        breadcrumb: 'Kunde bearbeiten',
-        editMode: true
-    }
-}, {
-    path: 'hinzufuegen',
-    component: CustomerFormComponent,
-    canActivate: [AuthGuard, IsAdminGuard],
-    data: {
-        breadcrumb: 'Kunde hinzufügen',
-        editMode: true,
-        createNew: true
     }
 }];
 

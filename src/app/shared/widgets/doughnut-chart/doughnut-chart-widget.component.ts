@@ -5,7 +5,8 @@ import {UIChart} from 'primeng/primeng';
 
 @Component({
     selector: 'doughnut-chart-widget',
-    templateUrl: 'doughnut-chart-widget.component.html'
+    templateUrl: 'doughnut-chart-widget.component.html',
+    styleUrls: ['doughnut-chart-widget.component.scss']
 })
 export class DoughnutChartWidgetComponent implements AfterViewInit {
     public chartData: DoughnutChartWidgetDataModel;

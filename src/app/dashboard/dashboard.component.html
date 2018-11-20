@@ -1,95 +1,53 @@
-<div class="grid-container">
-    <h1 class="mat-h1">Dashboard</h1>
-    <mat-grid-list cols="3" rowHeight="350px">
-        <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <mat-card class="dashboard-card overflow-y-scroll">
-                <mat-card-header>
-                    <mat-card-title>
-                        Eigene offene Jobs
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Menü öffnen">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>Öffnen</button>
-                            <button mat-menu-item>Entfernen</button>
-                        </mat-menu>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="dashboard-card-content">
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-8 mb-3">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Eigene offene Jobs</h5>
                     <job-list-widget [jobs]="ownOpenJobs$ | async"></job-list-widget>
-                </mat-card-content>
-            </mat-card>
-            <div class="loading-overlay position-absolute" *ngIf="!(ownOpenJobs$ | async)">
-                <mat-spinner></mat-spinner>
+                </div>
             </div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <mat-card class="dashboard-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        Schnellstart
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Menü öffnen">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>Öffnen</button>
-                            <button mat-menu-item>Entfernen</button>
-                        </mat-menu>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="dashboard-card-content">
+            <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+                 <mat-spinner></mat-spinner>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Schnellstart</h5>
                     <quickstart-widget [links]="quickstartLinks"></quickstart-widget>
-                </mat-card-content>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <mat-card class="dashboard-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        Offene Jobs gesamt
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Menü öffnen">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>Öffnen</button>
-                            <button mat-menu-item>Entfernen</button>
-                        </mat-menu>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="dashboard-card-content cursor-pointer" [routerLink]="['/jobs']">
-                    <simple-number-widget [number]="openJobCount$"></simple-number-widget>
-                </mat-card-content>
-            </mat-card>
-            <div class="loading-overlay position-absolute" *ngIf="!(openJobCount$ | async)">
-                <mat-spinner></mat-spinner>
+                </div>
             </div>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <mat-card class="dashboard-card">
-                <mat-card-header>
-                    <mat-card-title>
-                        Überfällige Jobs gesamt
-                        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Menü öffnen">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu" xPosition="before">
-                            <button mat-menu-item>Öffnen</button>
-                            <button mat-menu-item>Entfernen</button>
-                        </mat-menu>
-                    </mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="dashboard-card-content cursor-pointer" [routerLink]="['/jobs']">
+            <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+                 <mat-spinner></mat-spinner>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Offene Jobs gesamt</h5>
+                    <simple-number-widget [number]="openJobCount$"></simple-number-widget>
+                </div>
+                <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+                     <mat-spinner></mat-spinner>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Überfällige Jobs gesamt</h5>
                     <doughnut-chart-widget
                         [labels]="overdueJobChartData.labels"
                         [backgroundColors]="overdueJobChartData.backgroundColor"
                         [data]="openOverdueJobCountChartData$"
                         class="d-block"
                     ></doughnut-chart-widget>
-                </mat-card-content>
-            </mat-card>
-            <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
-                <mat-spinner></mat-spinner>
+                </div>
+                <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+                     <mat-spinner></mat-spinner>
+                </div>
             </div>
-        </mat-grid-tile>
-    </mat-grid-list>
+        </div>
+    </div>
 </div>

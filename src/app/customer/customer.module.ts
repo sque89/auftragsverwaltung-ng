@@ -8,7 +8,6 @@ import {CustomerApiService} from '../core/services/customer-api.service';
 import {MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatButtonModule, MatCardModule} from '@angular/material';
 import {SharedModule} from '../shared/shared.module';
 import {CustomerSingleResolver} from './customer-single-resolver.service';
-import {CustomerFormComponent} from './form/customer-form.component';
 import {CustomerDetailComponent} from './details/customer-detail.component';
 
 @NgModule({
@@ -33,7 +32,6 @@ import {CustomerDetailComponent} from './details/customer-detail.component';
     ],
     declarations: [
         CustomerListComponent,
-        CustomerFormComponent,
         CustomerDetailComponent
     ]
 })
