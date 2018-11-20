@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {trigger, transition, useAnimation} from '@angular/animations';
-import {tada, jackInTheBox, jello, swing} from 'ng-animate';
+import {jackInTheBox} from 'ng-animate';
 
 @Component({
     selector: 'quickstart-widget',

@@ -1,5 +1,9 @@
-.link-icon {
-    font-size: 3.5em;
-    width: auto;
-    height: auto;
+:host {
+    .row .col-6 {
+        .link-icon {
+            font-size: 3.5em;
+            width: auto;
+            height: auto;
+        }
+    }
 }
