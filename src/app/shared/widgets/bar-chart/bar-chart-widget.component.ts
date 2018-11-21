@@ -1,17 +1,17 @@
 import {Component, Input, ViewChild, AfterViewInit} from '@angular/core';
-import {DoughnutChartWidgetModel} from './doughnut-chart-widget.model';
+import {BarChartWidgetModel} from './bar-chart-widget.model';
 import {UIChart} from 'primeng/components/chart/chart';
 
 @Component({
-    selector: 'doughnut-chart-widget',
-    templateUrl: 'doughnut-chart-widget.component.html',
-    styleUrls: ['doughnut-chart-widget.component.scss']
+    selector: 'bar-chart-widget',
+    templateUrl: 'bar-chart-widget.component.html',
+    styleUrls: ['bar-chart-widget.component.scss']
 })
-export class DoughnutChartWidgetComponent implements AfterViewInit {
+export class BarChartWidgetComponent implements AfterViewInit {
     @ViewChild('chart')
     private chart: UIChart;
 
-    @Input() data: DoughnutChartWidgetModel;
+    @Input() data: BarChartWidgetModel;
 
     public constructor() {
     }

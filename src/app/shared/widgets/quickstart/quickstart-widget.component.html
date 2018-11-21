@@ -1,5 +1,5 @@
 <div class="row">
-    <div *ngFor="let link of links; let index = index" class="col-6" [@jackInTheBox]="jackInTheBox">
+    <div *ngFor="let link of data; let index = index" class="col-6" [@jackInTheBox]="jackInTheBox">
          <div class="text-center p-3 bg-primary cursor-pointer rounded" [routerLink]="link.routerLink">
             <mat-icon class="d-block text-dark mx-auto link-icon">{{link.icon}}</mat-icon>
             <span class="d-block text-dark font-weight-bold">{{link.label}}</span>

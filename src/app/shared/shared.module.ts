@@ -9,6 +9,7 @@ import {JobListWidgetComponent} from './widgets/job-list/job-list-widget.compone
 import {QuickstartWidgetComponent} from './widgets/quickstart/quickstart-widget.component';
 import {SimpleNumberWidgetComponent} from './widgets/simple-number/simple-number-widget.component';
 import {DoughnutChartWidgetComponent} from './widgets/doughnut-chart/doughnut-chart-widget.component';
+import {BarChartWidgetComponent} from './widgets/bar-chart/bar-chart-widget.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {DoughnutChartWidgetComponent} from './widgets/doughnut-chart/doughnut-ch
         JobListWidgetComponent,
         QuickstartWidgetComponent,
         SimpleNumberWidgetComponent,
-        DoughnutChartWidgetComponent
+        DoughnutChartWidgetComponent,
+        BarChartWidgetComponent
     ],
     exports: [
         BreadcrumbComponent,
@@ -34,7 +36,8 @@ import {DoughnutChartWidgetComponent} from './widgets/doughnut-chart/doughnut-ch
         JobListWidgetComponent,
         QuickstartWidgetComponent,
         SimpleNumberWidgetComponent,
-        DoughnutChartWidgetComponent
+        DoughnutChartWidgetComponent,
+        BarChartWidgetComponent
     ]
 })
 export class SharedModule {}

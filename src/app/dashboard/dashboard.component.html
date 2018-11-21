@@ -4,10 +4,10 @@
             <div class="card h-100 shadow">
                 <div class="card-body">
                     <h5 class="card-title">Eigene offene Jobs</h5>
-                    <job-list-widget [jobs]="ownOpenJobs$ | async"></job-list-widget>
+                    <job-list-widget [data]="ownOpenJobs$ | async"></job-list-widget>
                 </div>
             </div>
-            <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+            <div class="loading-overlay position-absolute" *ngIf="!(ownOpenJobs$ | async)">
                  <mat-spinner></mat-spinner>
             </div>
         </div>
@@ -15,36 +15,42 @@
             <div class="card h-100 shadow">
                 <div class="card-body">
                     <h5 class="card-title">Schnellstart</h5>
-                    <quickstart-widget [links]="quickstartLinks"></quickstart-widget>
+                    <quickstart-widget [data]="quickstartLinks"></quickstart-widget>
                 </div>
-            </div>
-            <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
-                 <mat-spinner></mat-spinner>
             </div>
         </div>
         <div class="col-12 col-lg-4 mb-3">
             <div class="card h-100 shadow">
                 <div class="card-body">
                     <h5 class="card-title">Offene Jobs gesamt</h5>
-                    <simple-number-widget [number]="openJobCount$"></simple-number-widget>
+                    <simple-number-widget [data]="openJobCount$"></simple-number-widget>
                 </div>
-                <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+                <div class="loading-overlay position-absolute" *ngIf="!(openJobCount$ | async)">
                      <mat-spinner></mat-spinner>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-4 mb-3">
+        <div class="col-12 col-lg-8 mb-3">
             <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Jobeingänge diesen Monat</h5>
+                    <bar-chart-widget [data]="incomingJobChartData"></bar-chart-widget>
+                </div>
+            </div>
+            <div class="loading-overlay position-absolute" *ngIf="!incomingJobChartData.chartData.datasets[0].data.length">
+                 <mat-spinner></mat-spinner>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 mb-3">
+            <div class="card h-100 shadow cursor-pointer" [routerLink]="['/jobs']" [queryParams]="{filterOverdue: true}">
                 <div class="card-body">
                     <h5 class="card-title">Überfällige Jobs gesamt</h5>
                     <doughnut-chart-widget
-                        [labels]="overdueJobChartData.labels"
-                        [backgroundColors]="overdueJobChartData.backgroundColor"
-                        [data]="openOverdueJobCountChartData$"
+                        [data]="overdueJobChartData"
                         class="d-block"
                     ></doughnut-chart-widget>
                 </div>
-                <div class="loading-overlay position-absolute" *ngIf="!(openOverdueJobCountChartData$ | async)">
+                <div class="loading-overlay position-absolute" *ngIf="!overdueJobChartData.chartData.datasets[0].data.length">
                      <mat-spinner></mat-spinner>
                 </div>
             </div>

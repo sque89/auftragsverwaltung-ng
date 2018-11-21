@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import {environment} from '../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
@@ -46,6 +47,21 @@ export class JobApiService {
                 }
                 return jobs;
             }));
+    }
+
+    public getJobIncomeCountInTimespan(from: Moment, to: Moment): Observable<Array<{date: string, count: number}>> {
+        return this.http.get<Array<{dateIncoming:string, count: number}>>(this.ENDPOINTS.JOBS + `/timespan/${from.unix()}/${to.unix()}/income/count`).pipe(
+            map((days: Array<{dateIncoming:string, count: number}>) => {
+                const daysToReturn: Array<{date: string, count: number}> = [];
+                days.forEach((day) => {
+                    daysToReturn.push({
+                        date: moment(day.dateIncoming).format('DD.MM.YYYY'),
+                        count: day.count
+                    });
+                });
+                return daysToReturn;
+            })
+        );
     }
 
     public getJobById(id: string): Observable<Job> {

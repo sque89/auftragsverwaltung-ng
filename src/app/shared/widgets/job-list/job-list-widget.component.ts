@@ -7,7 +7,7 @@ import {Job} from '../../../core/models/job.model';
     styleUrls: ['job-list-widget.component.scss']
 })
 export class JobListWidgetComponent {
-    @Input() jobs: Array<Job>
+    @Input() data: Array<Job>
 
     public constructor() {
     }
