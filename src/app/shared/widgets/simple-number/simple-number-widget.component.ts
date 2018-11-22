@@ -7,28 +7,24 @@ import {Observable} from 'rxjs';
     styleUrls: ['simple-number-widget.component.scss']
 })
 export class SimpleNumberWidgetComponent implements AfterViewInit {
-    private limit: number;
     public currentNumber: number;
 
-    @Input() data: Observable<number>;
+    @Input() data: number;
 
     public constructor() {
         this.currentNumber = 0;
     }
 
     public ngAfterViewInit() {
-        this.data.subscribe((number) => {
-            this.limit = number;
-            this.count();
-        });
+        this.count();
     }
 
     private count(previousTimeout?: number): void {
-        if (this.currentNumber < this.limit) {
+        if (this.currentNumber < this.data) {
             window.setTimeout(() => {
                 this.currentNumber++
-                this.count(this.limit - this.currentNumber <= 20 ? previousTimeout * 1.4  : 1);
-            }, this.limit - this.currentNumber <= 20 ? previousTimeout * 1.4  : 1);
+                this.count(this.data - this.currentNumber <= 20 ? previousTimeout * 1.4  : 1);
+            }, this.data - this.currentNumber <= 20 ? previousTimeout * 1.4  : 1);
         }
     }
 }

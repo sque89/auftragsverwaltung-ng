@@ -9,7 +9,7 @@ export class User {
     ];
 
     public static fromVoid() {
-        return new User(null, '', '', '', '', [], false);
+        return new User(null, '', '', '', '', null, [], false);
     }
 
     public static fromObject(data: any) {
@@ -19,6 +19,7 @@ export class User {
             data.firstname,
             data.lastname,
             data.email,
+            _.isObject(data.settings) ? data.settings : JSON.parse(data.settings),
             data.roles,
             data.isActive
         );
@@ -30,6 +31,7 @@ export class User {
         public firstname: string,
         public lastname: string,
         public email: string,
+        public settings: {dashboardWidgets: Array<string>},
         public roles: Array<string>,
         public isActive: boolean
     ) {}
@@ -54,5 +56,13 @@ export class User {
 
     public ownsTask(task: Task) {
         return this.id === task.arranger.id;
+    }
+
+    public setDashboardWidgetSettings(settings: Array<string>) {
+        if (!this.settings) {
+            this.settings = {dashboardWidgets: settings};
+        } else {
+            this.settings.dashboardWidgets = settings;
+        }
     }
 }

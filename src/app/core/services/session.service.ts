@@ -31,15 +31,7 @@ export class SessionService {
         }
         if (this.isSessionActive()) {
             const sessionUser = JSON.parse(localStorage.getItem(environment.sessionId)).user;
-            this.user = new User(
-                sessionUser.id,
-                sessionUser.username,
-                sessionUser.firstname,
-                sessionUser.lastname,
-                sessionUser.email,
-                sessionUser.roles,
-                sessionUser.isActive
-            );
+            this.user = User.fromObject(sessionUser);
         } else {
             this.user = null;
         }

@@ -20,15 +20,7 @@ export class AuthenticationService {
             .pipe(map((res:any) => {
                 if (res && res.token) {
                     const decodedJwt = this.jwtHelper.decodeToken(res.token);
-                    this.sessionService.setSession(new User(
-                        decodedJwt.id,
-                        decodedJwt.username,
-                        decodedJwt.firstname,
-                        decodedJwt.lastname,
-                        decodedJwt.email,
-                        decodedJwt.roles,
-                        decodedJwt.isActive
-                    ), res.token);
+                    this.sessionService.setSession(User.fromObject(decodedJwt), res.token);
                 }
             }));
     }

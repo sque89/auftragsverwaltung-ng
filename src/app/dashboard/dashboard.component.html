@@ -1,59 +1,29 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12 col-lg-8 mb-3">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Eigene offene Jobs</h5>
-                    <job-list-widget [data]="ownOpenJobs$ | async"></job-list-widget>
-                </div>
-            </div>
-            <div class="loading-overlay position-absolute" *ngIf="!(ownOpenJobs$ | async)">
-                 <mat-spinner></mat-spinner>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4 mb-3">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Schnellstart</h5>
-                    <quickstart-widget [data]="quickstartLinks"></quickstart-widget>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4 mb-3">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Offene Jobs gesamt</h5>
-                    <simple-number-widget [data]="openJobCount$"></simple-number-widget>
-                </div>
-                <div class="loading-overlay position-absolute" *ngIf="!(openJobCount$ | async)">
-                     <mat-spinner></mat-spinner>
-                </div>
+<div class="row mb-3">
+    <div class="col-12 text-right">
+        <mat-menu #sortMenu>
+            <mat-list cdkDropList (cdkDropListDropped)="dropWidget($event)">
+                <mat-list-item *ngFor="let widget of widgets" cdkDrag>
+                    <mat-icon cdkDragHandle class="mr-2 cursor-pointer">drag_handle</mat-icon>
+                    {{widget.label}}
+                </mat-list-item>
+            </mat-list>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="sortMenu" title="Widgets sortieren">
+            <mat-icon>sort</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="row widgets">
+    <div *ngFor="let widget of widgets" class="col-12 col-lg-{{widget.cols}} mb-3">
+        <div class="card h-100 shadow">
+            <div class="card-body">
+                <h5 class="card-title">{{widget.label}}</h5>
+                <ng-template #widgetContainer></ng-template>
             </div>
         </div>
-        <div class="col-12 col-lg-8 mb-3">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <h5 class="card-title">Jobeingänge diesen Monat</h5>
-                    <bar-chart-widget [data]="incomingJobChartData"></bar-chart-widget>
-                </div>
-            </div>
-            <div class="loading-overlay position-absolute" *ngIf="!incomingJobChartData.chartData.datasets[0].data.length">
-                 <mat-spinner></mat-spinner>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4 mb-3">
-            <div class="card h-100 shadow cursor-pointer" [routerLink]="['/jobs']" [queryParams]="{filterOverdue: true}">
-                <div class="card-body">
-                    <h5 class="card-title">Überfällige Jobs gesamt</h5>
-                    <doughnut-chart-widget
-                        [data]="overdueJobChartData"
-                        class="d-block"
-                    ></doughnut-chart-widget>
-                </div>
-                <div class="loading-overlay position-absolute" *ngIf="!overdueJobChartData.chartData.datasets[0].data.length">
-                     <mat-spinner></mat-spinner>
-                </div>
-            </div>
+        <div class="loading-overlay position-absolute" *ngIf="isLoading">
+            <mat-spinner></mat-spinner>
         </div>
     </div>
 </div>

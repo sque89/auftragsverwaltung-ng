@@ -68,6 +68,10 @@ export class UserApiService {
         });
     }
 
+    public changeSettings(user: User) {
+        return this.http.post<User>(`${environment.apiUrl}/user/settings`, JSON.stringify(user.settings));
+    }
+
     public changePassword(
         newPassword: string,
         currentPassword?: string,
@@ -107,6 +111,7 @@ export class UserApiService {
     public activateUser(username: string): Observable<User> {
         return this.http.post<User>(`${environment.apiUrl}/user/activate/${username}`, null);
     }
+
     public deactivateUser(username: string): Observable<User> {
         return this.http.post<User>(`${environment.apiUrl}/user/deactivate/${username}`, null);
     }
