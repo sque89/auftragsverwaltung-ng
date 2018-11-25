@@ -13,7 +13,7 @@ export class UserDetailComponent implements OnInit {
     public gotoEditHappened: EventEmitter<null>;
 
     public constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-        this.user = new User(null, '', '', '', '', [], true);
+        this.user = new User(null, '', '', '', '', null, [], true);
         this.isOwnProfile = false;
         this.gotoEditHappened = new EventEmitter();
     }

@@ -33,7 +33,7 @@ export class UserFormComponent implements OnInit {
         private router: Router,
         private sessionService: SessionService
     ) {
-        this.user = new User(null, '', '', '', '', [], true);
+        this.user = new User(null, '', '', '', '', null, [], true);
         this.discardHappened = new EventEmitter();
     }
 
