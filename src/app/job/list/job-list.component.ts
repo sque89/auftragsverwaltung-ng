@@ -120,24 +120,38 @@ export class JobListComponent implements OnInit {
     }
 
     private filterJobs(resetPage = true): void {
+        const searchStrings: Array<{searchString: string, found: boolean}> = [];
         const filterOpen = this.filterForm.controls['filterOpen'].value;
         const filterClosed = this.filterForm.controls['filterClosed'].value;
         const filterOverdue = this.filterForm.controls['filterOverdue'].value;
         this.jobsInTimespanFiltered = [];
 
+        if (this.searchString.startsWith('"') && this.searchString.endsWith('"')) {
+            searchStrings.push({searchString: this.searchString.replace(/\"/g, ''), found: false});
+        } else {
+            this.searchString.split(' ').forEach(part => searchStrings.push({searchString: part, found: false}));
+        }
+
         this.jobsInTimespan.forEach((job: Job) => {
-            if ((
-                job.id.toLowerCase().includes(this.searchString.toLowerCase()) ||
-                job.description.toLowerCase().includes(this.searchString.toLowerCase()) ||
-                job.externalPurchase.toLowerCase().includes(this.searchString.toLowerCase()) ||
-                job.notes.toLowerCase().includes(this.searchString.toLowerCase()) ||
-                job.customer.name.toLowerCase().includes(this.searchString.toLowerCase())) &&
-                (!filterOpen || filterOpen && !job.isClosed()) &&
-                (!filterClosed || filterClosed && job.isClosed()) &&
-                (!filterOverdue || filterOverdue && job.isOverdue() && !job.isClosed())
-            ) {
+            searchStrings.forEach((single) => {
+                if ((
+                    job.id.toLowerCase().includes(single.searchString.toLowerCase()) ||
+                    job.description.toLowerCase().includes(single.searchString.toLowerCase()) ||
+                    job.externalPurchase.toLowerCase().includes(single.searchString.toLowerCase()) ||
+                    job.notes.toLowerCase().includes(single.searchString.toLowerCase()) ||
+                    job.customer.name.toLowerCase().includes(single.searchString.toLowerCase())) &&
+                    (!filterOpen || filterOpen && !job.isClosed()) &&
+                    (!filterClosed || filterClosed && job.isClosed()) &&
+                    (!filterOverdue || filterOverdue && job.isOverdue() && !job.isClosed())
+                ) {
+                    single.found = true;
+                }
+            });
+
+            if (_.every(searchStrings, {found: true})) {
                 this.jobsInTimespanFiltered.push({opened: !_.isEmpty(this.searchString), job: job});
             }
+            searchStrings.map(searchString => searchString.found = false);
         });
 
         this.paginator.pageIndex === 0 || !resetPage ? this.updatePage(null, resetPage) : this.paginator.firstPage();
