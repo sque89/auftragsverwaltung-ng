@@ -78,7 +78,10 @@
         <div class="mb-3" [innerHtml]="job.description | highlight: textToHighlight"></div>
 
         <div class="h4">Kunde</div>
-        <div class="d-block font-weight-bold" [innerHtml]="job.customer.name | highlight: textToHighlight"></div>
+        <div class="d-block">
+            <span class="font-weight-bold" [innerHtml]="job.customer.id | highlight: textToHighlight"></span> |
+            <span class="font-weight-bold" [innerHtml]="job.customer.name | highlight: textToHighlight"></span>
+        </div>
         <div>{{job.customer.address}}</div>
         <div class="mb-3">{{job.customer.postcode}} {{job.customer.city}}</div>
         <div>{{job.customer.mail}}</div>
