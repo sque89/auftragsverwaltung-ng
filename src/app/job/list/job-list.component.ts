@@ -149,7 +149,7 @@ export class JobListComponent implements OnInit {
             });
 
             if (_.every(searchStrings, {found: true})) {
-                this.jobsInTimespanFiltered.push({opened: !_.isEmpty(this.searchString), job: job});
+                this.jobsInTimespanFiltered.push({opened: false, job: job});
             }
             searchStrings.map(searchString => searchString.found = false);
         });

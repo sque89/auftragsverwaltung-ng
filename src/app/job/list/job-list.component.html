@@ -57,10 +57,11 @@
     <mat-expansion-panel *ngFor="let job of jobsInTimespanFilteredPaged" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
         <mat-expansion-panel-header [collapsedHeight]="'58px'" [expandedHeight]="'58px'">
             <mat-panel-title>
-                <span [innerHtml]="job.job.id | highlight: search"></span>
+                <span [innerHtml]="job.job.id | highlight: searchString"></span>
+                <span class="ml-3" *ngIf="!job.opened" [innerHtml]="job.job.customer.name | highlight: searchString"></span>
             </mat-panel-title>
             <mat-panel-description class="flex-fill">
-                <span *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: search"></span>
+                <span class="text-right" *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: searchString"></span>
             </mat-panel-description>
 
             <mat-chip *ngIf="job.job.isClosed()" class="mr-3" color="primary" selected>geschlossen</mat-chip>

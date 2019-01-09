@@ -30,7 +30,7 @@
             </mat-form-field>
             <mat-autocomplete #customerAutocomplete="matAutocomplete" [displayWith]="customerAutocompleteDisplay">
                 <mat-option *ngFor="let customer of customers$ | async" [value]="customer">
-                    {{ customer.name }}
+                    {{customer.id}} | {{ customer.name }}
                 </mat-option>
             </mat-autocomplete>
         </div>
