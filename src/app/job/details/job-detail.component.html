@@ -75,7 +75,7 @@
         </mat-expansion-panel>
 
         <div class="h4">Beschreibung</div>
-        <div class="mb-3" [innerHtml]="job.description | highlight: textToHighlight"></div>
+        <div class="mb-3" [innerHtml]="job.description | highlight: textToHighlight | nl2br"></div>
 
         <div class="h4">Kunde</div>
         <div class="d-block">
@@ -90,10 +90,10 @@
         <div class="mb-3">Fax: {{job.customer.fax}}</div>
 
         <div class="h4" matLine>Notizen</div>
-        <div class="mb-3" [innerHtml]="job.notes || '--' | highlight: textToHighlight"></div>
+        <div class="mb-3" [innerHtml]="job.notes || '--' | highlight: textToHighlight | nl2br"></div>
 
         <div class="h4" matLine>Externer Einkauf</div>
-        <div class="mb-3" [innerHtml]="job.externalPurchase || '--'  | highlight: textToHighlight"></div>
+        <div class="mb-3" [innerHtml]="job.externalPurchase || '--'  | highlight: textToHighlight | nl2br"></div>
 
         <div class="h4" matLine>Bearbeiter</div>
         <mat-chip-list>

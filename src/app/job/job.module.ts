@@ -18,6 +18,7 @@ import {TaskFormDialogComponent} from './dialogs/task/task-form-dialog.component
 import {TaskApiService} from '../core/services/task-api.service';
 import {JobService} from './job.service';
 import {InvoiceDialogComponent} from './dialogs/invoice/invoice-dialog.component';
+import {Nl2BrPipeModule} from 'nl2br-pipe';
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import {InvoiceDialogComponent} from './dialogs/invoice/invoice-dialog.component
         MatMenuModule,
         MatTooltipModule,
         MatPaginatorModule,
-        TruncateModule
+        TruncateModule,
+        Nl2BrPipeModule
     ],
     providers: [
         JobApiService,
