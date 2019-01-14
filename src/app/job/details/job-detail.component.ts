@@ -5,7 +5,7 @@ import {NumberService} from '../../core/services/number.service';
 import {Task} from '../../core/models/task.model';
 import {Subject} from 'rxjs';
 import {MatTable, MatDialog} from '@angular/material';
-import {JobService} from '../job.service';
+import {JobService} from '../services/job.service';
 import {SessionService} from '../../core/services/session.service';
 import {InvoiceDialogComponent} from '../dialogs/invoice/invoice-dialog.component';
 import {JobApiService} from '../../core/services/job-api.service';

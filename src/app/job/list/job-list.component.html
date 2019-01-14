@@ -28,14 +28,14 @@
     <div class="row">
         <div class="col-12 col-md-6">
             <mat-form-field>
-                <mat-select matInput formControlName="sort" placeholder="Sortieren nach">
+                <mat-select matInput formControlName="sortColumn" placeholder="Sortieren nach">
                     <mat-option value="id">Jobnummer</mat-option>
                     <mat-option value="description">Beschreibung</mat-option>
                 </mat-select>
             </mat-form-field>
             <button mat-icon-button (click)="toggleSortDirection()">
-                    <mat-icon *ngIf="!sortDirectionAsc">arrow_downward</mat-icon>
-                <mat-icon *ngIf="sortDirectionAsc">arrow_upward</mat-icon>
+                    <mat-icon *ngIf="!jobFilterService.sortDirectionAsc">arrow_downward</mat-icon>
+                <mat-icon *ngIf="jobFilterService.sortDirectionAsc">arrow_upward</mat-icon>
             </button>
         </div>
         <div class="col-12 col-md-6 text-right my-auto">
