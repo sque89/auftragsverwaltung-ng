@@ -16,7 +16,8 @@ import {UserApiService} from '../core/services/user-api.service';
 import {HighlightPipe} from '../core/pipes/highlight/highlight.pipe';
 import {TaskFormDialogComponent} from './dialogs/task/task-form-dialog.component';
 import {TaskApiService} from '../core/services/task-api.service';
-import {JobService} from './job.service';
+import {JobService} from './services/job.service';
+import {JobFilterService} from './services/job-filter.service';
 import {InvoiceDialogComponent} from './dialogs/invoice/invoice-dialog.component';
 import {Nl2BrPipeModule} from 'nl2br-pipe';
 
@@ -55,7 +56,8 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
         CustomerApiService,
         UserApiService,
         TaskApiService,
-        JobService
+        JobService,
+        JobFilterService
     ],
     declarations: [
         JobListComponent,

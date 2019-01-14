@@ -79,7 +79,7 @@
 
         <div class="h4">Kunde</div>
         <div class="d-block">
-            <span class="font-weight-bold" [innerHtml]="job.customer.id | highlight: textToHighlight"></span> |
+            <span class="font-weight-bold" [innerHtml]="job.customer.id.toString() | highlight: textToHighlight"></span> |
             <span class="font-weight-bold" [innerHtml]="job.customer.name | highlight: textToHighlight"></span>
         </div>
         <div>{{job.customer.address}}</div>

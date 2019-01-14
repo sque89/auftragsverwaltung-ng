@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Job} from '../core/models/job.model';
-import {Task} from '../core/models/task.model';
-import {TaskFormDialogComponent} from './dialogs/task/task-form-dialog.component';
-import {TaskApiService} from '../core/services/task-api.service';
+import {Job} from '../../core/models/job.model';
+import {Task} from '../../core/models/task.model';
+import {TaskFormDialogComponent} from '../dialogs/task/task-form-dialog.component';
+import {TaskApiService} from '../../core/services/task-api.service';
 import {MatDialog} from '@angular/material';
-import {NotificationService} from '../core/services/notification.service';
+import {NotificationService} from '../../core/services/notification.service';
 import {catchError, switchMap} from 'rxjs/operators';
 import {of, Observable, throwError} from 'rxjs';
-import {TaskFormDialogData} from './dialogs/task/data.model';
+import {TaskFormDialogData} from '../dialogs/task/data.model';
 import * as _ from 'lodash';
 
 @Injectable()
