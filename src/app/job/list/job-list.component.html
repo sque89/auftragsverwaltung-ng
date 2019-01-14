@@ -57,8 +57,8 @@
     <mat-expansion-panel *ngFor="let job of jobsInTimespanFilteredPaged" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
         <mat-expansion-panel-header [collapsedHeight]="'58px'" [expandedHeight]="'58px'">
             <mat-panel-title>
-                <span [innerHtml]="job.job.id | highlight: searchString"></span>
-                <span class="ml-3" *ngIf="!job.opened" [innerHtml]="job.job.customer.name | highlight: searchString"></span>
+                <span [innerHtml]="job.job.id | highlight: jobFilterService.searchString"></span>
+                <span class="ml-3" *ngIf="!job.opened" [innerHtml]="job.job.customer.name | highlight: jobFilterService.searchString"></span>
             </mat-panel-title>
             <mat-panel-description class="flex-fill">
                 <span class="text-right" *ngIf="!job.opened" [innerHtml]="job.job.description | words:10 | highlight: searchString"></span>
@@ -86,6 +86,6 @@
                 <mat-icon>playlist_add</mat-icon>
             </button>
         </mat-expansion-panel-header>
-        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="searchString" [updateTaskTable]="updateTaskTable"></job-detail>
+        <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="jobFilterService.searchString" [updateTaskTable]="updateTaskTable"></job-detail>
     </mat-expansion-panel>
 </mat-accordion>

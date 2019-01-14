@@ -130,7 +130,8 @@ export class JobListComponent implements OnInit {
                     job.description.toLowerCase().includes(single.searchString.toLowerCase()) ||
                     job.externalPurchase.toLowerCase().includes(single.searchString.toLowerCase()) ||
                     job.notes.toLowerCase().includes(single.searchString.toLowerCase()) ||
-                    job.customer.name.toLowerCase().includes(single.searchString.toLowerCase())) &&
+                    job.customer.name.toLowerCase().includes(single.searchString.toLowerCase()) ||
+                    job.customer.id.toString().includes(single.searchString.toLowerCase())) &&
                     (!this.jobFilterService.filterOpen || this.jobFilterService.filterOpen && !job.isClosed()) &&
                     (!this.jobFilterService.filterClosed || this.jobFilterService.filterClosed && job.isClosed()) &&
                     (!this.jobFilterService.filterOverdue || this.jobFilterService.filterOverdue && job.isOverdue() && !job.isClosed())
