@@ -39,7 +39,7 @@ export class JobListComponent implements OnInit {
         private router: Router,
         private appService: AppService,
         private jobApiService: JobApiService,
-        private jobFilterService: JobFilterService,
+        public jobFilterService: JobFilterService,
         public jobService: JobService,
         public sessionService: SessionService
     ) {
