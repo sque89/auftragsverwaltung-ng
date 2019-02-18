@@ -51,7 +51,7 @@
     </div>
 </form>
 
-<mat-paginator #paginator [length]="jobsInTimespanFiltered.length" (page)="updatePage($event)" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+<mat-paginator #paginatorTop [length]="jobsInTimespanFiltered.length" (page)="updatePage($event)" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 
 <mat-accordion multi="true">
     <mat-expansion-panel *ngFor="let job of jobsInTimespanFilteredPaged" (opened)="job.opened = true" (closed)="job.opened = false" [expanded]="job.opened">
@@ -89,3 +89,5 @@
         <job-detail [inputJob]="job.job" [summaryMode]="true" [textToHighlight]="jobFilterService.searchString" [updateTaskTable]="updateTaskTable"></job-detail>
     </mat-expansion-panel>
 </mat-accordion>
+
+<mat-paginator #paginatorBottom (page)="updatePaginatorTop($event)" [length]="jobsInTimespanFiltered.length" [hidePageSize]="true" [pageIndex]="paginatorTop.pageIndex" [pageSize]="paginatorTop.pageSize"></mat-paginator>
