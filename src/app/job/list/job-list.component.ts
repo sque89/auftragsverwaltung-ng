@@ -26,8 +26,12 @@ export class JobListComponent implements OnInit {
 
     public filterForm: FormGroup;
 
-    @ViewChild('paginator')
-    private paginator: MatPaginator;
+    @ViewChild('paginatorTop')
+    private paginatorTop: MatPaginator;
+
+    @ViewChild('paginatorBottom')
+    private paginatorBottom: MatPaginator;
+
     public pageSize = this.appService.getSettingById('job_list_jobs_per_page').value;
     public pageSizeOptions: number[] = [10, 25, 50];
 
@@ -68,7 +72,7 @@ export class JobListComponent implements OnInit {
         this.sortJobsByProperty('id', this.jobFilterService.sortDirectionAsc);
         this.filterJobs();
 
-        this.paginator.initialized.subscribe(() => {
+        merge(this.paginatorTop.initialized, this.paginatorBottom.initialized).subscribe(() => {
             this.updatePage();
         });
     }
@@ -146,7 +150,7 @@ export class JobListComponent implements OnInit {
             searchStrings.map(searchString => searchString.found = false);
         });
 
-        this.paginator.pageIndex === 0 || !resetPage ? this.updatePage(null, resetPage) : this.paginator.firstPage();
+        this.paginatorTop.pageIndex === 0 || !resetPage ? this.updatePage(null, resetPage) : this.paginatorTop.firstPage();
     }
 
     private sortJobsByProperty(property: string, asc = false): void {
@@ -167,9 +171,17 @@ export class JobListComponent implements OnInit {
         this.filterJobs(false);
     }
 
+    public updatePaginatorTop(pageEvent?: PageEvent) {
+        if (pageEvent.pageIndex > this.paginatorTop.pageIndex) {
+            this.paginatorTop.nextPage();
+        } else {
+            this.paginatorTop.previousPage();
+        }
+    }
+
     public updatePage(pageEvent?: PageEvent, gotoFirstPage = false) {
-        const pageIndexToUse = gotoFirstPage ? 0 : pageEvent && pageEvent.pageIndex || this.paginator.pageIndex;
-        const pageSizeToUse = pageEvent && pageEvent.pageSize || this.paginator.pageSize;
+        const pageIndexToUse = gotoFirstPage ? 0 : pageEvent && pageEvent.pageIndex || this.paginatorTop.pageIndex;
+        const pageSizeToUse = pageEvent && pageEvent.pageSize || this.paginatorTop.pageSize;
         this.jobsInTimespanFilteredPaged = this.jobsInTimespanFiltered.slice(
             pageIndexToUse * pageSizeToUse, (pageIndexToUse + 1) * pageSizeToUse
         );
