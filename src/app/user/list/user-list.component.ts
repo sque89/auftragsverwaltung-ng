@@ -16,7 +16,7 @@ import * as _ from 'lodash';
     styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-    @ViewChild('activateToggle', { static: false }) activateToggle: MatSlideToggle;
+    @ViewChild('activateToggle') activateToggle: MatSlideToggle;
 
     public users: Array<User>;
     public gotoDetailsHappened: EventEmitter<null>;
