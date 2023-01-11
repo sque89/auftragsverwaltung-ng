@@ -2,7 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Customer} from '../../core/models/customer.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UiService} from '../../core/services/ui.service';
-import {MatSort, MatTableDataSource, MatPaginator} from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
     selector: 'customer-list',

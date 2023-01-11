@@ -12,7 +12,7 @@ import {JobService} from '../services/job.service';
 import * as _ from 'lodash';
 import * as moment from 'moment'
 import {Moment} from 'moment';
-import {PageEvent, MatPaginator} from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import {SessionService} from '../../core/services/session.service';
 
 @Component({

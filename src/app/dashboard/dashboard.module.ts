@@ -1,7 +1,15 @@
 import {NgModule} from '@angular/core';
 
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule, MatGridListModule, MatIconModule, MatMenuModule, MatCardModule, MatButtonModule, MatProgressSpinnerModule, MatSidenavModule, MatListModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import {DashboardComponent} from './dashboard.component';
 import {DashboardRoutingModule} from './dashboard-routing.module';
 import {CommonModule} from '@angular/common';

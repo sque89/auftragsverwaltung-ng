@@ -3,7 +3,8 @@ import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {SettingRoutingModule} from './setting-routing.module';
 import {SettingComponent} from './setting.component';
-import {MatInputModule, MatButtonModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import {SharedModule} from '../shared/shared.module';
 
 @NgModule({

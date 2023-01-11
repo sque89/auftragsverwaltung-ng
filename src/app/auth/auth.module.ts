@@ -3,7 +3,9 @@ import {NgModule} from '@angular/core';
 import {AuthComponent} from './auth.component';
 import {AuthRoutingModule} from './auth-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatFormFieldModule, MatInputModule, MatButtonModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     imports: [

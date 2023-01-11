@@ -5,7 +5,8 @@ import {UiService} from '../../core/services/ui.service';
 import {UserApiService} from '../../core/services/user-api.service';
 import {NotificationService} from '../../core/services/notification.service';
 import {SessionService} from '../../core/services/session.service';
-import {MatDialog, MatSlideToggleChange, MatSlideToggle} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange, MatSlideToggle } from '@angular/material/slide-toggle';
 import {DeletionConfirmationDialogComponent} from '../../shared/dialogs/deletion-confirmation/deletion-confirmation-dialog.component';
 import * as _ from 'lodash';
 
