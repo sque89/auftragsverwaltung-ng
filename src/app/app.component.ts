@@ -9,7 +9,7 @@ import {MatSidenav} from '@angular/material';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-    @ViewChild('mainMenu') mainMenu: MatSidenav;
+    @ViewChild('mainMenu', { static: true }) mainMenu: MatSidenav;
 
     public constructor(public uiService: UiService, public sessionService: SessionService) {
     }

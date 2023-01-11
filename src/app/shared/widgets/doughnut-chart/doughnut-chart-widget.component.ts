@@ -8,7 +8,7 @@ import {UIChart} from 'primeng/components/chart/chart';
     styleUrls: ['doughnut-chart-widget.component.scss']
 })
 export class DoughnutChartWidgetComponent implements AfterViewInit {
-    @ViewChild('chart')
+    @ViewChild('chart', { static: true })
     private chart: UIChart;
 
     @Input() data: DoughnutChartWidgetModel;

@@ -15,8 +15,8 @@ export class CustomerListComponent implements OnInit {
     public pageSize = 10;
     public pageSizeOptions: number[] = [5, 10, 25, 100];
 
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
     public constructor(private activatedRoute: ActivatedRoute, private uiService: UiService, private router: Router) {
     }

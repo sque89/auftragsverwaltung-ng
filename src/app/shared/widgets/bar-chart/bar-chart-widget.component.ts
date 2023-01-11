@@ -8,7 +8,7 @@ import {UIChart} from 'primeng/components/chart/chart';
     styleUrls: ['bar-chart-widget.component.scss']
 })
 export class BarChartWidgetComponent implements AfterViewInit {
-    @ViewChild('chart')
+    @ViewChild('chart', { static: true })
     private chart: UIChart;
 
     @Input() data: BarChartWidgetModel;

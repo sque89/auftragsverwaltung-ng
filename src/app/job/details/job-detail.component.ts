@@ -18,7 +18,7 @@ import {ActionButton} from '../../shared/content/action-headline/actionButton.mo
     styleUrls: ['./job-detail.component.scss']
 })
 export class JobDetailComponent implements OnInit, AfterViewInit {
-    @ViewChild(MatTable) taskTable: MatTable<Task>;
+    @ViewChild(MatTable, { static: true }) taskTable: MatTable<Task>;
 
     public job: Job;
     public gotoEditHappened: EventEmitter<null>;

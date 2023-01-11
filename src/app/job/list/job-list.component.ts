@@ -26,10 +26,10 @@ export class JobListComponent implements OnInit {
 
     public filterForm: FormGroup;
 
-    @ViewChild('paginatorTop')
+    @ViewChild('paginatorTop', { static: true })
     private paginatorTop: MatPaginator;
 
-    @ViewChild('paginatorBottom')
+    @ViewChild('paginatorBottom', { static: true })
     private paginatorBottom: MatPaginator;
 
     public pageSize = this.appService.getSettingById('job_list_jobs_per_page').value;
