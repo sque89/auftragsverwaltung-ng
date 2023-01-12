@@ -83,10 +83,6 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
         HighlightPipe,
         TaskFormDialogComponent,
         InvoiceDialogComponent
-    ],
-    entryComponents: [
-        TaskFormDialogComponent,
-        InvoiceDialogComponent
     ]
 })
 export class JobModule {}

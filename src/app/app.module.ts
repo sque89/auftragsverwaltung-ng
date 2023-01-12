@@ -83,10 +83,6 @@ export const DATE_FORMATS = {
         MatDialogModule,
         MatMomentDateModule
     ],
-    entryComponents: [
-        CancelDialogComponent,
-        DeletionConfirmationDialogComponent
-    ],
     providers: [
         SettingApiService,
         DeliveryTypeApiService,

@@ -45,13 +45,6 @@ import {UserApiService} from '../core/services/user-api.service';
     ],
     declarations: [
         DashboardComponent
-    ],
-    entryComponents: [
-        JobListWidgetComponent,
-        QuickstartWidgetComponent,
-        SimpleNumberWidgetComponent,
-        DoughnutChartWidgetComponent,
-        BarChartWidgetComponent
     ]
 })
 export class DashboardModule {}
