@@ -45,7 +45,7 @@
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
-    "codelyzer": "^5.1.2",
+    "codelyzer": "^6.1.2",
     "nl2br-pipe": "^1.1.0",
     "ts-node": "~5.0.1",
     "tslint": "~6.1.0",
