@@ -6,7 +6,7 @@ import {UserApiService} from '../../core/services/user-api.service';
 import {UiService} from '../../core/services/ui.service';
 import {NotificationService} from '../../core/services/notification.service';
 import {SessionService} from '../../core/services/session.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import {CancelDialogComponent} from '../../shared/dialogs/cancel/cancel-dialog.component';
 
 import * as _ from 'lodash';

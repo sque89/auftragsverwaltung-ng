@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from "@angular/material/legacy-dialog";
 import {Task} from "../../../core/models/task.model";
 import {UntypedFormGroup, UntypedFormControl, Validators} from "@angular/forms";
 import {TaskFormDialogData} from "./data.model";

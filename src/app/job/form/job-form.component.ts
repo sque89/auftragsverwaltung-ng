@@ -2,7 +2,7 @@ import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../core/models/job.model';
 import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import {CancelDialogComponent} from '../../shared/dialogs/cancel/cancel-dialog.component';
 import {AppService} from '../../core/services/app.service';
 import {DeliveryType} from '../../core/models/delivery-type.model';

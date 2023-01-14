@@ -3,7 +3,7 @@ import {Job} from '../../core/models/job.model';
 import {Task} from '../../core/models/task.model';
 import {TaskFormDialogComponent} from '../dialogs/task/task-form-dialog.component';
 import {TaskApiService} from '../../core/services/task-api.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import {NotificationService} from '../../core/services/notification.service';
 import {catchError, switchMap} from 'rxjs/operators';
 import {of, Observable, throwError} from 'rxjs';
