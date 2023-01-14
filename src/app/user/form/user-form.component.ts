@@ -1,5 +1,5 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../core/models/user.model';
 import {UserApiService} from '../../core/services/user-api.service';
@@ -17,8 +17,8 @@ import * as _ from 'lodash';
     styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-    public commonDataForm: FormGroup;
-    public passwordForm: FormGroup;
+    public commonDataForm: UntypedFormGroup;
+    public passwordForm: UntypedFormGroup;
     public user: User;
     public isOwnProfile: boolean;
     public createNew: boolean;
@@ -46,23 +46,23 @@ export class UserFormComponent implements OnInit {
 
         this.discardHappened.subscribe(() => this.askForCancel());
 
-        this.commonDataForm = new FormGroup({
-            firstname: new FormControl(
+        this.commonDataForm = new UntypedFormGroup({
+            firstname: new UntypedFormControl(
                 this.user.firstname,
                 [Validators.required]
             ),
-            lastname: new FormControl(
+            lastname: new UntypedFormControl(
                 this.user.lastname,
                 [Validators.required]
             ),
-            mail: new FormControl(
+            mail: new UntypedFormControl(
                 this.user.email,
                 [Validators.required]
             )
         });
 
-        this.passwordForm = new FormGroup({
-            newPassword: new FormControl(
+        this.passwordForm = new UntypedFormGroup({
+            newPassword: new UntypedFormControl(
                 '',
                 [Validators.required]
             )
@@ -70,20 +70,20 @@ export class UserFormComponent implements OnInit {
 
         if (this.isOwnProfile) {
             this.passwordForm.addControl(
-                'currentPassword', new FormControl(
+                'currentPassword', new UntypedFormControl(
                     '',
                     [Validators.required]
                 )
             );
             this.passwordForm.addControl(
-                'newPasswordConfirmation', new FormControl(
+                'newPasswordConfirmation', new UntypedFormControl(
                     '',
                     [Validators.required]
                 )
             );
         } else {
             this.commonDataForm.addControl(
-                'roles', new FormControl(
+                'roles', new UntypedFormControl(
                     this.user.roles,
                     [Validators.required]
                 )
@@ -92,13 +92,13 @@ export class UserFormComponent implements OnInit {
 
         if (this.createNew) {
             this.commonDataForm.addControl(
-                'password', new FormControl(
+                'password', new UntypedFormControl(
                     '',
                     [Validators.required]
                 )
             );
             this.commonDataForm.addControl(
-                'username', new FormControl(
+                'username', new UntypedFormControl(
                     '',
                     [Validators.required]
                 )

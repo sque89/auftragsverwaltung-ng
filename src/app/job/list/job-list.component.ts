@@ -3,7 +3,7 @@ import {Job} from '../../core/models/job.model';
 import {UiService} from '../../core/services/ui.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppService} from '../../core/services/app.service';
-import {FormGroup, FormControl} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormControl} from '@angular/forms';
 import {JobApiService} from '../../core/services/job-api.service';
 import {JobFilterService} from '../services/job-filter.service';
 import {debounceTime} from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class JobListComponent implements OnInit {
     public jobsInTimespanFiltered: Array<{opened: boolean, job: Job}>;
     public jobsInTimespanFilteredPaged: Array<{opened: boolean, job: Job}>;
 
-    public filterForm: FormGroup;
+    public filterForm: UntypedFormGroup;
 
     @ViewChild('paginatorTop', { static: true })
     private paginatorTop: MatPaginator;
@@ -55,14 +55,14 @@ export class JobListComponent implements OnInit {
     public ngOnInit() {
         this.uiService.closeMainMenu();
         this.jobFilterService.jobsInTimespan = this.activatedRoute.snapshot.data.JobListResolver;
-        this.filterForm = new FormGroup({
-            from: new FormControl(this.jobFilterService.filterFrom),
-            to: new FormControl(this.jobFilterService.filterTo),
-            search: new FormControl(this.jobFilterService.searchString),
-            sortColumn: new FormControl(this.jobFilterService.sortColumn),
-            filterOpen: new FormControl(),
-            filterClosed: new FormControl(this.jobFilterService.filterClosed),
-            filterOverdue: new FormControl(this.jobFilterService.filterOverdue)
+        this.filterForm = new UntypedFormGroup({
+            from: new UntypedFormControl(this.jobFilterService.filterFrom),
+            to: new UntypedFormControl(this.jobFilterService.filterTo),
+            search: new UntypedFormControl(this.jobFilterService.searchString),
+            sortColumn: new UntypedFormControl(this.jobFilterService.sortColumn),
+            filterOpen: new UntypedFormControl(),
+            filterClosed: new UntypedFormControl(this.jobFilterService.filterClosed),
+            filterOverdue: new UntypedFormControl(this.jobFilterService.filterOverdue)
         });
 
         this.bindRouteQueryParamChanges();

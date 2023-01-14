@@ -1,14 +1,14 @@
 import {Component, Inject, OnInit} from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import {Task} from "../../../core/models/task.model";
-import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {UntypedFormGroup, UntypedFormControl, Validators} from "@angular/forms";
 
 @Component({
     selector: 'invoice-dialog',
     templateUrl: 'invoice-dialog.component.html',
 })
 export class InvoiceDialogComponent implements OnInit {
-    public form: FormGroup;
+    public form: UntypedFormGroup;
 
     public constructor(
         public dialogRef: MatDialogRef<InvoiceDialogComponent>,
@@ -16,8 +16,8 @@ export class InvoiceDialogComponent implements OnInit {
     ) {}
 
     public ngOnInit() {
-        this.form = new FormGroup({
-            invoiceNumber: new FormControl(this.data, [Validators.required])
+        this.form = new UntypedFormGroup({
+            invoiceNumber: new UntypedFormControl(this.data, [Validators.required])
         });
 
         this.form.valueChanges.subscribe((newData) => {

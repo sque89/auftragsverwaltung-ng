@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
 import {AuthenticationService} from '../core/services/authentication.service';
 import {Router} from '@angular/router';
 import {NotificationService} from '../core/services/notification.service';
@@ -10,7 +10,7 @@ import {NotificationService} from '../core/services/notification.service';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
-    public form: FormGroup;
+    public form: UntypedFormGroup;
 
     public constructor(
         private authService: AuthenticationService,
@@ -19,11 +19,11 @@ export class AuthComponent {
     }
 
     public ngOnInit() {
-        this.form = new FormGroup({
-            username: new FormControl('', [
+        this.form = new UntypedFormGroup({
+            username: new UntypedFormControl('', [
                 Validators.required
             ]),
-            password: new FormControl('', [
+            password: new UntypedFormControl('', [
                 Validators.required
             ])
         });

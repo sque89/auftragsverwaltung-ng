@@ -1,7 +1,7 @@
 import {Component, OnInit, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../core/models/job.model';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {UntypedFormGroup, UntypedFormControl, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {CancelDialogComponent} from '../../shared/dialogs/cancel/cancel-dialog.component';
 import {AppService} from '../../core/services/app.service';
@@ -24,7 +24,7 @@ import {UserApiService} from '../../core/services/user-api.service';
 })
 export class JobFormComponent implements OnInit {
     public job: Job;
-    public form: FormGroup;
+    public form: UntypedFormGroup;
     public customers$: Observable<Array<Customer>>;
     public users$: Observable<Array<User>>;
     public createNew: boolean;
@@ -53,15 +53,15 @@ export class JobFormComponent implements OnInit {
         if (!this.createNew) {
             this.job = this.activatedRoute.snapshot.data.JobSingleResolver;
         }
-        this.form = new FormGroup({
-            dateIncoming: new FormControl(this.job.dateIncoming, [Validators.required]),
-            dateDeadline: new FormControl(this.job.dateDeadline),
-            customer: new FormControl(this.job.customer, [Validators.required]),
-            deliveryType: new FormControl(this.job.deliveryType, [Validators.required]),
-            description: new FormControl(this.job.description, [Validators.required]),
-            notes: new FormControl(this.job.notes),
-            externalPurchase: new FormControl(this.job.externalPurchase),
-            arrangers: new FormControl(this.job.arrangers, [Validators.required])
+        this.form = new UntypedFormGroup({
+            dateIncoming: new UntypedFormControl(this.job.dateIncoming, [Validators.required]),
+            dateDeadline: new UntypedFormControl(this.job.dateDeadline),
+            customer: new UntypedFormControl(this.job.customer, [Validators.required]),
+            deliveryType: new UntypedFormControl(this.job.deliveryType, [Validators.required]),
+            description: new UntypedFormControl(this.job.description, [Validators.required]),
+            notes: new UntypedFormControl(this.job.notes),
+            externalPurchase: new UntypedFormControl(this.job.externalPurchase),
+            arrangers: new UntypedFormControl(this.job.arrangers, [Validators.required])
         });
 
         this.customers$ = this.form.controls['customer'].valueChanges.pipe(
