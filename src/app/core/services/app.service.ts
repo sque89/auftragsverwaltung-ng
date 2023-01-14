@@ -21,7 +21,7 @@ export class AppService {
                 this.settingApi.loadSettings().subscribe((response: any) => {
                     this.uiService.hideLoadingOverlay();
                     this.settings = response;
-                    resolve();
+                    resolve(null);
                 }, (error) => {
                     reject(error);
                 });
@@ -30,7 +30,7 @@ export class AppService {
                 this.deliveryTypeApi.fetchAll().subscribe((response: any) => {
                     this.uiService.hideLoadingOverlay();
                     this.deliveryTypes = response;
-                    resolve();
+                    resolve(null);
                 }, (error) => {
                     reject(error);
                 });

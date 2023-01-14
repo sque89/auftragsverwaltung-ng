@@ -1,12 +1,12 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import {MatButtonModule} from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {BreadcrumbComponent} from './layout/breadcrumb/breadcrumb.component';
 import {RouterModule} from '@angular/router';
-import {ChartModule} from 'primeng/primeng';
+import {ChartModule} from 'primeng/chart';
 import {ActionHeadlineComponent} from './content/action-headline/action-headline.component';
 import {JobListWidgetComponent} from './widgets/job-list/job-list-widget.component';
 import {QuickstartWidgetComponent} from './widgets/quickstart/quickstart-widget.component';

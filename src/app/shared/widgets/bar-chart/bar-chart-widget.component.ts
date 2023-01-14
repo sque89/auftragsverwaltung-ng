@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild, AfterViewInit} from '@angular/core';
 import {BarChartWidgetModel} from './bar-chart-widget.model';
-import {UIChart} from 'primeng/components/chart/chart';
+import {UIChart} from 'primeng/chart';
 
 @Component({
     selector: 'bar-chart-widget',

@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild, AfterViewInit} from '@angular/core';
 import {DoughnutChartWidgetModel} from './doughnut-chart-widget.model';
-import {UIChart} from 'primeng/components/chart/chart';
+import {UIChart} from 'primeng/chart';
 
 @Component({
     selector: 'doughnut-chart-widget',

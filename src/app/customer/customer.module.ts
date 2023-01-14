@@ -5,7 +5,7 @@ import {CustomerListResolver} from './list/customer-list-resolver.service';
 import {CustomerListComponent} from './list/customer-list.component';
 import {CustomerRoutingModule} from './customer-routing.module';
 import {CustomerApiService} from '../core/services/customer-api.service';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import {MatButtonModule} from '@angular/material/button';
 import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
