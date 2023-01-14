@@ -17,9 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize": [
-              "de"
-            ],
             "outputPath": "dist/auftragsverwaltung-ng",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -58,12 +55,6 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -89,12 +80,6 @@
             }
           },
           "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "auftragsverwaltung-ng:build"
-          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
