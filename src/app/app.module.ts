@@ -32,6 +32,10 @@ import {SettingApiService} from './core/services/setting-api.service';
 import {ErrorsHandler} from './core/handlers/error.handler';
 import {LogApiService} from './core/services/log-api.service';
 import {DeliveryTypeApiService} from './core/services/delivery-type-api.service';
+import {registerLocaleData} from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
 
 export function getSettings(appService: AppService) {
     return () => {
@@ -87,7 +91,7 @@ export const DATE_FORMATS = {
         SettingApiService,
         DeliveryTypeApiService,
         LogApiService,
-        {provide: LOCALE_ID, useValue: 'de'},
+        {provide: LOCALE_ID, useValue: 'de-DE'},
         {provide: APP_INITIALIZER, useFactory: getSettings, deps: [AppService], multi: true},
         //{provide: ErrorHandler, useClass: ErrorsHandler},
         {provide: MAT_DATE_FORMATS, useValue: DATE_FORMATS},
